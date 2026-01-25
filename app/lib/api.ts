@@ -1,11 +1,10 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-if (!BASE_URL) {
-  throw new Error("NEXT_PUBLIC_API_BASE_URL is not defined");
-}
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080";
+
 
 export async function api(path: string) {
-  const url = `${BASE_URL}${path}`;
+  const url = `${API_BASE_URL}${path}`;
 
   try {
     const res = await fetch(url, { cache: "no-store" });
