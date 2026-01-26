@@ -24,17 +24,28 @@ export const PublicApi = {
     return fetcher(`/api/news/${slug}`);
   },
 
-  getArticle(slug: string) {
-    return fetcher(`/api/articles/${slug}`);
-  },
-  getArticleBySlug(slug: string) {
-  return fetcher(`/api/articles/${slug}`);
+//   getArticle(slug: string) {
+//     return fetcher(`/api/articles/${slug}`);
+//   },
+//   getArticleBySlug(slug: string) {
+//   return fetcher(`/api/articles/${slug}`);
+// },
+
+// getArticleById(id: number | string) {
+//   return fetcher(`/api/articles/${id}`);
+// }
+getArticle(slug: string) {
+  return fetcher(`/api/articles/slug/${slug}`);
+},
+
+getArticleBySlug(slug: string) {
+  return fetcher(`/api/articles/slug/${slug}`);
 },
 
 getArticleById(id: number | string) {
-  return fetcher(`/api/articles/${id}`);
-}
-,
+  return fetcher(`/api/articles/id/${id}`);
+},
+
 
   // CATEGORIES
   getCategories() {
