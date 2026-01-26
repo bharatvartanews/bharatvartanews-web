@@ -155,7 +155,7 @@ export default function ArticleList({
             key={a.id}
             className="news-card"
             onClick={() =>
-              router.push(`/articles/${a.id}`)
+              router.push(`/articles/${a.slug}`)
             }
             role="button"
           >

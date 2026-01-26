@@ -165,7 +165,14 @@ function injectMediaAfterFirstParagraph(
 /* ================= PAGE ================= */
 
 export default async function ArticlePage({ params }: PageProps) {
-  const article = await PublicApi.getArticleBySlug(params.slug);
+  //const article = await PublicApi.getArticleBySlug(params.slug);
+   const raw = params.slug;
+
+  const isId = /^\d+$/.test(raw);
+
+  const article = isId
+    ? await PublicApi.getArticleById(raw)
+    : await PublicApi.getArticleBySlug(raw);
 
   if (!article) {
     return (
