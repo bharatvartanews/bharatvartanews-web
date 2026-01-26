@@ -5,7 +5,7 @@ const BASE_URL =
 
 async function fetcher(path: string) {
   const res = await fetch(`${BASE_URL}${path}`, {
-    cache: "no-store"
+    next: { revalidate: 5 },
   });
 
   if (!res.ok) {
