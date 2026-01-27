@@ -201,52 +201,141 @@
 //   );
 // }
 
+// "use client";
+
+// import { useState } from "react";
+// import Link from "next/link";
+// import { usePathname } from "next/navigation";
+// import "./globals.css";
+
+// import ProfileButton from "./components/ProfileButton";
+// import { AuthProvider } from "./context/AuthContext";
+// import AutoSignIn from "./components/AutoSignIn";
+// import { SearchProvider } from "./context/SearchContext";
+// import HeaderSearch from "./components/HeaderSearch";
+// import Footer from "./footer";
+// import MobileBottomBar from "./components/MobileBottomBar";
+// import MobileMenu from "./components/MobileMenu";
+// const [menuOpen, setMenuOpen] = useState(false);
+
+
+
+// export default function RootLayout({
+//   children,
+// }: {
+//   children: React.ReactNode;
+// }) {
+//   const [lang, setLang] = useState("en");
+//   const pathname = usePathname();
+
+//   const tabClass = (path: string) =>
+//     pathname === path ? "active" : "";
+
+//   return (
+//     <html lang="en">
+//       <body>
+//         <AuthProvider>
+//           <SearchProvider>
+//             <AutoSignIn />
+
+//             {/* ===== HEADER (UNCHANGED) ===== */}
+//             <header className="header">
+//               <div className="header-inner">
+//                 <div className="logo">
+//                   <img
+//                     src="/logo_a.png"
+//                     alt="Bharat Varta"
+//                     width={100}
+//                     height={80}
+//                   />
+//                 </div>
+
+//                 <div className="lang-toggle">
+//                   <button
+//                     className={lang === "hi" ? "active" : ""}
+//                     onClick={() => setLang("hi")}
+//                   >
+//                     हिन्दी
+//                   </button>
+//                   <button
+//                     className={lang === "en" ? "active" : ""}
+//                     onClick={() => setLang("en")}
+//                   >
+//                     EN
+//                   </button>
+//                 </div>
+
+//                 <HeaderSearch />
+
+//                 <nav className="nav">
+//                   <Link href="/" className={tabClass("/")}>Home</Link>
+//                   <Link href="/videos" className={tabClass("/videos")}>Videos</Link>
+//                   <Link href="/stories" className={tabClass("/stories")}>Stories</Link>
+//                   <Link href="/live" className={tabClass("/live")}>Live</Link>
+//                 </nav>
+
+//                 <div className="header-actions">
+//                   <ProfileButton />
+//                 </div>
+//               </div>
+//             </header>
+
+//             {children}
+
+//             {/* ===== FOOTER (ONLY ONCE) ===== */}
+//             <Footer />
+//             <MobileBottomBar />
+//           </SearchProvider>
+//         </AuthProvider>
+
+//       </body>
+//     </html>
+//   );
+// }
+
 "use client";
 
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
 import "./globals.css";
 
 import ProfileButton from "./components/ProfileButton";
-import { AuthProvider } from "./context/AuthContext";
-import AutoSignIn from "./components/AutoSignIn";
-import { SearchProvider } from "./context/SearchContext";
 import HeaderSearch from "./components/HeaderSearch";
+import MobileMenu from "./components/MobileMenu";
 import Footer from "./footer";
-import MobileBottomBar from "./components/MobileBottomBar";
 
+import { AuthProvider } from "./context/AuthContext";
+import { SearchProvider } from "./context/SearchContext";
+import AutoSignIn from "./components/AutoSignIn";
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }) {
   const [lang, setLang] = useState("en");
+  const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
 
-  const tabClass = (path: string) =>
+  const tabClass = (path) =>
     pathname === path ? "active" : "";
 
   return (
     <html lang="en">
       <body>
+
         <AuthProvider>
           <SearchProvider>
             <AutoSignIn />
 
-            {/* ===== HEADER (UNCHANGED) ===== */}
+            {/* ================= HEADER ================= */}
             <header className="header">
               <div className="header-inner">
+
+                {/* LOGO */}
                 <div className="logo">
-                  <img
-                    src="/logo_a.png"
-                    alt="Bharat Varta"
-                    width={100}
-                    height={80}
-                  />
+                  <img src="/logo_a.png" alt="Bharat Varta" />
                 </div>
 
+                {/* LANGUAGE */}
                 <div className="lang-toggle">
                   <button
                     className={lang === "hi" ? "active" : ""}
@@ -262,8 +351,10 @@ export default function RootLayout({
                   </button>
                 </div>
 
+                {/* SEARCH */}
                 <HeaderSearch />
 
+                {/* DESKTOP NAV ONLY */}
                 <nav className="nav">
                   <Link href="/" className={tabClass("/")}>Home</Link>
                   <Link href="/videos" className={tabClass("/videos")}>Videos</Link>
@@ -271,17 +362,34 @@ export default function RootLayout({
                   <Link href="/live" className={tabClass("/live")}>Live</Link>
                 </nav>
 
+                {/* RIGHT ACTIONS */}
                 <div className="header-actions">
+                  {/* HAMBURGER (MOBILE ONLY) */}
+                  <button
+                    className="hamburger"
+                    onClick={() => setMenuOpen(true)}
+                    aria-label="Open menu"
+                  >
+                    ☰
+                  </button>
+
                   <ProfileButton />
                 </div>
               </div>
             </header>
 
+            {/* MOBILE MENU OVERLAY */}
+            <MobileMenu
+              open={menuOpen}
+              onClose={() => setMenuOpen(false)}
+            />
+
+            {/* PAGE CONTENT */}
             {children}
 
-            {/* ===== FOOTER (ONLY ONCE) ===== */}
+            {/* FOOTER */}
             <Footer />
-            <MobileBottomBar />
+
           </SearchProvider>
         </AuthProvider>
 

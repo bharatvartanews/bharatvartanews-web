@@ -2001,3 +2001,111 @@ body {
     margin: auto;
   }
 }
+
+/* ================= MOBILE CATEGORY BAR ================= */
+
+.mobile-categories {
+  display: none;
+}
+
+@media (max-width: 768px) {
+
+  .mobile-categories {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 8px 2px 12px;
+    margin-bottom: 8px;
+
+    scrollbar-width: none;
+  }
+
+  .mobile-categories::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mobile-categories button {
+    flex-shrink: 0;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(0,0,0,0.12);
+    background: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .mobile-categories button.active {
+    background: #d32f2f;
+    color: #fff;
+    border-color: #d32f2f;
+  }
+}
+/* ================= MOBILE FIX ================= */
+
+@media (max-width: 768px) {
+
+  .nav {
+    display: none;
+  }
+
+  .hamburger {
+    font-size: 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  /* MOBILE MENU */
+  .mobile-menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 999;
+  }
+
+  .mobile-menu {
+    width: 260px;
+    height: 100%;
+    background: #fff;
+    padding: 16px;
+  }
+
+  .mobile-menu a {
+    display: block;
+    padding: 10px 0;
+    font-weight: 600;
+    text-decoration: none;
+    color: #111;
+  }
+
+  /* MOBILE CATEGORIES */
+  .mobile-categories {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+  }
+
+  .mobile-categories a {
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid #ddd;
+    white-space: nowrap;
+    font-size: 14px;
+  }
+
+  .mobile-categories a.active {
+    background: #d32f2f;
+    color: #fff;
+    border-color: #d32f2f;
+  }
+
+  /* HIDE DESKTOP SIDEBARS */
+  .side-card,
+  .right {
+    display: none;
+  }
+}
