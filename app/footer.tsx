@@ -324,9 +324,7 @@ export default function Footer() {
           <ul>
             <li><Link href="/about">About Us</Link></li>
             <li><Link href="/contact">Contact</Link></li>
-            <li>
-              <a href="mailto:bharatvartanews24@gmail.com">Feedback</a>
-            </li>
+            <li><Link href="/feedback">Feedback</Link></li>
           </ul>
         </div>
 
