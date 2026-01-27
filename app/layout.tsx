@@ -96,6 +96,111 @@
 // }
 
 
+// "use client";
+
+// import { useState } from "react";
+// import Link from "next/link";
+// import { usePathname } from "next/navigation";
+// import "./globals.css";
+
+// import ProfileButton from "./components/ProfileButton";
+// import { AuthProvider } from "./context/AuthContext";
+// import AutoSignIn from "./components/AutoSignIn";
+// import { SearchProvider } from "./context/SearchContext";
+// import HeaderSearch from "./components/HeaderSearch";
+// import Footer from "./footer";
+
+
+// export default function RootLayout({
+//   children,
+// }: {
+//   children: React.ReactNode;
+// }) {
+//   const [lang, setLang] = useState("en");
+//   const pathname = usePathname();
+
+//   const tabClass = (path: string) =>
+//     pathname === path ? "nav-tab active" : "nav-tab";
+
+//   return (
+//     <html lang="en">
+//       <body>
+//         {/* Google Identity SDK */}
+//         <script
+//           src="https://accounts.google.com/gsi/client"
+//           async
+//           defer
+//         />
+
+//         <AuthProvider>
+//           <SearchProvider>
+//           <AutoSignIn />
+
+//           <header className="header">
+//             <div className="header-inner">
+//               <div className="logo">
+//                 <img
+//                   src="/logo_a.png"
+//                   alt="Bharat Varta"
+//                   width={100}
+//                   height={80}
+//                 />
+//               </div>
+
+//               <div className="lang-toggle">
+//                 <button
+//                   className={lang === "hi" ? "active" : ""}
+//                   onClick={() => setLang("hi")}
+//                 >
+//                   हिन्दी
+//                 </button>
+//                 <button
+//                   className={lang === "en" ? "active" : ""}
+//                   onClick={() => setLang("en")}
+//                 >
+//                   EN
+//                 </button>
+//               </div>
+
+//               {/* <div className="search-box">
+//                 <input placeholder="Search news..." />
+//               </div> */}
+//                <HeaderSearch />
+
+//            <nav className="nav">
+//   <Link href="/" className={tabClass("/")}>
+//     Home
+//   </Link>
+//   <Link href="/videos" className={tabClass("/videos")}>
+//     Videos
+//   </Link>
+//   <Link href="/stories" className={tabClass("/stories")}>
+//     Stories
+//   </Link>
+//   <Link href="/live" className={tabClass("/live")}>
+//     Live
+//   </Link>
+// </nav>
+
+// {/* Header action area */}
+// <div className="header-actions">
+//   <ProfileButton />
+// </div>
+
+//             </div>
+//           </header>
+
+//           {children}
+
+//         {/* ✅ FOOTER COMPONENT */}
+//             <Footer />
+//           </SearchProvider>
+//         </AuthProvider>
+//       </body>
+//     </html>
+//   );
+// }
+
 "use client";
 
 import { useState } from "react";
@@ -103,13 +208,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import "./globals.css";
 
-import ProfileButton from "./components/ProfileButton";
 import { AuthProvider } from "./context/AuthContext";
-import AutoSignIn from "./components/AutoSignIn";
 import { SearchProvider } from "./context/SearchContext";
+
+import AutoSignIn from "./components/AutoSignIn";
+import ProfileButton from "./components/ProfileButton";
 import HeaderSearch from "./components/HeaderSearch";
 import Footer from "./footer";
 
+import MobileBottomBar from "./components/MobileBottomBar";
+import HamburgerMenu from "./components/HamburgerMenu";
 
 export default function RootLayout({
   children,
@@ -125,7 +233,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {/* Google Identity SDK */}
+        {/* Google Identity */}
         <script
           src="https://accounts.google.com/gsi/client"
           async
@@ -134,66 +242,56 @@ export default function RootLayout({
 
         <AuthProvider>
           <SearchProvider>
-          <AutoSignIn />
+            <AutoSignIn />
 
-          <header className="header">
-            <div className="header-inner">
-              <div className="logo">
-                <img
-                  src="/logo_a.png"
-                  alt="Bharat Varta"
-                  width={100}
-                  height={80}
-                />
+            {/* ================= HEADER ================= */}
+            <header className="header">
+              <div className="header-inner">
+                <div className="logo">
+                  <img src="/logo_a.png" alt="Bharat Varta" />
+                </div>
+
+                <div className="lang-toggle">
+                  <button
+                    className={lang === "hi" ? "active" : ""}
+                    onClick={() => setLang("hi")}
+                  >
+                    हिन्दी
+                  </button>
+                  <button
+                    className={lang === "en" ? "active" : ""}
+                    onClick={() => setLang("en")}
+                  >
+                    EN
+                  </button>
+                </div>
+
+                <HeaderSearch />
+
+                {/* Desktop Nav */}
+                <nav className="nav">
+                  <Link href="/" className={tabClass("/")}>Home</Link>
+                  <Link href="/videos" className={tabClass("/videos")}>Videos</Link>
+                  <Link href="/stories" className={tabClass("/stories")}>Stories</Link>
+                  <Link href="/live" className={tabClass("/live")}>Live</Link>
+                </nav>
+
+                {/* Profile + Hamburger */}
+                <div className="header-actions">
+                  <ProfileButton />
+                  <HamburgerMenu />
+                </div>
               </div>
+            </header>
 
-              <div className="lang-toggle">
-                <button
-                  className={lang === "hi" ? "active" : ""}
-                  onClick={() => setLang("hi")}
-                >
-                  हिन्दी
-                </button>
-                <button
-                  className={lang === "en" ? "active" : ""}
-                  onClick={() => setLang("en")}
-                >
-                  EN
-                </button>
-              </div>
+            {/* ================= PAGE ================= */}
+            {children}
 
-              {/* <div className="search-box">
-                <input placeholder="Search news..." />
-              </div> */}
-               <HeaderSearch />
-
-           <nav className="nav">
-  <Link href="/" className={tabClass("/")}>
-    Home
-  </Link>
-  <Link href="/videos" className={tabClass("/videos")}>
-    Videos
-  </Link>
-  <Link href="/stories" className={tabClass("/stories")}>
-    Stories
-  </Link>
-  <Link href="/live" className={tabClass("/live")}>
-    Live
-  </Link>
-</nav>
-
-{/* Header action area */}
-<div className="header-actions">
-  <ProfileButton />
-</div>
-
-            </div>
-          </header>
-
-          {children}
-
-        {/* ✅ FOOTER COMPONENT */}
+            {/* ================= FOOTER ================= */}
             <Footer />
+
+            {/* ================= MOBILE NAV ================= */}
+            <MobileBottomBar />
           </SearchProvider>
         </AuthProvider>
       </body>
