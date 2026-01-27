@@ -1960,3 +1960,15 @@ body {
   font-size: 0.95rem;
   line-height: 1.4;
 }
+.feedback-home-link {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 0.9rem;
+  color: #d62828; /* Bharat Varta red */
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.feedback-home-link:hover {
+  text-decoration: underline;
+}

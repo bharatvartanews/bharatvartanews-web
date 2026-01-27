@@ -81,6 +81,7 @@
 // }
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function FeedbackPage() {
@@ -106,6 +107,10 @@ export default function FeedbackPage() {
               <br />
               Thank you for your time and support.
             </p>
+            {/* 👉 HOME LINK */}
+            <Link href="/" className="feedback-home-link">
+              ← Back to Home
+            </Link>
           </div>
         ) : (
           /* ================= FORM ================= */
