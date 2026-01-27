@@ -77,6 +77,221 @@
 //     </main>
 //   );
 // }
+// import Link from "next/link";
+// import { PublicApi } from "../../services/publicApi";
+// import ShareBar from "../../components/ShareBar";
+// import CommentBox from "../../components/CommentBox";
+
+// interface PageProps {
+//   params: { slug: string };
+// }
+
+// /* ================= HELPERS (EXISTING + REQUIRED) ================= */
+
+// function isYouTube(url: string) {
+//   return url.includes("youtube.com") || url.includes("youtu.be");
+// }
+
+// function getYouTubeEmbed(url: string) {
+//   const id = url.includes("youtu.be")
+//     ? url.split("youtu.be/")[1]
+//     : new URL(url).searchParams.get("v");
+
+//   return id
+//     ? `https://www.youtube.com/embed/${id}`
+//     : null;
+// }
+
+// function isVideoFile(url: string) {
+//   return /\.(mp4|webm|ogg)$/i.test(url);
+// }
+
+// /* ================= NEW: BUILD SINGLE MEDIA HTML ================= */
+
+// function buildMediaHtml(article: any): string | null {
+//   if (article.video) {
+//     if (isYouTube(article.video)) {
+//       const embed = getYouTubeEmbed(article.video);
+//       if (!embed) return null;
+
+//       return `
+//         <div class="article-media">
+//           <iframe
+//             src="${embed}"
+//             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+//             allowfullscreen
+//           ></iframe>
+//         </div>
+//       `;
+//     }
+
+//     if (isVideoFile(article.video)) {
+//       return `
+//         <div class="article-media">
+//           <video controls>
+//             <source src="${article.video}" />
+//           </video>
+//         </div>
+//       `;
+//     }
+//   }
+
+//   if (article.image) {
+//     return `
+//       <div class="article-media">
+//         <img src="${article.image}" alt="${article.title}" />
+//       </div>
+//     `;
+//   }
+
+//   return null;
+// }
+
+// /* ================= MODIFIED: INSERT MEDIA ONLY ONCE ================= */
+
+// function injectMediaAfterFirstParagraph(
+//   body: string,
+//   mediaHtml: string | null
+// ) {
+//   if (!body || !mediaHtml) return body;
+
+//   const parts = body.split("</p>");
+//   if (parts.length < 2) return mediaHtml + body;
+
+//   parts.splice(1, 0, mediaHtml);
+//   return parts.join("</p>");
+// }
+
+// /* ================= PAGE ================= */
+
+// export default async function ArticlePage({ params }: PageProps) {
+//   //const article = await PublicApi.getArticleBySlug(params.slug);
+//    const raw = params.slug;
+
+//   const isId = /^\d+$/.test(raw);
+
+//   const article = isId
+//     ? await PublicApi.getArticleById(raw)
+//     : await PublicApi.getArticleBySlug(raw);
+
+//   if (!article) {
+//     return (
+//       <main className="container">
+//         <p className="empty">Article not found</p>
+//       </main>
+//     );
+//   }
+
+//   /* ================= META (UNCHANGED, FUTURE-PROOF) ================= */
+
+//   const categoryName = article.category?.name || "News";
+//   const authorName = "Bharat Varta";
+//   const publishedDate = article.createdAt
+//     ? new Date(article.createdAt).toLocaleDateString("hi-IN")
+//     : "";
+
+//   /* ================= MEDIA ================= */
+
+//   const mediaHtml = buildMediaHtml(article);
+//   const finalBody = injectMediaAfterFirstParagraph(
+//     article.body || "",
+//     mediaHtml
+//   );
+
+//   return (
+//     <main className="container">
+//       <div className="grid">
+//         {/* LEFT */}
+//         <aside className="left">
+//           <Link href="/" className="category-pill">
+//             ← Back to News
+//           </Link>
+//         </aside>
+
+//         {/* CENTER */}
+//         <section>
+//           <article className="article-card">
+//             <h1 className="article-title">
+//               {article.title}
+//             </h1>
+
+//             <div className="article-meta">
+//               <span>{categoryName}</span>
+//               <span>•</span>
+//               <span>{publishedDate}</span>
+//               <span>•</span>
+//               <span>{authorName}</span>
+//             </div>
+
+//             {/* BODY + MEDIA */}
+//             <div
+//               className="article-body"
+//               dangerouslySetInnerHTML={{
+//                 __html: finalBody
+//               }}
+//             />
+
+//             {/* COMMENTS */}
+//             <CommentBox articleId={article.id} />
+
+//             {/* SHARE */}
+//             <ShareBar />
+//           </article>
+//         </section>
+
+//         {/* RIGHT */}
+//         <aside className="right">
+//           <h3>Related News</h3>
+//           <div className="right-card">
+//             More updates soon
+//           </div>
+//         </aside>
+//       </div>
+//     </main>
+//   );
+// }
+// function buildMediaQueue(article: any): string[] {
+//   const media: string[] = [];
+
+//   if (Array.isArray(article.image)) {
+//     article.image.forEach((img: string) => {
+//       media.push(
+//         `<div class="article-media">
+//            <img src="${img}" alt="${article.title}" />
+//          </div>`
+//       );
+//     });
+//   }
+
+//   if (Array.isArray(article.video)) {
+//     article.video.forEach((video: string) => {
+//       if (isYouTube(video)) {
+//         const embed = getYouTubeEmbed(video);
+//         if (embed) {
+//           media.push(
+//             `<div class="article-media">
+//                <iframe
+//                  src="${embed}"
+//                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+//                  allowfullscreen
+//                ></iframe>
+//              </div>`
+//           );
+//         }
+//       } else if (isVideoFile(video)) {
+//         media.push(
+//           `<div class="article-media">
+//              <video controls>
+//                <source src="${video}" />
+//              </video>
+//            </div>`
+//         );
+//       }
+//     });
+//   }
+
+//   return media;
+// }
 import Link from "next/link";
 import { PublicApi } from "../../services/publicApi";
 import ShareBar from "../../components/ShareBar";
@@ -86,88 +301,112 @@ interface PageProps {
   params: { slug: string };
 }
 
-/* ================= HELPERS (EXISTING + REQUIRED) ================= */
+/* ===================== HELPERS ===================== */
 
 function isYouTube(url: string) {
   return url.includes("youtube.com") || url.includes("youtu.be");
 }
 
 function getYouTubeEmbed(url: string) {
-  const id = url.includes("youtu.be")
-    ? url.split("youtu.be/")[1]
-    : new URL(url).searchParams.get("v");
-
-  return id
-    ? `https://www.youtube.com/embed/${id}`
-    : null;
+  try {
+    if (url.includes("youtu.be")) {
+      return `https://www.youtube.com/embed/${url.split("youtu.be/")[1]}`;
+    }
+    return `https://www.youtube.com/embed/${new URL(url).searchParams.get("v")}`;
+  } catch {
+    return null;
+  }
 }
 
 function isVideoFile(url: string) {
   return /\.(mp4|webm|ogg)$/i.test(url);
 }
 
-/* ================= NEW: BUILD SINGLE MEDIA HTML ================= */
+/* ===================== MEDIA BUILDER ===================== */
 
-function buildMediaHtml(article: any): string | null {
-  if (article.video) {
-    if (isYouTube(article.video)) {
-      const embed = getYouTubeEmbed(article.video);
-      if (!embed) return null;
+function buildAllMedia(article: any): string[] {
+  const media: string[] = [];
 
-      return `
-        <div class="article-media">
-          <iframe
-            src="${embed}"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
-        </div>
-      `;
-    }
+  // 🔹 IMAGES (multiple)
+  const images =
+    Array.isArray(article.images)
+      ? article.images
+      : article.image
+      ? [article.image]
+      : [];
 
-    if (isVideoFile(article.video)) {
-      return `
+  images.forEach((img: string) => {
+    media.push(`
+      <div class="article-media">
+        <img src="${img}" alt="${article.title}" />
+      </div>
+    `);
+  });
+
+  // 🔹 VIDEOS (multiple)
+  const videos =
+    Array.isArray(article.videos)
+      ? article.videos
+      : article.video
+      ? [article.video]
+      : [];
+
+  videos.forEach((vid: string) => {
+    if (isYouTube(vid)) {
+      const embed = getYouTubeEmbed(vid);
+      if (embed) {
+        media.push(`
+          <div class="article-media">
+            <iframe
+              src="${embed}"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+        `);
+      }
+    } else if (isVideoFile(vid)) {
+      media.push(`
         <div class="article-media">
           <video controls>
-            <source src="${article.video}" />
+            <source src="${vid}" />
           </video>
         </div>
-      `;
+      `);
     }
-  }
+  });
 
-  if (article.image) {
-    return `
-      <div class="article-media">
-        <img src="${article.image}" alt="${article.title}" />
-      </div>
-    `;
-  }
-
-  return null;
+  return media;
 }
 
-/* ================= MODIFIED: INSERT MEDIA ONLY ONCE ================= */
+/* ===================== INJECT MEDIA BETWEEN PARAGRAPHS ===================== */
 
-function injectMediaAfterFirstParagraph(
-  body: string,
-  mediaHtml: string | null
-) {
-  if (!body || !mediaHtml) return body;
+function injectMedia(body: string, media: string[]) {
+  if (!body || media.length === 0) return body;
 
   const parts = body.split("</p>");
-  if (parts.length < 2) return mediaHtml + body;
+  let output = "";
+  let mediaIndex = 0;
 
-  parts.splice(1, 0, mediaHtml);
-  return parts.join("</p>");
+  parts.forEach((p, i) => {
+    if (!p.trim()) return;
+
+    output += p + "</p>";
+
+    // 🔹 first media after first paragraph, then sequential
+    if (mediaIndex < media.length) {
+      output += media[mediaIndex];
+      mediaIndex++;
+    }
+  });
+
+  return output;
 }
 
-/* ================= PAGE ================= */
+/* ===================== PAGE ===================== */
 
 export default async function ArticlePage({ params }: PageProps) {
-  //const article = await PublicApi.getArticleBySlug(params.slug);
-   const raw = params.slug;
-
+  const raw = params.slug;
   const isId = /^\d+$/.test(raw);
 
   const article = isId
@@ -182,21 +421,19 @@ export default async function ArticlePage({ params }: PageProps) {
     );
   }
 
-  /* ================= META (UNCHANGED, FUTURE-PROOF) ================= */
+  const authorName =
+    article.authorName ||
+    article.author?.name ||
+    "Bharat Varta";
 
   const categoryName = article.category?.name || "News";
-  const authorName = "Bharat Varta";
+
   const publishedDate = article.createdAt
     ? new Date(article.createdAt).toLocaleDateString("hi-IN")
     : "";
 
-  /* ================= MEDIA ================= */
-
-  const mediaHtml = buildMediaHtml(article);
-  const finalBody = injectMediaAfterFirstParagraph(
-    article.body || "",
-    mediaHtml
-  );
+  const media = buildAllMedia(article);
+  const finalBody = injectMedia(article.body || "", media);
 
   return (
     <main className="container">
@@ -211,9 +448,7 @@ export default async function ArticlePage({ params }: PageProps) {
         {/* CENTER */}
         <section>
           <article className="article-card">
-            <h1 className="article-title">
-              {article.title}
-            </h1>
+            <h1 className="article-title">{article.title}</h1>
 
             <div className="article-meta">
               <span>{categoryName}</span>
@@ -223,12 +458,9 @@ export default async function ArticlePage({ params }: PageProps) {
               <span>{authorName}</span>
             </div>
 
-            {/* BODY + MEDIA */}
             <div
               className="article-body"
-              dangerouslySetInnerHTML={{
-                __html: finalBody
-              }}
+              dangerouslySetInnerHTML={{ __html: finalBody }}
             />
 
             {/* COMMENTS */}
@@ -242,9 +474,7 @@ export default async function ArticlePage({ params }: PageProps) {
         {/* RIGHT */}
         <aside className="right">
           <h3>Related News</h3>
-          <div className="right-card">
-            More updates soon
-          </div>
+          <div className="right-card">More updates soon</div>
         </aside>
       </div>
     </main>

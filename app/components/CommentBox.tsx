@@ -59,7 +59,12 @@
 import { useEffect, useState } from "react";
 import CommentItem from "./CommentItem";
 
-const API = "http://localhost:8080/api/public/comments";
+// const API = "http://localhost:8080/api/public/comments";
+const API =
+  process.env.NEXT_PUBLIC_API_BASE_URL
+    ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/public/comments`
+    : "http://localhost:8080/api/public/comments";
+
 const PAGE_SIZE = 5;
 
 export default function CommentBox({ articleId }: { articleId: number }) {
