@@ -67,3 +67,4 @@ getArticleById(id: number | string) {
     return fetcher("/api/videos");
   }
 };
+
