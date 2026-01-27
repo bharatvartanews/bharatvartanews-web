@@ -208,24 +208,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import "./globals.css";
 
-import { AuthProvider } from "./context/AuthContext";
-import { SearchProvider } from "./context/SearchContext";
-
-import AutoSignIn from "./components/AutoSignIn";
-import ProfileButton from "./components/ProfileButton";
-import HeaderSearch from "./components/HeaderSearch";
 import Footer from "./footer";
-
-import MobileBottomBar from "./components/MobileBottomBar";
-import HamburgerMenu from "./components/HamburgerMenu";
+import ProfileButton from "./components/ProfileButton";
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [lang, setLang] = useState("en");
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
 
   const tabClass = (path: string) =>
     pathname === path ? "nav-tab active" : "nav-tab";
@@ -233,67 +225,58 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {/* Google Identity */}
-        <script
-          src="https://accounts.google.com/gsi/client"
-          async
-          defer
-        />
+        <header className="header">
+          <div className="header-inner">
 
-        <AuthProvider>
-          <SearchProvider>
-            <AutoSignIn />
+            {/* LOGO */}
+            <div className="logo">
+              <img src="/logo_a.png" alt="Bharat Varta" />
+            </div>
 
-            {/* ================= HEADER ================= */}
-            <header className="header">
-              <div className="header-inner">
-                <div className="logo">
-                  <img src="/logo_a.png" alt="Bharat Varta" />
-                </div>
+            {/* SEARCH */}
+            <div className="search-box">
+              <input placeholder="Search news..." />
+            </div>
 
-                <div className="lang-toggle">
-                  <button
-                    className={lang === "hi" ? "active" : ""}
-                    onClick={() => setLang("hi")}
-                  >
-                    हिन्दी
-                  </button>
-                  <button
-                    className={lang === "en" ? "active" : ""}
-                    onClick={() => setLang("en")}
-                  >
-                    EN
-                  </button>
-                </div>
+            {/* DESKTOP NAV */}
+            <nav className="nav">
+              <Link href="/" className={tabClass("/")}>Home</Link>
+              <Link href="/videos" className={tabClass("/videos")}>Videos</Link>
+              <Link href="/live" className={tabClass("/live")}>Live</Link>
+            </nav>
 
-                <HeaderSearch />
+            {/* HAMBURGER */}
+            <button
+              className="hamburger-btn"
+              onClick={() => setOpen(!open)}
+            >
+              ☰
+            </button>
 
-                {/* Desktop Nav */}
-                <nav className="nav">
-                  <Link href="/" className={tabClass("/")}>Home</Link>
-                  <Link href="/videos" className={tabClass("/videos")}>Videos</Link>
-                  <Link href="/stories" className={tabClass("/stories")}>Stories</Link>
-                  <Link href="/live" className={tabClass("/live")}>Live</Link>
-                </nav>
+            <ProfileButton />
+          </div>
 
-                {/* Profile + Hamburger */}
-                <div className="header-actions">
-                  <ProfileButton />
-                  <HamburgerMenu />
-                </div>
-              </div>
-            </header>
+          {/* MOBILE DRAWER */}
+          {open && (
+            <div className="hamburger-drawer">
+              <Link href="/" onClick={() => setOpen(false)}>Home</Link>
+              <Link href="/videos" onClick={() => setOpen(false)}>Videos</Link>
+              <Link href="/live" onClick={() => setOpen(false)}>Live</Link>
+            </div>
+          )}
+        </header>
 
-            {/* ================= PAGE ================= */}
-            {children}
+        {children}
 
-            {/* ================= FOOTER ================= */}
-            <Footer />
+        {/* MOBILE BOTTOM BAR */}
+        <div className="mobile-bottom-bar">
+          <Link href="/" className="mb-tab">Home</Link>
+          <Link href="/videos" className="mb-tab">Videos</Link>
+          <Link href="/live" className="mb-tab">Live</Link>
+          <Link href="/profile" className="mb-tab">Profile</Link>
+        </div>
 
-            {/* ================= MOBILE NAV ================= */}
-            <MobileBottomBar />
-          </SearchProvider>
-        </AuthProvider>
+        <Footer />
       </body>
     </html>
   );
