@@ -176,13 +176,23 @@ export default function ArticleList({
               </div>
 
               <div className="news-content">
-                <div className="news-meta">
-                  {a.createdAt
-                    ? new Date(
-                        a.createdAt
-                      ).toLocaleDateString()
-                    : ""}
-                </div>
+               <div className="news-meta">
+  {a.createdAt && (
+    <span>
+      {new Date(a.createdAt).toLocaleDateString("hi-IN")}
+    </span>
+  )}
+
+  {a.authorName && (
+    <>
+      <span className="meta-separator"> • </span>
+      <span className="meta-author">
+        {a.authorName}
+      </span>
+    </>
+  )}
+</div>
+
 
                 <div className="news-preview">
                   {a.body
