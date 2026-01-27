@@ -338,7 +338,7 @@ export default function Footer() {
         <div className="bv-footer-col bv-footer-right">
           <h4>Follow</h4>
           <div className="bv-footer-social">
-            <a href="https://www.facebook.com/share/K7hUijJRsdYiP5uE/?mibextid=qi2Omg" target="_blank"><FaFacebookF /></a>
+            <a href="https://www.facebook.com/share/1bUh4G7sZL/" target="_blank"><FaFacebookF /></a>
             <a href="https://www.instagram.com/bharatvartanews" target="_blank"><FaInstagram /></a>
             <a href="https://twitter.com/bharatvarta" target="_blank"><FaXTwitter /></a>
             <a href="https://www.youtube.com/@BharatVartanews" target="_blank"><FaYoutube /></a>

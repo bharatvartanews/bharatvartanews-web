@@ -214,6 +214,8 @@ import AutoSignIn from "./components/AutoSignIn";
 import { SearchProvider } from "./context/SearchContext";
 import HeaderSearch from "./components/HeaderSearch";
 import Footer from "./footer";
+import MobileBottomBar from "./components/MobileBottomBar";
+
 
 export default function RootLayout({
   children,
@@ -279,8 +281,10 @@ export default function RootLayout({
 
             {/* ===== FOOTER (ONLY ONCE) ===== */}
             <Footer />
+            <MobileBottomBar />
           </SearchProvider>
         </AuthProvider>
+
       </body>
     </html>
   );
