@@ -1,99 +1,99 @@
-// "use client";
+// // "use client";
 
-// import { useState } from "react";
-// import Link from "next/link";
-// import { usePathname } from "next/navigation";
-// import "./globals.css";
-// import ProfileButton from "../app/components/ProfileButton";
+// // import { useState } from "react";
+// // import Link from "next/link";
+// // import { usePathname } from "next/navigation";
+// // import "./globals.css";
+// // import ProfileButton from "../app/components/ProfileButton";
 
-// export default function RootLayout({
-//   children,
-// }: {
-//   children: React.ReactNode;
-// }) {
-//   const [lang, setLang] = useState("en");
-//   const pathname = usePathname();
+// // export default function RootLayout({
+// //   children,
+// // }: {
+// //   children: React.ReactNode;
+// // }) {
+// //   const [lang, setLang] = useState("en");
+// //   const pathname = usePathname();
 
-//   const tabClass = (path: string) =>
-//     pathname === path ? "nav-tab active" : "nav-tab";
+// //   const tabClass = (path: string) =>
+// //     pathname === path ? "nav-tab active" : "nav-tab";
 
-//   return (
-//     <html lang="en">
-//       <body>
-//         <header className="header">
-//           <div className="header-inner">
-//             {/* LOGO */}
-//             <div className="logo">
-//               <img src="/logo_a.png" alt="Bharat Varta" width={100} height={80} />
-//             </div>
+// //   return (
+// //     <html lang="en">
+// //       <body>
+// //         <header className="header">
+// //           <div className="header-inner">
+// //             {/* LOGO */}
+// //             <div className="logo">
+// //               <img src="/logo_a.png" alt="Bharat Varta" width={100} height={80} />
+// //             </div>
 
-//             {/* LANGUAGE TOGGLE */}
-//             <div className="lang-toggle">
-//               <button
-//                 className={lang === "hi" ? "active" : ""}
-//                 onClick={() => setLang("hi")}
-//               >
-//                 हिन्दी
-//               </button>
-//               <button
-//                 className={lang === "en" ? "active" : ""}
-//                 onClick={() => setLang("en")}
-//               >
-//                 EN
-//               </button>
-//             </div>
+// //             {/* LANGUAGE TOGGLE */}
+// //             <div className="lang-toggle">
+// //               <button
+// //                 className={lang === "hi" ? "active" : ""}
+// //                 onClick={() => setLang("hi")}
+// //               >
+// //                 हिन्दी
+// //               </button>
+// //               <button
+// //                 className={lang === "en" ? "active" : ""}
+// //                 onClick={() => setLang("en")}
+// //               >
+// //                 EN
+// //               </button>
+// //             </div>
 
-//             {/* SEARCH */}
-//             <div className="search-box">
-//               <input placeholder="Search news..." />
-//             </div>
+// //             {/* SEARCH */}
+// //             <div className="search-box">
+// //               <input placeholder="Search news..." />
+// //             </div>
 
-//             {/* NAVIGATION – BUTTON STYLE */}
-//             <nav className="nav">
-//               <Link href="/" className={tabClass("/")}>
-//                 Home
-//               </Link>
-//               <Link href="/videos" className={tabClass("/videos")}>
-//                 Videos
-//               </Link>
-//               <Link href="/stories" className={tabClass("/stories")}>
-//                 Stories
-//               </Link>
-//               <Link href="/live" className={tabClass("/live")}>
-//                 Live
-//               </Link>
-//                <ProfileButton />
-//             </nav>
-//           </div>
-//         </header>
+// //             {/* NAVIGATION – BUTTON STYLE */}
+// //             <nav className="nav">
+// //               <Link href="/" className={tabClass("/")}>
+// //                 Home
+// //               </Link>
+// //               <Link href="/videos" className={tabClass("/videos")}>
+// //                 Videos
+// //               </Link>
+// //               <Link href="/stories" className={tabClass("/stories")}>
+// //                 Stories
+// //               </Link>
+// //               <Link href="/live" className={tabClass("/live")}>
+// //                 Live
+// //               </Link>
+// //                <ProfileButton />
+// //             </nav>
+// //           </div>
+// //         </header>
 
-//         {children}
+// //         {children}
 
-//         <footer className="footer">
-//           <div className="footer-inner">
-//             <div>
-//               <h4>Bharat Varta</h4>
-//               <p>Independent digital news platform.</p>
-//             </div>
-//             <div>
-//               <h4>Company</h4>
-//               <p>About Us</p>
-//               <p>Contact</p>
-//               <p>Feedback</p>
-//             </div>
-//             <div>
-//               <h4>Follow</h4>
-//               <p>Facebook</p>
-//               <p>X (Twitter)</p>
-//               <p>Email</p>
-//             </div>
-//           </div>
-//           <small>© 2025 Bharat Varta News. All rights reserved.</small>
-//         </footer>
-//       </body>
-//     </html>
-//   );
-// }
+// //         <footer className="footer">
+// //           <div className="footer-inner">
+// //             <div>
+// //               <h4>Bharat Varta</h4>
+// //               <p>Independent digital news platform.</p>
+// //             </div>
+// //             <div>
+// //               <h4>Company</h4>
+// //               <p>About Us</p>
+// //               <p>Contact</p>
+// //               <p>Feedback</p>
+// //             </div>
+// //             <div>
+// //               <h4>Follow</h4>
+// //               <p>Facebook</p>
+// //               <p>X (Twitter)</p>
+// //               <p>Email</p>
+// //             </div>
+// //           </div>
+// //           <small>© 2025 Bharat Varta News. All rights reserved.</small>
+// //         </footer>
+// //       </body>
+// //     </html>
+// //   );
+// // }
 
 
 // "use client";
@@ -208,75 +208,79 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import "./globals.css";
 
-import Footer from "./footer";
 import ProfileButton from "./components/ProfileButton";
+import { AuthProvider } from "./context/AuthContext";
+import AutoSignIn from "./components/AutoSignIn";
+import { SearchProvider } from "./context/SearchContext";
+import HeaderSearch from "./components/HeaderSearch";
+import Footer from "./footer";
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [lang, setLang] = useState("en");
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
 
   const tabClass = (path: string) =>
-    pathname === path ? "nav-tab active" : "nav-tab";
+    pathname === path ? "active" : "";
 
   return (
     <html lang="en">
       <body>
-        <header className="header">
-          <div className="header-inner">
+        <AuthProvider>
+          <SearchProvider>
+            <AutoSignIn />
 
-            {/* LOGO */}
-            <div className="logo">
-              <img src="/logo_a.png" alt="Bharat Varta" />
-            </div>
+            {/* ===== HEADER (UNCHANGED) ===== */}
+            <header className="header">
+              <div className="header-inner">
+                <div className="logo">
+                  <img
+                    src="/logo_a.png"
+                    alt="Bharat Varta"
+                    width={100}
+                    height={80}
+                  />
+                </div>
 
-            {/* SEARCH */}
-            <div className="search-box">
-              <input placeholder="Search news..." />
-            </div>
+                <div className="lang-toggle">
+                  <button
+                    className={lang === "hi" ? "active" : ""}
+                    onClick={() => setLang("hi")}
+                  >
+                    हिन्दी
+                  </button>
+                  <button
+                    className={lang === "en" ? "active" : ""}
+                    onClick={() => setLang("en")}
+                  >
+                    EN
+                  </button>
+                </div>
 
-            {/* DESKTOP NAV */}
-            <nav className="nav">
-              <Link href="/" className={tabClass("/")}>Home</Link>
-              <Link href="/videos" className={tabClass("/videos")}>Videos</Link>
-              <Link href="/live" className={tabClass("/live")}>Live</Link>
-            </nav>
+                <HeaderSearch />
 
-            {/* HAMBURGER */}
-            <button
-              className="hamburger-btn"
-              onClick={() => setOpen(!open)}
-            >
-              ☰
-            </button>
+                <nav className="nav">
+                  <Link href="/" className={tabClass("/")}>Home</Link>
+                  <Link href="/videos" className={tabClass("/videos")}>Videos</Link>
+                  <Link href="/stories" className={tabClass("/stories")}>Stories</Link>
+                  <Link href="/live" className={tabClass("/live")}>Live</Link>
+                </nav>
 
-            <ProfileButton />
-          </div>
+                <div className="header-actions">
+                  <ProfileButton />
+                </div>
+              </div>
+            </header>
 
-          {/* MOBILE DRAWER */}
-          {open && (
-            <div className="hamburger-drawer">
-              <Link href="/" onClick={() => setOpen(false)}>Home</Link>
-              <Link href="/videos" onClick={() => setOpen(false)}>Videos</Link>
-              <Link href="/live" onClick={() => setOpen(false)}>Live</Link>
-            </div>
-          )}
-        </header>
+            {children}
 
-        {children}
-
-        {/* MOBILE BOTTOM BAR */}
-        <div className="mobile-bottom-bar">
-          <Link href="/" className="mb-tab">Home</Link>
-          <Link href="/videos" className="mb-tab">Videos</Link>
-          <Link href="/live" className="mb-tab">Live</Link>
-          <Link href="/profile" className="mb-tab">Profile</Link>
-        </div>
-
-        <Footer />
+            {/* ===== FOOTER (ONLY ONCE) ===== */}
+            <Footer />
+          </SearchProvider>
+        </AuthProvider>
       </body>
     </html>
   );
