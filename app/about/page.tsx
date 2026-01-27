@@ -24,6 +24,8 @@
 "use client";
 
 import { useTranslate } from "../lib/useTranslate";
+export const dynamic = "force-dynamic";
+
 
 export default function AboutPage() {
   const t1 = useTranslate("About Bharat Varta");
