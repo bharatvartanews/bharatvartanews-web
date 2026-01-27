@@ -16,7 +16,7 @@ export default function AutoSignIn() {
       localStorage.getItem("google_prompt_dismissed") === "1";
 
     if (!user && !dismissed) {
-      signIn(true).then(() => signIn(false));
+      signIn();
     }
   }, []);
 
