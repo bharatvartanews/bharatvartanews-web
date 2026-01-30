@@ -868,7 +868,10 @@ export async function generateMetadata(
     article.body?.replace(/<[^>]+>/g, "").slice(0, 150);
 
   // 🔥 IMPORTANT: STATIC, ABSOLUTE IMAGE (MOST RELIABLE FOR WHATSAPP)
-  const image = `${siteUrl}/app_logo.png`;
+  // const image = `${siteUrl}/app_logo.png`;
+
+  const image = `${siteUrl}/articles/${params.slug}/opengraph-image`;
+
 
   return {
     title,
