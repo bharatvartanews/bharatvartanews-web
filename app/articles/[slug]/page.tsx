@@ -593,46 +593,76 @@ function injectMedia(body: string, media: string[]) {
 
 /* ===================== METADATA ===================== */
 
+// export async function generateMetadata(
+//   { params }: PageProps
+// ): Promise<Metadata> {
+//   const raw = params.slug;
+//   const isId = /^\d+$/.test(raw);
+
+//   const article = isId
+//     ? await PublicApi.getArticleById(raw)
+//     : await PublicApi.getArticleBySlug(raw);
+
+//   const SITE_URL = "https://www.bharatvartanews.com";
+
+//   if (!article) {
+//     return {
+//       title: "Bharat Varta News",
+//       description: "Latest news from Bharat Varta News",
+//     };
+//   }
+
+//   const title = article.title;
+//   const description =
+//     article.summary ||
+//     article.excerpt ||
+//     article.body?.replace(/<[^>]+>/g, "").slice(0, 150);
+
+//   // 🔥 THIS IS THE KEY
+//   const ogImage = `${SITE_URL}/og-default.jpg`;
+
+//   return {
+//     title,
+//     description,
+//     openGraph: {
+//       type: "article",
+//       url: `${SITE_URL}/articles/${params.slug}`,
+//       siteName: "Bharat Varta News",
+//       title,
+//       description,
+//       images: [
+//         {
+//           url: ogImage,
+//           width: 1200,
+//           height: 630,
+//         },
+//       ],
+//     },
+//     twitter: {
+//       card: "summary_large_image",
+//       title,
+//       description,
+//       images: [ogImage],
+//     },
+//   };
+// }
+
 export async function generateMetadata(
-  { params }: PageProps
+  { params }: { params: { slug: string } }
 ): Promise<Metadata> {
-  const raw = params.slug;
-  const isId = /^\d+$/.test(raw);
-
-  const article = isId
-    ? await PublicApi.getArticleById(raw)
-    : await PublicApi.getArticleBySlug(raw);
-
-  const SITE_URL = "https://www.bharatvartanews.com";
-
-  if (!article) {
-    return {
-      title: "Bharat Varta News",
-      description: "Latest news from Bharat Varta News",
-    };
-  }
-
-  const title = article.title;
-  const description =
-    article.summary ||
-    article.excerpt ||
-    article.body?.replace(/<[^>]+>/g, "").slice(0, 150);
-
-  // 🔥 THIS IS THE KEY
-  const ogImage = `${SITE_URL}/og-default.jpg`;
+  const siteUrl = "https://www.bharatvartanews.com";
 
   return {
-    title,
-    description,
     openGraph: {
       type: "article",
-      url: `${SITE_URL}/articles/${params.slug}`,
+      url: `${siteUrl}/articles/${params.slug}`,
       siteName: "Bharat Varta News",
-      title,
-      description,
+      title: "Bharat Varta News",
+      description: "Latest news from Bharat Varta News",
       images: [
         {
-          url: ogImage,
+          // 🔥 ONLY THIS IMAGE, ALWAYS
+          url: `${siteUrl}/articles/${params.slug}/opengraph-image`,
           width: 1200,
           height: 630,
         },
@@ -640,9 +670,9 @@ export async function generateMetadata(
     },
     twitter: {
       card: "summary_large_image",
-      title,
-      description,
-      images: [ogImage],
+      images: [
+        `${siteUrl}/articles/${params.slug}/opengraph-image`,
+      ],
     },
   };
 }
