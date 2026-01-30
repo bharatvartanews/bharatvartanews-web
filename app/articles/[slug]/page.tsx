@@ -603,7 +603,7 @@ export async function generateMetadata(
     ? await PublicApi.getArticleById(raw)
     : await PublicApi.getArticleBySlug(raw);
 
-  const siteUrl = "https://www.bharatvartanews.com"; // your live domain
+  const siteUrl = "https://www.bharatvartanews.com";
 
   if (!article) {
     return {
@@ -613,20 +613,20 @@ export async function generateMetadata(
   }
 
   const title = article.title;
-
   const description =
     article.summary ||
     article.excerpt ||
-    article.body
-      ?.replace(/<[^>]+>/g, "")
-      .slice(0, 150);
+    article.body?.replace(/<[^>]+>/g, "").slice(0, 150);
 
-  // ✅ IMAGE PRIORITY:
-  // article image → fallback to app logo from /public
-  const image =
+  // 🔥 ABSOLUTE IMAGE (THIS FIXES PREVIEW)
+  let image =
     article.image ||
     article.images?.[0] ||
-    `${siteUrl}/logo.png`;
+    "/app_logo.png";
+
+  if (image.startsWith("/")) {
+    image = siteUrl + image;
+  }
 
   return {
     title,
@@ -639,7 +639,7 @@ export async function generateMetadata(
       siteName: "Bharat Varta News",
       images: [
         {
-          url: image, // MUST be absolute
+          url: image,
           width: 1200,
           height: 630,
         },
@@ -653,6 +653,7 @@ export async function generateMetadata(
     },
   };
 }
+
 
 /* ===================== PAGE ===================== */
 
