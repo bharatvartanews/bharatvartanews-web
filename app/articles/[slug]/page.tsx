@@ -851,7 +851,7 @@ export async function generateMetadata(
     ? await PublicApi.getArticleById(raw)
     : await PublicApi.getArticleBySlug(raw);
 
-  const SITE_URL = "https://www.bharatvartanews.com";
+  const siteUrl = "https://www.bharatvartanews.com";
 
   if (!article) {
     return {
@@ -861,26 +861,27 @@ export async function generateMetadata(
   }
 
   const title = article.title;
+
   const description =
     article.summary ||
     article.excerpt ||
     article.body?.replace(/<[^>]+>/g, "").slice(0, 150);
 
-  // 🔥 THIS IS THE KEY
-  const ogImage = `${SITE_URL}/app_logo.png`;
+  // 🔥 IMPORTANT: STATIC, ABSOLUTE IMAGE (MOST RELIABLE FOR WHATSAPP)
+  const image = `${siteUrl}/app_logo.png`;
 
   return {
     title,
     description,
     openGraph: {
       type: "article",
-      url: `${SITE_URL}/articles/${params.slug}`,
-      siteName: "Bharat Varta News",
       title,
       description,
+      url: `${siteUrl}/articles/${params.slug}`,
+      siteName: "Bharat Varta News",
       images: [
         {
-          url: ogImage,
+          url: image,
           width: 1200,
           height: 630,
         },
@@ -890,10 +891,11 @@ export async function generateMetadata(
       card: "summary_large_image",
       title,
       description,
-      images: [ogImage],
+      images: [image],
     },
   };
 }
+
 /* ===================== PAGE ===================== */
 
 export default async function ArticlePage({ params }: PageProps) {
