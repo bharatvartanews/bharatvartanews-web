@@ -66,7 +66,7 @@ export default function ShareBar() {
 
       {/* WhatsApp */}
       <a
-        href={`https://wa.me/?text=${whatsappText}`}
+       href={`https://wa.me/?text=${encodeURIComponent(url)}`}
         target="_blank"
         rel="noreferrer"
         className="share-btn"
