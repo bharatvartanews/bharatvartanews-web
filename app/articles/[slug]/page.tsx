@@ -603,7 +603,7 @@ export async function generateMetadata(
     ? await PublicApi.getArticleById(raw)
     : await PublicApi.getArticleBySlug(raw);
 
-  const siteUrl = "https://www.bharatvartanews.com"; // your live domain
+  const siteUrl = "https://www.bharatvartanews.com";
 
   if (!article) {
     return {
@@ -613,20 +613,30 @@ export async function generateMetadata(
   }
 
   const title = article.title;
-
   const description =
     article.summary ||
     article.excerpt ||
-    article.body
-      ?.replace(/<[^>]+>/g, "")
-      .slice(0, 150);
+    article.body?.replace(/<[^>]+>/g, "").slice(0, 150);
 
-  // ✅ IMAGE PRIORITY:
-  // article image → fallback to app logo from /public
-  const image =
-    article.image ||
-    article.images?.[0] ||
-    `${siteUrl}/logo.png`;
+  // 🔥 FINAL OG IMAGE LOGIC (APP LOGO ALWAYS SAFE)
+  const isValidImage = (url?: string) =>
+    !!url && /\.(jpg|jpeg|png|webp)$/i.test(url);
+
+  let ogImage = `${siteUrl}/logo.png`; // ✅ DEFAULT = APP LOGO
+
+  if (isValidImage(article.image)) {
+    ogImage = article.image;
+  } else if (
+    Array.isArray(article.images) &&
+    isValidImage(article.images[0])
+  ) {
+    ogImage = article.images[0];
+  }
+
+  // make sure absolute
+  if (ogImage.startsWith("/")) {
+    ogImage = siteUrl + ogImage;
+  }
 
   return {
     title,
@@ -639,7 +649,7 @@ export async function generateMetadata(
       siteName: "Bharat Varta News",
       images: [
         {
-          url: image, // MUST be absolute
+          url: ogImage,
           width: 1200,
           height: 630,
         },
@@ -649,7 +659,7 @@ export async function generateMetadata(
       card: "summary_large_image",
       title,
       description,
-      images: [image],
+      images: [ogImage],
     },
   };
 }
