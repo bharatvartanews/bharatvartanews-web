@@ -292,10 +292,204 @@
 
 //   return media;
 // }
+// import Link from "next/link";
+// import { PublicApi } from "../../services/publicApi";
+// import ShareBar from "../../components/ShareBar";
+// import CommentBox from "../../components/CommentBox";
+
+// interface PageProps {
+//   params: { slug: string };
+// }
+
+// /* ===================== HELPERS ===================== */
+
+// function isYouTube(url: string) {
+//   return url.includes("youtube.com") || url.includes("youtu.be");
+// }
+
+// function getYouTubeEmbed(url: string) {
+//   try {
+//     if (url.includes("youtu.be")) {
+//       return `https://www.youtube.com/embed/${url.split("youtu.be/")[1]}`;
+//     }
+//     return `https://www.youtube.com/embed/${new URL(url).searchParams.get("v")}`;
+//   } catch {
+//     return null;
+//   }
+// }
+
+// function isVideoFile(url: string) {
+//   return /\.(mp4|webm|ogg)$/i.test(url);
+// }
+
+// /* ===================== MEDIA BUILDER ===================== */
+
+// function buildAllMedia(article: any): string[] {
+//   const media: string[] = [];
+
+//   // 🔹 IMAGES (multiple)
+//   const images =
+//     Array.isArray(article.images)
+//       ? article.images
+//       : article.image
+//       ? [article.image]
+//       : [];
+
+//   images.forEach((img: string) => {
+//     media.push(`
+//       <div class="article-media">
+//         <img src="${img}" alt="${article.title}" />
+//       </div>
+//     `);
+//   });
+
+//   // 🔹 VIDEOS (multiple)
+//   const videos =
+//     Array.isArray(article.videos)
+//       ? article.videos
+//       : article.video
+//       ? [article.video]
+//       : [];
+
+//   videos.forEach((vid: string) => {
+//     if (isYouTube(vid)) {
+//       const embed = getYouTubeEmbed(vid);
+//       if (embed) {
+//         media.push(`
+//           <div class="article-media">
+//             <iframe
+//               src="${embed}"
+//               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+//               allowfullscreen
+//             ></iframe>
+//           </div>
+//         `);
+//       }
+//     } else if (isVideoFile(vid)) {
+//       media.push(`
+//         <div class="article-media">
+//           <video controls>
+//             <source src="${vid}" />
+//           </video>
+//         </div>
+//       `);
+//     }
+//   });
+
+//   return media;
+// }
+
+// /* ===================== INJECT MEDIA BETWEEN PARAGRAPHS ===================== */
+
+// function injectMedia(body: string, media: string[]) {
+//   if (!body || media.length === 0) return body;
+
+//   const parts = body.split("</p>");
+//   let output = "";
+//   let mediaIndex = 0;
+
+//   parts.forEach((p, i) => {
+//     if (!p.trim()) return;
+
+//     output += p + "</p>";
+
+//     // 🔹 first media after first paragraph, then sequential
+//     if (mediaIndex < media.length) {
+//       output += media[mediaIndex];
+//       mediaIndex++;
+//     }
+//   });
+
+//   return output;
+// }
+
+
+
+// /* ===================== PAGE ===================== */
+
+// export default async function ArticlePage({ params }: PageProps) {
+//   const raw = params.slug;
+//   const isId = /^\d+$/.test(raw);
+
+//   const article = isId
+//     ? await PublicApi.getArticleById(raw)
+//     : await PublicApi.getArticleBySlug(raw);
+
+//   if (!article) {
+//     return (
+//       <main className="container">
+//         <p className="empty">Article not found</p>
+//       </main>
+//     );
+//   }
+
+//   const authorName =
+//     article.authorName ||
+//     article.author?.name ||
+//     "Bharat Varta";
+
+//   const categoryName = article.category?.name || "News";
+
+//   const publishedDate = article.createdAt
+//     ? new Date(article.createdAt).toLocaleDateString("hi-IN")
+//     : "";
+
+//   const media = buildAllMedia(article);
+//   const finalBody = injectMedia(article.body || "", media);
+
+//   return (
+//     <main className="container">
+//       <div className="grid">
+//         {/* LEFT */}
+//         <aside className="left">
+//           <Link href="/" className="category-pill">
+//             ← Back to News
+//           </Link>
+//         </aside>
+
+//         {/* CENTER */}
+//         <section>
+//           <article className="article-card">
+//             <h1 className="article-title">{article.title}</h1>
+
+//             <div className="article-meta">
+//               <span>{categoryName}</span>
+//               <span>•</span>
+//               <span>{publishedDate}</span>
+//               <span>•</span>
+//               <span>{authorName}</span>
+//             </div>
+
+//             <div
+//               className="article-body"
+//               dangerouslySetInnerHTML={{ __html: finalBody }}
+//             />
+
+//             {/* COMMENTS */}
+//             <CommentBox articleId={article.id} />
+
+//             {/* SHARE */}
+//             <ShareBar />
+//           </article>
+//         </section>
+
+//         {/* RIGHT */}
+//         <aside className="right">
+//           <h3>Related News</h3>
+//           <div className="right-card">More updates soon</div>
+//         </aside>
+//       </div>
+//     </main>
+//   );
+// }
+
+import type { Metadata } from "next";
 import Link from "next/link";
 import { PublicApi } from "../../services/publicApi";
 import ShareBar from "../../components/ShareBar";
 import CommentBox from "../../components/CommentBox";
+
+/* ===================== TYPES ===================== */
 
 interface PageProps {
   params: { slug: string };
@@ -327,7 +521,6 @@ function isVideoFile(url: string) {
 function buildAllMedia(article: any): string[] {
   const media: string[] = [];
 
-  // 🔹 IMAGES (multiple)
   const images =
     Array.isArray(article.images)
       ? article.images
@@ -338,12 +531,11 @@ function buildAllMedia(article: any): string[] {
   images.forEach((img: string) => {
     media.push(`
       <div class="article-media">
-        <img src="${img}" alt="${article.title}" />
+        <img src="${img}" alt="${article.title}" loading="lazy" decoding="async"/>
       </div>
     `);
   });
 
-  // 🔹 VIDEOS (multiple)
   const videos =
     Array.isArray(article.videos)
       ? article.videos
@@ -379,7 +571,7 @@ function buildAllMedia(article: any): string[] {
   return media;
 }
 
-/* ===================== INJECT MEDIA BETWEEN PARAGRAPHS ===================== */
+/* ===================== INJECT MEDIA ===================== */
 
 function injectMedia(body: string, media: string[]) {
   if (!body || media.length === 0) return body;
@@ -388,19 +580,65 @@ function injectMedia(body: string, media: string[]) {
   let output = "";
   let mediaIndex = 0;
 
-  parts.forEach((p, i) => {
+  parts.forEach((p) => {
     if (!p.trim()) return;
-
     output += p + "</p>";
-
-    // 🔹 first media after first paragraph, then sequential
     if (mediaIndex < media.length) {
-      output += media[mediaIndex];
-      mediaIndex++;
+      output += media[mediaIndex++];
     }
   });
 
   return output;
+}
+
+/* ===================== METADATA ===================== */
+
+export async function generateMetadata(
+  { params }: PageProps
+): Promise<Metadata> {
+  const raw = params.slug;
+  const isId = /^\d+$/.test(raw);
+
+  const article = isId
+    ? await PublicApi.getArticleById(raw)
+    : await PublicApi.getArticleBySlug(raw);
+
+  if (!article) {
+    return {
+      title: "Bharat Varta News",
+      description: "Latest news from Bharat Varta",
+    };
+  }
+
+  const title = article.title;
+  const description =
+    article.summary ||
+    article.excerpt ||
+    article.body?.replace(/<[^>]+>/g, "").slice(0, 160);
+
+  return {
+    title,
+    description,
+    openGraph: {
+      type: "article",
+      title,
+      description,
+      siteName: "Bharat Varta News",
+      images: [
+        {
+          url: `/articles/${params.slug}/opengraph-image`,
+          width: 1200,
+          height: 630,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [`/articles/${params.slug}/opengraph-image`],
+    },
+  };
 }
 
 /* ===================== PAGE ===================== */
@@ -426,7 +664,8 @@ export default async function ArticlePage({ params }: PageProps) {
     article.author?.name ||
     "Bharat Varta";
 
-  const categoryName = article.category?.name || "News";
+  const categoryName =
+    article.category?.name || "News";
 
   const publishedDate = article.createdAt
     ? new Date(article.createdAt).toLocaleDateString("hi-IN")
@@ -463,10 +702,7 @@ export default async function ArticlePage({ params }: PageProps) {
               dangerouslySetInnerHTML={{ __html: finalBody }}
             />
 
-            {/* COMMENTS */}
             <CommentBox articleId={article.id} />
-
-            {/* SHARE */}
             <ShareBar />
           </article>
         </section>

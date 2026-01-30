@@ -81,7 +81,7 @@ export default async function Head({ params }: any) {
               name: "Bharat Varta",
               logo: {
                 "@type": "ImageObject",
-                url: "https://bharatvartanews.com/logo_a.png",
+                url: "https://bharatvartanews.com/app_logo.png",
               },
             },
           }),

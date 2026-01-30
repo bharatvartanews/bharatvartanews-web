@@ -45,7 +45,7 @@ function getPoster(v: any) {
   if (v.thumbnail) return v.thumbnail;
 
   // ✅ fallback
-  return "/logo_a.png"; // create this in /public
+  return "/video-placeholder.png"; // create this in /public
 }
 
 export default function VideoGrid({ videos }: { videos: any[] }) {

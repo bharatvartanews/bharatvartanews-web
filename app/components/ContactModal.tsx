@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslate } from "../lib/useTranslate";
+import { useTranslate } from "../lib/translate";
 
 export default function ContactModal({ onClose }: any) {
   return (

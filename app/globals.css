@@ -1972,3 +1972,632 @@ body {
 .feedback-home-link:hover {
   text-decoration: underline;
 }
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.pagination button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.news-meta {
+  font-size: 12px;
+  color: #6b7280; /* gray */
+  margin-bottom: 6px;
+}
+
+.meta-author {
+  font-weight: 500;
+  color: #374151;
+}
+
+.meta-separator {
+  margin: 0 6px;
+  color: #9ca3af;
+}
+.bv-footer-inner {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 28px;
+  align-items: center;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  align-items: center;
+
+}
+.bv-footer-logo-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* 👈 centers logo + text together */
+  text-align: center;    /* 👈 centers text */
+}
+/* LOGO */
+.bv-footer-logo {
+  width: 150px;
+  margin: 0 auto;
+}
+.bv-footer-tagline {
+  font-size: 13px;
+  opacity: 0.8;
+  text-align: center;
+}
+.bv-footer-company {
+  text-align: center;
+}
+
+.bv-footer-center {
+  text-align: center;
+}
+
+/* COMPANY LINKS */
+.bv-footer-company ul {
+  list-style: none;
+  padding: 0;
+}
+.bv-footer-company li {
+  margin: 6px 0;
+}
+.bv-footer-company a {
+  color: #eaeaea;
+  text-decoration: none;
+  font-size: 14px;
+  position: relative;
+}
+.bv-footer-company a:hover {
+  color: #ff3b3b;
+  padding-left: 6px;
+}
+
+/* CENTER CLOCK */
+.bv-clock-time {
+  font-size: 26px;
+  font-weight: 600;
+}
+.bv-clock-date {
+  font-size: 13px;
+  opacity: 0.8;
+}
+.bv-visitors {
+  margin-top: 6px;
+  font-size: 13px;
+}
+.live-dot {
+  color: #3cff00;
+  margin: 0 6px;
+}
+.live-users {
+  color: #3cff00;
+}
+
+/* SOCIAL */
+.bv-footer-social a {
+  color: #fff;
+  margin-right: 12px;
+  font-size: 18px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.bv-footer-social a:hover {
+  color: #ff3b3b;
+  transform: translateY(-2px);
+}
+
+/* BACK TO TOP */
+.bv-back-to-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #d10000;
+  color: #fff;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+}
+
+
+.astro-header {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.rashi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.rashi-card {
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 8px;
+  border-radius: 10px;
+  text-align: center;
+}
+.rashi-icon {
+  font-size: 22px;
+}
+
+.astro-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.astro-modal {
+  background: #fff;
+  padding: 20px;
+  border-radius: 14px;
+  width: 300px;
+}
+.astro-preview {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.astro-readmore {
+  font-size: 12px;
+  font-weight: 600;
+  color: #dc2626;
+  text-decoration: none;
+}
+.side-title {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.astro-preview-card {
+  background: #fff;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  margin-bottom: 16px;
+}
+
+.astro-header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.astro-icon {
+  font-size: 28px;
+}
+
+.astro-preview {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.astro-readmore {
+  font-size: 12px;
+  font-weight: 600;
+  color: #dc2626;
+  text-decoration: none;
+}
+
+.rashi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.rashi-card {
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+  background: #fafafa;
+  border: 1px solid #eee;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.rashi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.rashi-icon {
+  font-size: 22px;
+  display: block;
+}
+
+.rashi-name {
+  font-size: 11px;
+  font-weight: 600;
+}
+.astro-article {
+  background: #fff;
+  padding: 24px;
+  border-radius: 14px;
+  max-width: 820px;
+  margin: auto;
+}
+
+.astro-date {
+  color: #6b7280;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.astro-section p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #1f2937;
+  margin-bottom: 10px;
+}
+.astrology-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dob-box {
+  display: flex;
+  gap: 6px;
+}
+
+.dob-box input {
+  flex: 1;
+  padding: 6px 8px;
+  font-size: 13px;
+}
+
+.dob-box button {
+  padding: 6px 10px;
+  font-size: 12px;
+  background: #dc2626;
+  color: #fff;
+  border-radius: 6px;
+}
+
+.astro-content {
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.astro-header {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.astro-icon {
+  font-size: 26px;
+}
+
+.astro-preview {
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+
+.astro-readmore {
+  font-size: 12px;
+  font-weight: 600;
+  color: #dc2626;
+}
+
+.rashi-bottom {
+  border-top: 1px dashed #ddd;
+  padding-top: 10px;
+}
+
+.rashi-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.rashi-mini {
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 6px 0;
+  text-align: center;
+  cursor: pointer;
+}
+
+.rashi-mini span {
+  font-size: 18px;
+  display: block;
+}
+
+.rashi-mini small {
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+
+/* ASTROLOGY PANEL */
+
+.astrology-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.astro-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.astro-lang button {
+  font-size: 11px;
+  margin-left: 4px;
+  padding: 2px 6px;
+}
+
+.astro-lang .active {
+  background: #dc2626;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.dob-box {
+  display: flex;
+  gap: 6px;
+}
+
+.dob-box input {
+  flex: 1;
+  padding: 6px;
+  font-size: 12px;
+}
+
+.dob-box button {
+  padding: 6px 10px;
+  background: #dc2626;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.astro-loader {
+  font-size: 12px;
+  color: #6b7280;
+  animation: pulse 1.4s infinite;
+}
+
+.astro-content {
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 10px;
+  border-radius: 12px;
+  transition: all 0.25s ease;
+}
+
+.astro-back {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.astro-main-header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.astro-icon {
+  font-size: 26px;
+}
+
+.astro-tabs {
+  display: flex;
+  gap: 4px;
+  margin: 6px 0;
+}
+
+.astro-tabs button {
+  font-size: 11px;
+  padding: 4px 6px;
+}
+
+.astro-tabs .active {
+  background: #fee2e2;
+  border-radius: 4px;
+}
+
+.astro-text {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.astro-readmore {
+  font-size: 12px;
+  font-weight: 600;
+  color: #dc2626;
+}
+
+.rashi-bottom {
+  background: linear-gradient(180deg, #fff7f7, #fff);
+  padding: 8px;
+  border-radius: 10px;
+}
+
+.rashi-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+}
+
+.rashi-mini {
+  padding: 4px 0;
+  background: #ffffffcc;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.rashi-mini.active {
+  border-color: #dc2626;
+  background: #fee2e2;
+}
+
+.rashi-mini span {
+  font-size: 18px;
+  display: block;
+}
+
+.rashi-mini small {
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+/* Skeleton */
+.astro-skeleton {
+  padding: 12px;
+}
+.astro-skeleton div {
+  background: linear-gradient(90deg,#eee,#ddd,#eee);
+  border-radius: 6px;
+  animation: pulse 1.2s infinite;
+  margin-bottom: 8px;
+}
+.sk-header { height: 24px; width: 60%; }
+.sk-tabs { height: 16px; width: 100%; }
+.sk-line { height: 14px; width: 100%; }
+.sk-line.short { width: 70%; }
+
+@keyframes pulse {
+  0% { opacity: .6 }
+  50% { opacity: 1 }
+  100% { opacity: .6 }
+}
+
+/* Drawer tabs */
+.astro-tabs.drawer {
+  display: flex;
+  gap: 14px;
+  border-bottom: 1px solid #eee;
+}
+.astro-tabs.drawer button {
+  background: none;
+  border: none;
+  padding-bottom: 6px;
+}
+.astro-tabs.drawer .active {
+  color: #dc2626;
+  border-bottom: 2px solid #dc2626;
+}
+
+/* Empty */
+.astro-empty-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 13px;
+  color: #6b7280;
+}
+.astro-wrap { background:#fff7f7; border-radius:14px; padding:12px }
+.astro-head { display:flex; justify-content:space-between; align-items:center }
+.lang-switch button.on { background:#e11d48; color:#fff }
+
+.dob-row { display:flex; gap:6px; margin:8px 0 }
+
+.astro-skeleton .sk-line,
+.astro-skeleton .sk-title {
+  background: linear-gradient(90deg,#eee,#f5f5f5,#eee);
+  animation: shimmer 1.4s infinite;
+  height:12px; border-radius:6px; margin-bottom:8px;
+}
+.sk-title { height:18px; width:60% }
+@keyframes shimmer { 0%{background-position:-200px} 100%{background-position:200px} }
+
+.astro-drawer span {
+  padding:6px 10px; cursor:pointer; border-radius:20px;
+}
+.astro-drawer .active { background:#e11d48; color:#fff }
+
+.rashi-grid {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:6px;
+}
+.rashi-grid button.active { background:#ffe4e6 }
+
+.read-more { color:#e11d48; background:none }
+
+
+
+
+
+.astro-skeleton .sk-header,
+.astro-skeleton .sk-line {
+  background: linear-gradient(90deg, #eee, #f5f5f5, #eee);
+  animation: shimmer 1.2s infinite;
+  border-radius: 6px;
+}
+
+.sk-header {
+  height: 40px;
+  margin-bottom: 12px;
+}
+
+.sk-line {
+  height: 14px;
+  margin-bottom: 8px;
+}
+
+.sk-line.short {
+  width: 60%;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200px; }
+  100% { background-position: 200px; }
+}
+
+.astro-text {
+  max-height: 4.5em;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.astro-text.open {
+  max-height: 500px;
+}
+
+.astro-toggle {
+  background: none;
+  border: none;
+  color: #d32f2f;
+  font-weight: 600;
+  cursor: pointer;
+}
+.astro-rashi-name {
+  font-size: 15px;
+  font-weight: 600;
+}
+.rashi-label {
+  font-size: 11px;
+  font-style: italic;
+  font-weight: 500;
+  text-transform: none; /* important */
+  letter-spacing: 0.3px;
+  color: #374151; /* subtle dark gray */
+}
+.rashi-mini.active .rashi-label {
+  color: #b91c1c; /* highlight active rashi */
+  font-weight: 600;
+}
+

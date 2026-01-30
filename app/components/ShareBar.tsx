@@ -20,9 +20,7 @@ export default function ShareBar() {
 
   const url = `${origin}${pathname}`;
   const encodedUrl = encodeURIComponent(url);
-  const whatsappText = encodeURIComponent(
-    `Check this news: ${url}`
-  );
+ const whatsappText = encodeURIComponent(url);
 
   function copyLink() {
     navigator.clipboard.writeText(url);

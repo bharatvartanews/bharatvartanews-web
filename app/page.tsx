@@ -1,6 +1,8 @@
 import { api } from "./lib/api";
 import Link from "next/link";
 import ArticleList from "./components/ArticleList";
+import AstrologySidebar from "./components/astrology/AstrologySidebar";
+
 
 // const categoryIcon = (name: string) => {
 //   const key = name.toLowerCase();
@@ -176,8 +178,10 @@ const activeCategorySlug = categorySlug || null;
 
         {/* RIGHT */}
         <aside className="right">
+          <AstrologySidebar />
+
           {/* <h3>Top Trending</h3> */}
-          <div className="center-section-header">
+          {/* <div className="center-section-header">
     News You May Like
   </div>
 {topNews.map((n: any) => (
@@ -190,7 +194,7 @@ const activeCategorySlug = categorySlug || null;
       {n.title}
     </h4>
   </Link>
-))}
+))} */}
 
           {/* {topNews.map((n: any) => (
             <div key={n.id} className="right-card">

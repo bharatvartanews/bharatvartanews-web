@@ -140,8 +140,8 @@ export default function RootLayout({
             <div className="header-inner">
               <div className="logo">
                 <img
-                  src="/logo_a.png"
-                  alt="Bharat Varta"
+                  src="/app_logo.png"
+                  alt="Bharat Varta News"
                   width={100}
                   height={80}
                 />
@@ -174,9 +174,9 @@ export default function RootLayout({
   <Link href="/videos" className={tabClass("/videos")}>
     Videos
   </Link>
-  <Link href="/stories" className={tabClass("/stories")}>
+  {/* <Link href="/stories" className={tabClass("/stories")}>
     Stories
-  </Link>
+  </Link> */}
   <Link href="/live" className={tabClass("/live")}>
     Live
   </Link>

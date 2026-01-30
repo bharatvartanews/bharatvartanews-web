@@ -115,10 +115,13 @@
 //   );
 // }
 "use client";
+import { useState } from "react";
 
 import { useRouter } from "next/navigation";
 import { useSearch } from "../context/SearchContext";
 import { getArticleThumbnail } from "../lib/media";
+
+
 
 export default function ArticleList({
   articles,
@@ -127,15 +130,35 @@ export default function ArticleList({
 }) {
   const { query } = useSearch();
   const router = useRouter();
+  const PAGE_SIZE = 8;
+const [page, setPage] = useState(1);
+
+
+  // const filtered = articles.filter((a) => {
+  //   if (!query) return true;
+  //   const q = query.toLowerCase();
+  //   return (
+  //     a.title?.toLowerCase().includes(q) ||
+  //     a.body?.toLowerCase().includes(q)
+  //   );
+  // });
 
   const filtered = articles.filter((a) => {
-    if (!query) return true;
-    const q = query.toLowerCase();
-    return (
-      a.title?.toLowerCase().includes(q) ||
-      a.body?.toLowerCase().includes(q)
-    );
-  });
+  if (!query) return true;
+  const q = query.toLowerCase();
+  return (
+    a.title?.toLowerCase().includes(q) ||
+    a.body?.toLowerCase().includes(q)
+  );
+});
+
+const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+
+const paginated = filtered.slice(
+  (page - 1) * PAGE_SIZE,
+  page * PAGE_SIZE
+);
+
 
   if (!filtered.length) {
     return <p>No results found</p>;
@@ -143,7 +166,9 @@ export default function ArticleList({
 
   return (
     <>
-      {filtered.map((a) => {
+      {/* {filtered.map((a) => { */}
+      {paginated.map((a) => {
+
         const thumbnail = getArticleThumbnail(
           a.image,
           // 👇 SAFE: video may or may not exist
@@ -179,18 +204,26 @@ export default function ArticleList({
                <div className="news-meta">
   {a.createdAt && (
     <span>
-      {new Date(a.createdAt).toLocaleDateString("hi-IN")}
-    </span>
-  )}
+     {new Date(a.createdAt).toLocaleDateString("en-IN", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+})}
 
-  {a.authorName && (
-    <>
-      <span className="meta-separator"> • </span>
-      <span className="meta-author">
-        {a.authorName}
-      </span>
-    </>
+
+    </span>
+    
   )}
+  {a.authorName && (
+  <>
+    <span className="meta-separator"> • </span>
+    <span className="meta-author">
+      By {a.authorName}
+    </span>
+  </>
+)}
+
+
 </div>
 
 
@@ -209,6 +242,28 @@ export default function ArticleList({
           </div>
         );
       })}
+      {totalPages > 1 && (
+  <div className="pagination">
+    <button
+      disabled={page === 1}
+      onClick={() => setPage((p) => p - 1)}
+    >
+      ← Prev
+    </button>
+
+    <span>
+      Page {page} of {totalPages}
+    </span>
+
+    <button
+      disabled={page === totalPages}
+      onClick={() => setPage((p) => p + 1)}
+    >
+      Next →
+    </button>
+  </div>
+)}
+
     </>
   );
 }
