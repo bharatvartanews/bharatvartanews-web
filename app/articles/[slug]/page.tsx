@@ -594,7 +594,7 @@ function injectMedia(body: string, media: string[]) {
 /* ===================== METADATA ===================== */
 
 export async function generateMetadata(
-  { params }: PageProps
+  { params }: { params: { slug: string } }
 ): Promise<Metadata> {
   const raw = params.slug;
   const isId = /^\d+$/.test(raw);
@@ -603,18 +603,30 @@ export async function generateMetadata(
     ? await PublicApi.getArticleById(raw)
     : await PublicApi.getArticleBySlug(raw);
 
+  const siteUrl = "https://www.bharatvartanews.com"; // your live domain
+
   if (!article) {
     return {
       title: "Bharat Varta News",
-      description: "Latest news from Bharat Varta",
+      description: "Latest from Bharat Varta News",
     };
   }
 
   const title = article.title;
+
   const description =
     article.summary ||
     article.excerpt ||
-    article.body?.replace(/<[^>]+>/g, "").slice(0, 160);
+    article.body
+      ?.replace(/<[^>]+>/g, "")
+      .slice(0, 150);
+
+  // ✅ IMAGE PRIORITY:
+  // article image → fallback to app logo from /public
+  const image =
+    article.image ||
+    article.images?.[0] ||
+    `${siteUrl}/logo.png`;
 
   return {
     title,
@@ -623,10 +635,11 @@ export async function generateMetadata(
       type: "article",
       title,
       description,
+      url: `${siteUrl}/articles/${params.slug}`,
       siteName: "Bharat Varta News",
       images: [
         {
-          url: `/articles/${params.slug}/opengraph-image`,
+          url: image, // MUST be absolute
           width: 1200,
           height: 630,
         },
@@ -636,7 +649,7 @@ export async function generateMetadata(
       card: "summary_large_image",
       title,
       description,
-      images: [`/articles/${params.slug}/opengraph-image`],
+      images: [image],
     },
   };
 }
