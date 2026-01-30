@@ -594,7 +594,7 @@ function injectMedia(body: string, media: string[]) {
 /* ===================== METADATA ===================== */
 
 export async function generateMetadata(
-  { params }: { params: { slug: string } }
+  { params }: PageProps
 ): Promise<Metadata> {
   const raw = params.slug;
   const isId = /^\d+$/.test(raw);
@@ -603,12 +603,12 @@ export async function generateMetadata(
     ? await PublicApi.getArticleById(raw)
     : await PublicApi.getArticleBySlug(raw);
 
-  const siteUrl = "https://www.bharatvartanews.com";
+  const SITE_URL = "https://www.bharatvartanews.com";
 
   if (!article) {
     return {
       title: "Bharat Varta News",
-      description: "Latest from Bharat Varta News",
+      description: "Latest news from Bharat Varta News",
     };
   }
 
@@ -618,35 +618,18 @@ export async function generateMetadata(
     article.excerpt ||
     article.body?.replace(/<[^>]+>/g, "").slice(0, 150);
 
-  // 🔥 FINAL OG IMAGE LOGIC (APP LOGO ALWAYS SAFE)
-  const isValidImage = (url?: string) =>
-    !!url && /\.(jpg|jpeg|png|webp)$/i.test(url);
-
-  let ogImage = `${siteUrl}/logo.png`; // ✅ DEFAULT = APP LOGO
-
-  if (isValidImage(article.image)) {
-    ogImage = article.image;
-  } else if (
-    Array.isArray(article.images) &&
-    isValidImage(article.images[0])
-  ) {
-    ogImage = article.images[0];
-  }
-
-  // make sure absolute
-  if (ogImage.startsWith("/")) {
-    ogImage = siteUrl + ogImage;
-  }
+  // 🔥 THIS IS THE KEY
+  const ogImage = `${SITE_URL}/og-default.jpg`;
 
   return {
     title,
     description,
     openGraph: {
       type: "article",
+      url: `${SITE_URL}/articles/${params.slug}`,
+      siteName: "Bharat Varta News",
       title,
       description,
-      url: `${siteUrl}/articles/${params.slug}`,
-      siteName: "Bharat Varta News",
       images: [
         {
           url: ogImage,
@@ -663,6 +646,7 @@ export async function generateMetadata(
     },
   };
 }
+
 
 /* ===================== PAGE ===================== */
 
