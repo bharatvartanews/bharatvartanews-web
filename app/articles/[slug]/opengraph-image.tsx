@@ -6,6 +6,25 @@ import path from "path";
 export const runtime = "nodejs";
 export const size = { width: 1200, height: 630 };
 
+const isValidImage = (url?: string) =>
+  !!url && /\.(jpg|jpeg|png|webp)$/i.test(url);
+
+const isYouTube = (url?: string) =>
+  !!url && (url.includes("youtube.com") || url.includes("youtu.be"));
+
+const getYouTubeThumb = (url: string) => {
+  try {
+    const id = url.includes("youtu.be")
+      ? url.split("youtu.be/")[1]
+      : new URL(url).searchParams.get("v");
+    return id
+      ? `https://img.youtube.com/vi/${id}/hqdefault.jpg`
+      : null;
+  } catch {
+    return null;
+  }
+};
+
 export default async function OGImage({
   params,
 }: {
@@ -20,11 +39,9 @@ export default async function OGImage({
 
   const title = article?.title || "Bharat Varta News";
 
-  const isValidImage = (url?: string) =>
-    !!url && /\.(jpg|jpeg|png|webp)$/i.test(url);
-
-  // 🔹 background image (optional)
+  // 🔹 Decide background image
   let bgImage: string | null = null;
+  let isVideo = false;
 
   if (isValidImage(article?.image)) {
     bgImage = article.image;
@@ -33,9 +50,12 @@ export default async function OGImage({
     isValidImage(article.images[0])
   ) {
     bgImage = article.images[0];
+  } else if (isYouTube(article?.video)) {
+    bgImage = getYouTubeThumb(article.video);
+    isVideo = true;
   }
 
-  // 🔹 fallback background
+  // 🔹 Fallback to app logo
   if (!bgImage) {
     bgImage = "https://www.bharatvartanews.com/app_logo.png";
   }
@@ -51,9 +71,8 @@ export default async function OGImage({
           width: "100%",
           height: "100%",
           position: "relative",
-          display: "flex",
-          alignItems: "flex-end",
           backgroundColor: "#000",
+          fontFamily: "Arial, sans-serif",
         }}
       >
         {/* Background */}
@@ -68,37 +87,69 @@ export default async function OGImage({
           }}
         />
 
-        {/* Dark overlay */}
+        {/* Dark gradient (DeshajTimes style) */}
         <div
           style={{
             position: "absolute",
             inset: 0,
             background:
-              "linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0))",
+              "linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0.15))",
           }}
         />
 
-        {/* Logo – ALWAYS */}
+        {/* Logo */}
         <img
           src={logo as any}
           style={{
             position: "absolute",
             top: 30,
             left: 30,
-            width: 120,
-            height: 120,
+            width: 90,
+            height: 90,
           }}
         />
+
+        {/* Play icon for video */}
+        {isVideo && (
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: 90,
+              height: 90,
+              borderRadius: "50%",
+              background: "rgba(0,0,0,0.6)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              style={{
+                width: 0,
+                height: 0,
+                borderTop: "18px solid transparent",
+                borderBottom: "18px solid transparent",
+                borderLeft: "28px solid white",
+                marginLeft: 6,
+              }}
+            />
+          </div>
+        )}
 
         {/* Title */}
         <div
           style={{
-            position: "relative",
-            padding: 40,
-            fontSize: 46,
-            fontWeight: 800,
+            position: "absolute",
+            bottom: 40,
+            left: 40,
+            right: 40,
             color: "#fff",
-            lineHeight: 1.2,
+            fontSize: 44,
+            fontWeight: 800,
+            lineHeight: 1.25,
           }}
         >
           {title}

@@ -652,17 +652,29 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const siteUrl = "https://www.bharatvartanews.com";
 
+  const article = await PublicApi.getArticleBySlug(params.slug);
+
+  const title = article?.title || "Bharat Varta News";
+  const description =
+    article?.summary ||
+    article?.excerpt ||
+    article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
+    "Latest news from Bharat Varta News";
+
+  const ogImage = `${siteUrl}/articles/${params.slug}/opengraph-image`;
+
   return {
+    title,
+    description,
     openGraph: {
       type: "article",
       url: `${siteUrl}/articles/${params.slug}`,
       siteName: "Bharat Varta News",
-      title: "Bharat Varta News",
-      description: "Latest news from Bharat Varta News",
+      title,
+      description,
       images: [
         {
-          // 🔥 ONLY THIS IMAGE, ALWAYS
-          url: `${siteUrl}/articles/${params.slug}/opengraph-image`,
+          url: ogImage,
           width: 1200,
           height: 630,
         },
@@ -670,12 +682,13 @@ export async function generateMetadata(
     },
     twitter: {
       card: "summary_large_image",
-      images: [
-        `${siteUrl}/articles/${params.slug}/opengraph-image`,
-      ],
+      title,
+      description,
+      images: [ogImage],
     },
   };
 }
+
 
 
 /* ===================== PAGE ===================== */
