@@ -51,23 +51,35 @@ export default async function Head({
     ? await PublicApi.getArticleById(raw)
     : await PublicApi.getArticleBySlug(raw);
 
-  const siteUrl = "https://www.bharatvartanews.com";
+  const SITE_URL = "https://www.bharatvartanews.com";
 
   const title = article?.title || "Bharat Varta News";
 
   const description =
     article?.summary ||
     article?.excerpt ||
-    article?.body
-      ?.replace(/<[^>]+>/g, "")
-      .slice(0, 150) ||
+    article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
     "Latest news from Bharat Varta News";
 
-  /**
-   * 🔥 THIS IS THE KEY FIX
-   * OG image is DYNAMIC, not static logo
-   */
-  const ogImage = `${siteUrl}/articles/${params.slug}/opengraph-image`;
+  // 🔥 SIMPLE IMAGE DECISION (NO OG ROUTE)
+  let ogImage = `${SITE_URL}/app_logo.png`; // fallback
+
+  if (article?.image) {
+    ogImage = article.image;
+  } else if (Array.isArray(article?.images) && article.images[0]) {
+    ogImage = article.images[0];
+  } else if (article?.video) {
+    // YouTube thumbnail
+    try {
+      const id = article.video.includes("youtu.be")
+        ? article.video.split("youtu.be/")[1]
+        : new URL(article.video).searchParams.get("v");
+
+      if (id) {
+        ogImage = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+      }
+    } catch {}
+  }
 
   return (
     <>
@@ -79,12 +91,8 @@ export default async function Head({
       <meta property="og:site_name" content="Bharat Varta News" />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:url" content={`${siteUrl}/articles/${params.slug}`} />
-
-      {/* ✅ THIS LINE FIXES EVERYTHING */}
+      <meta property="og:url" content={`${SITE_URL}/articles/${params.slug}`} />
       <meta property="og:image" content={ogImage} />
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
