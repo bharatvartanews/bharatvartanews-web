@@ -63,7 +63,11 @@ export default async function Head({
       .slice(0, 150) ||
     "Latest news from Bharat Varta News";
 
-  const image = `${siteUrl}/app_logo.png`; // STATIC, SAFE
+  /**
+   * 🔥 THIS IS THE KEY FIX
+   * OG image is DYNAMIC, not static logo
+   */
+  const ogImage = `${siteUrl}/articles/${params.slug}/opengraph-image`;
 
   return (
     <>
@@ -76,7 +80,9 @@ export default async function Head({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={`${siteUrl}/articles/${params.slug}`} />
-      <meta property="og:image" content={image} />
+
+      {/* ✅ THIS LINE FIXES EVERYTHING */}
+      <meta property="og:image" content={ogImage} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
 
@@ -84,7 +90,7 @@ export default async function Head({
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={image} />
+      <meta name="twitter:image" content={ogImage} />
     </>
   );
 }
