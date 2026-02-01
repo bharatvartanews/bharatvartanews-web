@@ -135,12 +135,13 @@ export default function ShareBar() {
    * 3. CTA text
    * 4. Channel link (no preview)
    */
-  const whatsappText = `
+const whatsappText = `
 ${articleUrl}
 
 लगातार खबरों के लिए हमारे WhatsApp चैनल से जुड़ें 👇
-${channelUrl}
-  `.trim();
+https://tinyurl.com/bharat-varta-news
+`.trim();
+
 
   function copyLink() {
     navigator.clipboard.writeText(articleUrl);

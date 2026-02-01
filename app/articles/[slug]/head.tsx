@@ -39,30 +39,24 @@
 // }
 import { PublicApi } from "../../services/publicApi";
 
-export default async function Head({ params }) {
-  const article = await PublicApi.getArticleBySlug(params.slug);
+export default async function Head({ params }: { params: { slug: string } }) {
+  const raw = params.slug;
+  const isId = /^\d+$/.test(raw);
+
+  const article = isId
+    ? await PublicApi.getArticleById(raw)
+    : await PublicApi.getArticleBySlug(raw);
 
   const SITE_URL = "https://www.bharatvartanews.com";
 
   const title = article?.title || "Bharat Varta News";
-
   const description =
     article?.summary ||
     article?.excerpt ||
     article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
     "Latest news from Bharat Varta News";
 
-  const ogImage =
-    article?.image ||
-    (Array.isArray(article?.images) && article.images[0]) ||
-    (article?.video
-      ? `https://img.youtube.com/vi/${
-          article.video.includes("youtu.be")
-            ? article.video.split("youtu.be/")[1]
-            : new URL(article.video).searchParams.get("v")
-        }/hqdefault.jpg`
-      : null) ||
-    `${SITE_URL}/app_logo.png`;
+  const ogImage = `${SITE_URL}/og-default.jpeg`; 
 
   return (
     <>
@@ -75,6 +69,8 @@ export default async function Head({ params }) {
       <meta property="og:description" content={description} />
       <meta property="og:url" content={`${SITE_URL}/articles/${params.slug}`} />
       <meta property="og:image" content={ogImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
