@@ -56,7 +56,7 @@ export default async function Head({ params }: { params: { slug: string } }) {
     article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
     "Latest news from Bharat Varta News";
 
-  const ogImage = `${SITE_URL}/og-default.jpeg`; 
+  const ogImage = `${SITE_URL}/og-default.jpg`; // 🔒 ALWAYS STATIC
 
   return (
     <>
