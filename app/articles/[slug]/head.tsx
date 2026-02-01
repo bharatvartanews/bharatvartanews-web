@@ -61,25 +61,17 @@ export default async function Head({
     article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
     "Latest news from Bharat Varta News";
 
-  // 🔥 SIMPLE IMAGE DECISION (NO OG ROUTE)
-  let ogImage = `${SITE_URL}/app_logo.png`; // fallback
-
-  if (article?.image) {
-    ogImage = article.image;
-  } else if (Array.isArray(article?.images) && article.images[0]) {
-    ogImage = article.images[0];
-  } else if (article?.video) {
-    // YouTube thumbnail
-    try {
-      const id = article.video.includes("youtu.be")
-        ? article.video.split("youtu.be/")[1]
-        : new URL(article.video).searchParams.get("v");
-
-      if (id) {
-        ogImage = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
-      }
-    } catch {}
-  }
+ const ogImage =
+  article?.image ||
+  (Array.isArray(article?.images) && article.images[0]) ||
+  (article?.video
+    ? `https://img.youtube.com/vi/${
+        article.video.includes("youtu.be")
+          ? article.video.split("youtu.be/")[1]
+          : new URL(article.video).searchParams.get("v")
+      }/hqdefault.jpg`
+    : null) ||
+  "https://www.bharatvartanews.com/app_logo.png";
 
   return (
     <>
