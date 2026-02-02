@@ -1,13 +1,12 @@
 /* =====================================================
-   BHARAT VARTA – MOBILE ADAPTIVE CSS (NO STRUCTURE CHANGE)
-   Desktop remains 100% untouched
+   BHARAT VARTA – MOBILE RESPONSIVE (CLEAN)
+   Desktop remains untouched
 ===================================================== */
 
 @media (max-width: 768px) {
 
-  /* -------------------------------
-     GLOBAL SAFETY
-  -------------------------------- */
+  /* ================= GLOBAL ================= */
+
   html, body {
     overflow-x: hidden;
   }
@@ -16,10 +15,7 @@
     padding: 14px;
   }
 
-  /* -------------------------------
-     HEADER – FORCE ROWS USING GRID
-     (NO HTML CHANGE)
-  -------------------------------- */
+  /* ================= HEADER ================= */
 
   .header-inner {
     display: grid;
@@ -32,7 +28,6 @@
     align-items: center;
   }
 
-  /* Logo */
   .logo {
     grid-area: logo;
   }
@@ -41,7 +36,6 @@
     height: 44px;
   }
 
-  /* Website name (existing text/logo text) */
   .site-name,
   .logo-text {
     grid-area: title;
@@ -51,7 +45,6 @@
     color: var(--primary);
   }
 
-  /* Search */
   .header-search,
   .search-box {
     grid-area: search;
@@ -62,11 +55,9 @@
     width: 100%;
   }
 
-  /* Navigation */
   .nav {
     grid-area: nav;
     display: flex;
-    justify-content: flex-start;
     gap: 10px;
   }
 
@@ -75,20 +66,16 @@
     padding: 6px 10px;
   }
 
-  /* Profile */
   .header-actions {
     grid-area: profile;
     justify-self: end;
   }
 
-  /* Hide language toggle on mobile only */
   .lang-toggle {
     display: none;
   }
 
-  /* -------------------------------
-     MAIN GRID → SINGLE COLUMN
-  -------------------------------- */
+  /* ================= GRID ================= */
 
   .grid {
     display: flex;
@@ -96,22 +83,25 @@
     gap: 14px;
   }
 
-  /* -------------------------------
-     TRENDING FIRST
-  -------------------------------- */
+  /* ================= VISIBILITY ================= */
+
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: flex !important;
+  }
+
+  /* ================= TRENDING ================= */
 
   .center-section-header {
-    order: 1;
     margin-bottom: 6px;
   }
 
-  /* -------------------------------
-     CATEGORIES BELOW TRENDING
-     (SAME DESIGN, HORIZONTAL)
-  -------------------------------- */
+  /* ================= CATEGORIES (MOBILE) ================= */
 
-  .side-card {
-    order: 2;
+  .mobile-only.side-card {
     display: flex;
     flex-direction: row;
     gap: 10px;
@@ -121,12 +111,12 @@
     scrollbar-width: none;
   }
 
-  .side-card::-webkit-scrollbar {
+  .mobile-only.side-card::-webkit-scrollbar {
     display: none;
   }
 
-  .category-header,
-  .category-divider {
+  .mobile-only .category-header,
+  .mobile-only .category-divider {
     display: none;
   }
 
@@ -143,14 +133,7 @@
     height: 18px;
   }
 
-  /* -------------------------------
-     NEWS LIST – MOBILE FRIENDLY
-     (NO SIDE SCROLL)
-  -------------------------------- */
-
-  section {
-    order: 3;
-  }
+  /* ================= NEWS LIST ================= */
 
   .news-card {
     display: block;
@@ -182,13 +165,11 @@
     font-size: 14px;
   }
 
-  /* -------------------------------
-     RASHIFAL – KEEP DESKTOP LOOK
-     (JUST FIX WIDTH)
-  -------------------------------- */
+  /* ================= RASHIFAL ================= */
 
   .right {
-    order: 4;
+    display: block;
+    width: 100%;
   }
 
   .dob-box {
@@ -199,22 +180,22 @@
 
   .dob-box input {
     flex: 1;
-    min-height: 40px;
+    min-height: 44px;
   }
 
   .dob-box button {
-    min-height: 40px;
+    min-height: 44px;
     padding: 0 14px;
   }
 
   .rashi-grid {
+    display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 6px;
+    gap: 8px;
+    margin-top: 12px;
   }
 
-  /* -------------------------------
-     FOOTER – COMPACT ONLY
-  -------------------------------- */
+  /* ================= FOOTER ================= */
 
   .bv-footer-inner {
     grid-template-columns: 1fr;
@@ -226,14 +207,6 @@
     justify-content: center;
   }
 
-  .bv-footer-logo {
-    margin: 0 auto;
-  }
-
-  .bv-clock-time {
-    font-size: 22px;
-  }
-
   .bv-footer {
     margin-top: 28px;
   }
@@ -243,90 +216,18 @@
     padding: 10px;
   }
 
-  /* -------------------------------
-     BACK TO TOP
-  -------------------------------- */
+  /* ================= BACK TO TOP ================= */
 
   .bv-back-to-top {
     bottom: 16px;
     right: 16px;
   }
 }
-/* =====================================
-   FINAL OVERRIDE: CATEGORY POSITION
-===================================== */
-@media (max-width: 768px) {
 
-  /* Ensure correct stacking */
-  .grid {
-    display: flex !important;
-    flex-direction: column !important;
-  }
+/* ================= DESKTOP SAFETY ================= */
 
-  /* Trending always first */
-  .grid .center-section-header {
-    order: 1 !important;
-  }
-
-  /* Categories AFTER trending */
-  .grid .side-card {
-    order: 2 !important;
-  }
-
-  /* News list */
-  .grid section {
-    order: 3 !important;
-  }
-
-  /* Rashifal last */
-  .grid .right {
-    order: 4 !important;
-  }
-}
-/* =====================================
-   FINAL OVERRIDE: RASHIFAL MOBILE FIX
-===================================== */
-@media (max-width: 768px) {
-
-  /* Kill desktop grid behavior */
-  .right,
-  .right > div {
-    display: block !important;
-    width: 100% !important;
-  }
-
-  /* Date + OK in one row */
-  .right .dob-box {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center;
-    gap: 8px;
-    width: 100%;
-  }
-
-  /* Input behaves like desktop */
-  .right .dob-box input,
-  .right .dob-box input[type="date"] {
-    flex: 1;
-    min-height: 44px;
-  }
-
-  .right .dob-box button {
-    min-height: 44px;
-    padding: 0 14px;
-  }
-
-  /* Instruction text BELOW input */
-  .right p {
-    margin-top: 8px;
-    font-size: 13px;
-  }
-
-  /* Zodiac grid */
-  .right .rashi-grid {
-    display: grid !important;
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 8px;
-    margin-top: 12px;
+@media (min-width: 769px) {
+  .mobile-only {
+    display: none !important;
   }
 }
