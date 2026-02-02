@@ -693,6 +693,93 @@ function injectMedia(body: string, media: string[]) {
 //   };
 // }
 
+// export async function generateMetadata(
+//   { params }: { params: { slug: string } }
+// ): Promise<Metadata> {
+
+//   const siteUrl = "https://www.bharatvartanews.com";
+//   const article = await PublicApi.getArticleBySlug(params.slug);
+
+//   const title = article?.title || "Bharat Varta News";
+//   const description =
+//     article?.summary ||
+//     article?.excerpt ||
+//     article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
+//     "Latest news from Bharat Varta News";
+
+//   // ✅ DEFAULT FIRST (VERY IMPORTANT)
+//   let ogImage = `${siteUrl}/app_logo.png`;
+
+//   /* ================= IMAGE ================= */
+//   if (article?.image && article.image.startsWith("http")) {
+//     ogImage = article.image;
+//   }
+
+//   else if (
+//     Array.isArray(article?.images) &&
+//     article.images.length > 0 &&
+//     article.images[0].startsWith("http")
+//   ) {
+//     ogImage = article.images[0];
+//   }
+
+//   /* ================= VIDEO ================= */
+
+//   // single video
+//   else if (article?.video) {
+
+//     if (isYouTube(article.video)) {
+//       const ytThumb = getYouTubeThumb(article.video);
+//       if (ytThumb) ogImage = ytThumb;
+//     }
+
+//     else {
+//       // mp4 / hosted video → static placeholder
+//       ogImage = `${siteUrl}/video-placeholder.png`;
+//     }
+//   }
+
+//   // videos array
+//   else if (Array.isArray(article?.videos) && article.videos.length > 0) {
+//     const v = article.videos[0];
+
+//     if (isYouTube(v)) {
+//       const ytThumb = getYouTubeThumb(v);
+//       if (ytThumb) ogImage = ytThumb;
+//     }
+
+//     else {
+//       ogImage = `${siteUrl}/video-placeholder.png`;
+//     }
+//   }
+
+//   return {
+//     title,
+//     description,
+//     openGraph: {
+//       type: "article",
+//       url: `${siteUrl}/articles/${params.slug}`,
+//       siteName: "Bharat Varta News",
+//       title,
+//       description,
+//       images: [
+//         {
+//           url: ogImage,
+//           width: 1200,
+//           height: 630,
+//         },
+//       ],
+//     },
+//     twitter: {
+//       card: "summary_large_image",
+//       title,
+//       description,
+//       images: [ogImage],
+//     },
+//   };
+// }
+
+
 export async function generateMetadata(
   { params }: { params: { slug: string } }
 ): Promise<Metadata> {
@@ -707,36 +794,45 @@ export async function generateMetadata(
     article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
     "Latest news from Bharat Varta News";
 
-  // 🔥 DEFAULT FIRST (VERY IMPORTANT)
-  let ogImage = `${siteUrl}/og-default.jpeg`;
+  // DEFAULT (always valid)
+  let ogImage = `${siteUrl}/video-placeholder.png`;
 
-  /* ================= IMAGE ================= */
-
-  if (article?.image && article.image.startsWith("http")) {
+  // IMAGE
+  if (
+    article?.image &&
+    typeof article.image === "string" &&
+    article.image.startsWith("http")
+  ) {
     ogImage = article.image;
   }
 
   else if (
     Array.isArray(article?.images) &&
     article.images.length > 0 &&
+    typeof article.images[0] === "string" &&
     article.images[0].startsWith("http")
   ) {
     ogImage = article.images[0];
   }
 
-  /* ================= VIDEO ================= */
-
-  // single video
+  // SINGLE VIDEO
   else if (article?.video) {
-    ogImage = getVideoPreviewImage(article.video, siteUrl);
+    if (isYouTube(article.video)) {
+      const yt = getYouTubeThumb(article.video);
+      if (yt) ogImage = yt;
+    }
   }
 
-  // videos array
+  // VIDEOS ARRAY
   else if (
     Array.isArray(article?.videos) &&
     article.videos.length > 0
   ) {
-    ogImage = getVideoPreviewImage(article.videos[0], siteUrl);
+    const v = article.videos[0];
+    if (isYouTube(v)) {
+      const yt = getYouTubeThumb(v);
+      if (yt) ogImage = yt;
+    }
   }
 
   return {
@@ -764,8 +860,6 @@ export async function generateMetadata(
     },
   };
 }
-
-
 
 /* ===================== PAGE ===================== */
 
