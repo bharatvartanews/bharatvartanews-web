@@ -77,8 +77,8 @@ export default async function Head({
  const image =
     article?.image ||
     (Array.isArray(article?.images) && article.images[0]) ||
-    getYouTubeThumb(article?.video) ||
-    `${siteUrl}/app_logo.png`;
+    getYouTubeThumb(article?.video) ||(Array.isArray(article?.videos) && article.videos[0])
+    `${siteUrl}/video-placeholder.png`;
 
   return (
     <>
