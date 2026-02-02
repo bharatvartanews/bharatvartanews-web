@@ -1,0 +1,123 @@
+/* =====================================================
+   MOBILE RESPONSIVE PATCH
+   Project: Bharat Varta News
+   Scope: Mobile ONLY 
+===================================================== */
+
+@media (max-width: 768px) {
+
+  /* ===== GLOBAL SAFETY ===== */
+  html, body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* ===== HEADER ===== */
+  .header-inner {
+    grid-template-columns: auto 1fr auto !important;
+    gap: 10px;
+  }
+
+  .nav {
+    display: none; /* hide desktop nav on mobile */
+  }
+
+  .search-box input {
+    width: 100% !important;
+  }
+
+  /* ===== MAIN LAYOUT GRID ===== */
+  .grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  /* Order: center → left → right */
+  .grid > section {
+    order: 1;
+  }
+
+  .grid > .side-card {
+    order: 2;
+  }
+
+  .grid > .right {
+    order: 3;
+  }
+
+  /* ===== CONTAINER ===== */
+  .container {
+    padding: 12px;
+  }
+
+  /* ===== NEWS CARDS ===== */
+  .news-card {
+    padding: 14px;
+  }
+
+  .news-body-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .news-image {
+    width: 100% !important;
+    height: 180px;
+  }
+
+  .news-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .news-title {
+    font-size: 16px;
+  }
+
+  /* ===== ARTICLE PAGE ===== */
+  .article-title {
+    font-size: 22px;
+  }
+
+  .article-media iframe,
+  .article-media video {
+    height: 220px;
+  }
+
+  /* ===== SIDEBAR ===== */
+  .side-card {
+    padding: 12px;
+  }
+
+  /* ===== FOOTER ===== */
+  .bv-footer-inner {
+    grid-template-columns: 1fr !important;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .bv-footer-logo {
+    margin: 0 auto;
+  }
+
+  .bv-footer-social {
+    justify-content: center;
+  }
+
+  /* ===== BACK TO TOP ===== */
+  .bv-back-to-top {
+    bottom: 16px;
+    right: 16px;
+  }
+
+  /* ===== ASTROLOGY ===== */
+  .rashi-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .rashi-mini-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+}

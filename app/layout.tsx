@@ -102,6 +102,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import "./globals.css";
+import "./responsive.css";
+
 
 import ProfileButton from "./components/ProfileButton";
 import { AuthProvider } from "./context/AuthContext";

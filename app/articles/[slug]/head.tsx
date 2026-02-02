@@ -39,7 +39,11 @@
 // }
 import { PublicApi } from "../../services/publicApi";
 
-export default async function Head({ params }: { params: { slug: string } }) {
+export default async function Head({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const raw = params.slug;
   const isId = /^\d+$/.test(raw);
 
@@ -47,35 +51,40 @@ export default async function Head({ params }: { params: { slug: string } }) {
     ? await PublicApi.getArticleById(raw)
     : await PublicApi.getArticleBySlug(raw);
 
-  const SITE_URL = "https://www.bharatvartanews.com";
+  const siteUrl = "https://www.bharatvartanews.com";
 
   const title = article?.title || "Bharat Varta News";
+
   const description =
     article?.summary ||
     article?.excerpt ||
-    article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
+    article?.body
+      ?.replace(/<[^>]+>/g, "")
+      .slice(0, 150) ||
     "Latest news from Bharat Varta News";
 
-  const ogImage = `${SITE_URL}/og-default.jpg`; // 🔒 ALWAYS STATIC
+  const image = `${siteUrl}/app_logo.png`; // STATIC, SAFE
 
   return (
     <>
       <title>{title}</title>
       <meta name="description" content={description} />
 
+      {/* Open Graph */}
       <meta property="og:type" content="article" />
       <meta property="og:site_name" content="Bharat Varta News" />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:url" content={`${SITE_URL}/articles/${params.slug}`} />
-      <meta property="og:image" content={ogImage} />
+      <meta property="og:url" content={`${siteUrl}/articles/${params.slug}`} />
+      <meta property="og:image" content={image} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
 
+      {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={ogImage} />
+      <meta name="twitter:image" content={image} />
     </>
   );
 }
