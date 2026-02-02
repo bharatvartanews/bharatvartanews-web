@@ -49,8 +49,12 @@ export default async function OGImage({
     const v = article.video || article.videos?.[0];
 
     if (isYouTube(v)) {
-      bgImage = getYouTubeThumb(v)!;
-      isVideo = true;
+        const yt = getYouTubeThumb(v);
+bgImage = yt || "https://www.bharatvartanews.com/video-placeholder.png";
+isVideo = true;
+
+    //   bgImage = getYouTubeThumb(v)!;
+    //   isVideo = true;
     } else {
       // NON-YOUTUBE VIDEO → PLACEHOLDER
       bgImage = "https://www.bharatvartanews.com/video-placeholder.png";
