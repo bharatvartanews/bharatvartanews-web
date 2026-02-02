@@ -37,64 +37,93 @@
 // //     </>
 // //   );
 // // }
-// import { PublicApi } from "../../services/publicApi";
+import { PublicApi } from "../../services/publicApi";
 
-// function getYouTubeThumb(url?: string) {
-//   if (!url) return null;
-//   try {
-//     const id = url.includes("youtu.be")
-//       ? url.split("youtu.be/")[1]
-//       : new URL(url).searchParams.get("v");
-//     return id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : null;
-//   } catch {
-//     return null;
-//   }
-// }
+/* ================= HELPERS ================= */
 
-// export default async function Head({
-//   params,
-// }: {
-//   params: { slug: string };
-// }) {
-//   const article = await PublicApi.getArticleBySlug(params.slug);
+function isImage(url?: string) {
+  return !!url && /\.(jpg|jpeg|png|webp)$/i.test(url);
+}
 
-//   const siteUrl = "https://www.bharatvartanews.com";
+function isYouTube(url?: string) {
+  return !!url && (url.includes("youtube.com") || url.includes("youtu.be"));
+}
 
-//   const title = article?.title || "Bharat Varta News";
-//   const description =
-//     article?.summary ||
-//     article?.excerpt ||
-//     article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
-//     "Latest news from Bharat Varta News";
+function getYouTubeThumb(url?: string) {
+  if (!url) return null;
+  try {
+    const id = url.includes("youtu.be")
+      ? url.split("youtu.be/")[1]
+      : new URL(url).searchParams.get("v");
+    return id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : null;
+  } catch {
+    return null;
+  }
+}
 
-//   // 🔥 FINAL IMAGE LOGIC (ALL CASES)
-//   const image =
-//     article?.image ||
-//     (Array.isArray(article?.images) && article.images[0]) ||
-//     getYouTubeThumb(article?.video) ||
-//     (Array.isArray(article?.videos)
-//       ? getYouTubeThumb(article.videos[0])
-//       : null) ||
-//     `${siteUrl}/video-placeholder.png`; // FINAL FALLBACK
+/* ================= HEAD ================= */
 
-//   return (
-//     <>
-//       <title>{title}</title>
-//       <meta name="description" content={description} />
+export default async function Head({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const siteUrl = "https://www.bharatvartanews.com";
+  const article = await PublicApi.getArticleBySlug(params.slug);
 
-//       <meta property="og:type" content="article" />
-//       <meta property="og:site_name" content="Bharat Varta News" />
-//       <meta property="og:title" content={title} />
-//       <meta property="og:description" content={description} />
-//       <meta property="og:url" content={`${siteUrl}/articles/${params.slug}`} />
-//       <meta property="og:image" content={image} />
-//       <meta property="og:image:width" content="1200" />
-//       <meta property="og:image:height" content="630" />
+  const title = article?.title || "Bharat Varta News";
+  const description =
+    article?.summary ||
+    article?.excerpt ||
+    article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
+    "Latest news from Bharat Varta News";
 
-//       <meta name="twitter:card" content="summary_large_image" />
-//       <meta name="twitter:title" content={title} />
-//       <meta name="twitter:description" content={description} />
-//       <meta name="twitter:image" content={image} />
-//     </>
-//   );
-// }
+  /* ========= FINAL IMAGE RESOLUTION ========= */
+
+  let ogImage = `${siteUrl}/app_logo.png`; // default
+
+  // IMAGE ARTICLE
+  if (isImage(article?.image)) {
+    ogImage = article.image;
+  } else if (Array.isArray(article?.images) && isImage(article.images[0])) {
+    ogImage = article.images[0];
+  }
+
+  // VIDEO ARTICLE
+  else if (article?.video || article?.videos?.length) {
+    const v = article.video || article.videos[0];
+
+    if (isYouTube(v)) {
+      ogImage = getYouTubeThumb(v) || `${siteUrl}/video-placeholder.png`;
+    } else {
+      // mp4 / hosted video
+      ogImage = `${siteUrl}/video-placeholder.png`;
+    }
+  }
+
+  return (
+    <>
+      <title>{title}</title>
+      <meta name="description" content={description} />
+
+      {/* OpenGraph */}
+      <meta property="og:type" content="article" />
+      <meta property="og:site_name" content="Bharat Varta News" />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta
+        property="og:url"
+        content={`${siteUrl}/articles/${params.slug}`}
+      />
+      <meta property="og:image" content={ogImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+
+      {/* Twitter */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={ogImage} />
+    </>
+  );
+}
