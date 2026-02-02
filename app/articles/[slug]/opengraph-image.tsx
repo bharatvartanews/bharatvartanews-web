@@ -24,47 +24,29 @@ const getYouTubeThumb = (url?: string) => {
   }
 };
 
-export default async function OGImage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function OGImage({ params }: { params: { slug: string } }) {
   const article = await PublicApi.getArticleBySlug(params.slug);
 
-  let bgImage: string;
+  let bgImage = "https://www.bharatvartanews.com/app_logo.png";
   let isVideo = false;
 
-  /* ========== IMAGE ARTICLE ========== */
+  // ✅ IMAGE CASE
   if (isImage(article?.image)) {
     bgImage = article.image;
-  } else if (
-    Array.isArray(article?.images) &&
-    isImage(article.images[0])
-  ) {
+  } else if (Array.isArray(article?.images) && isImage(article.images[0])) {
     bgImage = article.images[0];
   }
 
-  /* ========== VIDEO ARTICLE ========== */
+  // ✅ VIDEO CASE
   else if (article?.video || article?.videos?.length) {
     const v = article.video || article.videos?.[0];
 
     if (isYouTube(v)) {
-        const yt = getYouTubeThumb(v);
-bgImage = yt || "https://www.bharatvartanews.com/video-placeholder.png";
-isVideo = true;
-
-    //   bgImage = getYouTubeThumb(v)!;
-    //   isVideo = true;
+      bgImage = getYouTubeThumb(v)!;
     } else {
-      // NON-YOUTUBE VIDEO → PLACEHOLDER
       bgImage = "https://www.bharatvartanews.com/video-placeholder.png";
-      isVideo = true;
     }
-  }
-
-  /* ========== NO MEDIA ========== */
-  else {
-    bgImage = "https://www.bharatvartanews.com/app_logo.png";
+    isVideo = true;
   }
 
   const logo = fs.readFileSync(
@@ -74,7 +56,6 @@ isVideo = true;
   return new ImageResponse(
     (
       <div style={{ width: "100%", height: "100%", position: "relative" }}>
-        {/* Background */}
         <img
           src={bgImage}
           style={{
@@ -101,13 +82,13 @@ isVideo = true;
           src={logo as any}
           style={{
             position: "absolute",
-            top: 30,
-            right: 30,
-            width: 90,
-            height: 90,
+            top: 24,
+            right: 24,
+            width: 80,
+            height: 80,
             borderRadius: "50%",
             background: "#fff",
-            padding: 8,
+            padding: 6,
           }}
         />
 
