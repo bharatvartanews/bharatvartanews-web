@@ -30,19 +30,19 @@ export default async function OGImage({ params }: { params: { slug: string } }) 
   let bgImage = "https://www.bharatvartanews.com/app_logo.png";
   let isVideo = false;
 
-  // ✅ IMAGE CASE
+  // ✅ IMAGE
   if (isImage(article?.image)) {
     bgImage = article.image;
   } else if (Array.isArray(article?.images) && isImage(article.images[0])) {
     bgImage = article.images[0];
   }
 
-  // ✅ VIDEO CASE
+  // ✅ VIDEO
   else if (article?.video || article?.videos?.length) {
-    const v = article.video || article.videos?.[0];
+    const v = article.video || article.videos[0];
 
     if (isYouTube(v)) {
-      bgImage = getYouTubeThumb(v)!;
+      bgImage = getYouTubeThumb(v) || bgImage;
     } else {
       bgImage = "https://www.bharatvartanews.com/video-placeholder.png";
     }
@@ -58,26 +58,18 @@ export default async function OGImage({ params }: { params: { slug: string } }) 
       <div style={{ width: "100%", height: "100%", position: "relative" }}>
         <img
           src={bgImage}
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-          }}
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
         />
 
-        {/* Gradient */}
         <div
           style={{
             position: "absolute",
             inset: 0,
             background:
-              "linear-gradient(to top, rgba(0,0,0,.75), rgba(0,0,0,.1))",
+              "linear-gradient(to top, rgba(0,0,0,.7), rgba(0,0,0,.1))",
           }}
         />
 
-        {/* Logo watermark */}
         <img
           src={logo as any}
           style={{
@@ -88,11 +80,10 @@ export default async function OGImage({ params }: { params: { slug: string } }) 
             height: 80,
             borderRadius: "50%",
             background: "#fff",
-            padding: 6,
+            padding: 8,
           }}
         />
 
-        {/* Play icon */}
         {isVideo && (
           <div
             style={{
@@ -104,24 +95,10 @@ export default async function OGImage({ params }: { params: { slug: string } }) 
               height: 90,
               borderRadius: "50%",
               background: "rgba(0,0,0,.6)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
             }}
-          >
-            <div
-              style={{
-                width: 0,
-                height: 0,
-                borderTop: "18px solid transparent",
-                borderBottom: "18px solid transparent",
-                borderLeft: "28px solid white",
-              }}
-            />
-          </div>
+          />
         )}
 
-        {/* Title */}
         <div
           style={{
             position: "absolute",
@@ -131,10 +108,9 @@ export default async function OGImage({ params }: { params: { slug: string } }) 
             color: "#fff",
             fontSize: 44,
             fontWeight: 800,
-            lineHeight: 1.25,
           }}
         >
-          {article?.title || "Bharat Varta News"}
+          {article?.title}
         </div>
       </div>
     ),
