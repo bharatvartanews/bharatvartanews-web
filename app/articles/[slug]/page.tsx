@@ -523,6 +523,31 @@ function getYouTubeThumb(url: string) {
   }
 }
 
+function getVideoPreviewImage(
+  url: string,
+  siteUrl: string
+): string {
+  // YouTube thumbnail
+  if (url.includes("youtube.com") || url.includes("youtu.be")) {
+    try {
+      const id = url.includes("youtu.be")
+        ? url.split("youtu.be/")[1]
+        : new URL(url).searchParams.get("v");
+
+      if (id) {
+        return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+      }
+    } catch {
+      // ignore
+    }
+  }
+
+  // ❌ Any non-YouTube video (mp4, webm, etc.)
+  // WhatsApp cannot generate thumbnails → use static image
+  return `${siteUrl}/video-placeholder.png`;
+}
+
+
 function isValidImage(url?: string) {
   return !!url && /\.(jpg|jpeg|png|webp)$/i.test(url);
 }
@@ -671,8 +696,8 @@ function injectMedia(body: string, media: string[]) {
 export async function generateMetadata(
   { params }: { params: { slug: string } }
 ): Promise<Metadata> {
-  const siteUrl = "https://www.bharatvartanews.com";
 
+  const siteUrl = "https://www.bharatvartanews.com";
   const article = await PublicApi.getArticleBySlug(params.slug);
 
   const title = article?.title || "Bharat Varta News";
@@ -682,44 +707,36 @@ export async function generateMetadata(
     article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
     "Latest news from Bharat Varta News";
 
-  let ogImage: string | null = null;
+  // 🔥 DEFAULT FIRST (VERY IMPORTANT)
+  let ogImage = `${siteUrl}/og-default.jpeg`;
 
-  /* ================= IMAGE CASE ================= */
+  /* ================= IMAGE ================= */
 
-  if (article?.image) {
+  if (article?.image && article.image.startsWith("http")) {
     ogImage = article.image;
   }
 
-  if (!ogImage && Array.isArray(article?.images) && article.images.length > 0) {
+  else if (
+    Array.isArray(article?.images) &&
+    article.images.length > 0 &&
+    article.images[0].startsWith("http")
+  ) {
     ogImage = article.images[0];
   }
 
-  /* ================= VIDEO CASE ================= */
+  /* ================= VIDEO ================= */
 
   // single video
-  if (!ogImage && article?.video) {
-    if (isYouTube(article.video)) {
-      ogImage = getYouTubeThumb(article.video);
-    } else {
-      // mp4 / other video → WhatsApp needs static image
-      ogImage = `${siteUrl}/video-placeholder.png`;
-    }
+  else if (article?.video) {
+    ogImage = getVideoPreviewImage(article.video, siteUrl);
   }
 
   // videos array
-  if (!ogImage && Array.isArray(article?.videos) && article.videos.length > 0) {
-    const v = article.videos[0];
-    if (isYouTube(v)) {
-      ogImage = getYouTubeThumb(v);
-    } else {
-      ogImage = `${siteUrl}/video-placeholder.png`;
-    }
-  }
-
-  /* ================= FINAL FALLBACK ================= */
-
-  if (!ogImage) {
-    ogImage = `${siteUrl}/app_logo.png`;
+  else if (
+    Array.isArray(article?.videos) &&
+    article.videos.length > 0
+  ) {
+    ogImage = getVideoPreviewImage(article.videos[0], siteUrl);
   }
 
   return {
@@ -747,6 +764,7 @@ export async function generateMetadata(
     },
   };
 }
+
 
 
 /* ===================== PAGE ===================== */
