@@ -779,7 +779,6 @@ function injectMedia(body: string, media: string[]) {
 //   };
 // }
 
-
 export async function generateMetadata(
   { params }: { params: { slug: string } }
 ): Promise<Metadata> {
@@ -794,10 +793,10 @@ export async function generateMetadata(
     article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
     "Latest news from Bharat Varta News";
 
-  // DEFAULT (always valid)
+  // 🔒 DEFAULT → placeholder
   let ogImage = `${siteUrl}/video-placeholder.png`;
 
-  // IMAGE
+  // ✅ IMAGE (single)
   if (
     article?.image &&
     typeof article.image === "string" &&
@@ -806,6 +805,7 @@ export async function generateMetadata(
     ogImage = article.image;
   }
 
+  // ✅ IMAGES ARRAY
   else if (
     Array.isArray(article?.images) &&
     article.images.length > 0 &&
@@ -815,25 +815,7 @@ export async function generateMetadata(
     ogImage = article.images[0];
   }
 
-  // SINGLE VIDEO
-  else if (article?.video) {
-    if (isYouTube(article.video)) {
-      const yt = getYouTubeThumb(article.video);
-      if (yt) ogImage = yt;
-    }
-  }
-
-  // VIDEOS ARRAY
-  else if (
-    Array.isArray(article?.videos) &&
-    article.videos.length > 0
-  ) {
-    const v = article.videos[0];
-    if (isYouTube(v)) {
-      const yt = getYouTubeThumb(v);
-      if (yt) ogImage = yt;
-    }
-  }
+  // ❌ VIDEO / VIDEOS → DO NOTHING → placeholder stays
 
   return {
     title,
@@ -860,6 +842,7 @@ export async function generateMetadata(
     },
   };
 }
+
 
 /* ===================== PAGE ===================== */
 
