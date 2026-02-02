@@ -1,13 +1,13 @@
 /* =====================================================
-   BHARAT VARTA – MOBILE ADAPTATION (DESIGN SAFE)
-   Desktop layout is NOT touched
+   BHARAT VARTA – MOBILE FIX (DESIGN SAFE)
+  
 ===================================================== */
 
 @media (max-width: 768px) {
 
-  /* ===============================
+  /* -------------------------------
      GLOBAL SAFETY
-  ================================ */
+  -------------------------------- */
   html, body {
     overflow-x: hidden;
   }
@@ -16,29 +16,35 @@
     padding: 14px;
   }
 
-  /* ===============================
-     HEADER – CONTROLLED STACKING
-  ================================ */
+  /* -------------------------------
+     HEADER – FORCE LINE STRUCTURE
+  -------------------------------- */
 
   .header-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    row-gap: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
 
-  /* LINE 1 */
+  /* LINE 1: Logo + Site name */
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
   .logo {
-    grid-column: 1 / 2;
+    position: absolute;
+    left: 0;
   }
 
   .logo img {
-    height: 46px;
+    height: 44px;
   }
 
   .site-name,
   .logo-text {
-    grid-column: 1 / -1;
-    text-align: center;
     font-size: 18px;
     font-weight: 700;
     color: var(--primary);
@@ -46,21 +52,20 @@
 
   /* hide language toggle */
   .lang-toggle {
-    display: none;
+    display: none !important;
   }
 
-  /* LINE 2 */
+  /* LINE 2: Search only */
   .header-search {
-    grid-column: 1 / -1;
+    width: 100%;
   }
 
   .header-search input {
     width: 100%;
   }
 
-  /* LINE 3 */
+  /* LINE 3: Nav + profile */
   .nav {
-    grid-column: 1 / -1;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -77,9 +82,9 @@
     align-items: center;
   }
 
-  /* ===============================
-     MAIN GRID – SINGLE COLUMN
-  ================================ */
+  /* -------------------------------
+     MAIN GRID → SINGLE COLUMN
+  -------------------------------- */
 
   .grid {
     display: flex;
@@ -87,18 +92,18 @@
     gap: 14px;
   }
 
-  /* ===============================
-     TRENDING HEADER (FIRST)
-  ================================ */
+  /* -------------------------------
+     TRENDING FIRST
+  -------------------------------- */
 
   .center-section-header {
     order: 1;
     margin-bottom: 6px;
   }
 
-  /* ===============================
-     CATEGORIES – BELOW TRENDING
-  ================================ */
+  /* -------------------------------
+     CATEGORIES BELOW TRENDING
+  -------------------------------- */
 
   .side-card {
     order: 2;
@@ -133,9 +138,9 @@
     height: 18px;
   }
 
-  /* ===============================
-     NEWS LIST – MOBILE FRIENDLY
-  ================================ */
+  /* -------------------------------
+     NEWS LIST – MOBILE ADAPTIVE
+  -------------------------------- */
 
   section {
     order: 3;
@@ -171,9 +176,9 @@
     font-size: 14px;
   }
 
-  /* ===============================
-     RASHIFAL – DESKTOP-LIKE INPUT
-  ================================ */
+  /* -------------------------------
+     RASHIFAL – DESKTOP LIKE
+  -------------------------------- */
 
   .right {
     order: 4;
@@ -202,9 +207,9 @@
     gap: 6px;
   }
 
-  /* ===============================
-     FOOTER – COMPACT & CENTERED
-  ================================ */
+  /* -------------------------------
+     FOOTER – COMPACT
+  -------------------------------- */
 
   .bv-footer-inner {
     grid-template-columns: 1fr;
@@ -234,9 +239,9 @@
     padding: 10px;
   }
 
-  /* ===============================
+  /* -------------------------------
      BACK TO TOP
-  ================================ */
+  -------------------------------- */
 
   .bv-back-to-top {
     bottom: 16px;
