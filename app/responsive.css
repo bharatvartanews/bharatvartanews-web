@@ -1,6 +1,6 @@
 /* =====================================================
-   BHARAT VARTA – MOBILE FIX (DESIGN SAFE)
-  
+   BHARAT VARTA – MOBILE ADAPTIVE CSS (NO STRUCTURE CHANGE)
+   Desktop remains 100% untouched
 ===================================================== */
 
 @media (max-width: 768px) {
@@ -17,46 +17,44 @@
   }
 
   /* -------------------------------
-     HEADER – FORCE LINE STRUCTURE
+     HEADER – FORCE ROWS USING GRID
+     (NO HTML CHANGE)
   -------------------------------- */
 
   .header-inner {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  /* LINE 1: Logo + Site name */
-  .header-top {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      "logo title title"
+      "search search search"
+      "nav nav profile";
+    row-gap: 10px;
     align-items: center;
-    justify-content: center;
-    position: relative;
   }
 
+  /* Logo */
   .logo {
-    position: absolute;
-    left: 0;
+    grid-area: logo;
   }
 
   .logo img {
     height: 44px;
   }
 
+  /* Website name (existing text/logo text) */
   .site-name,
   .logo-text {
+    grid-area: title;
+    text-align: center;
     font-size: 18px;
     font-weight: 700;
     color: var(--primary);
   }
 
-  /* hide language toggle */
-  .lang-toggle {
-    display: none !important;
-  }
-
-  /* LINE 2: Search only */
-  .header-search {
+  /* Search */
+  .header-search,
+  .search-box {
+    grid-area: search;
     width: 100%;
   }
 
@@ -64,12 +62,12 @@
     width: 100%;
   }
 
-  /* LINE 3: Nav + profile */
+  /* Navigation */
   .nav {
+    grid-area: nav;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 6px;
+    justify-content: flex-start;
+    gap: 10px;
   }
 
   .nav a {
@@ -77,9 +75,15 @@
     padding: 6px 10px;
   }
 
+  /* Profile */
   .header-actions {
-    display: flex;
-    align-items: center;
+    grid-area: profile;
+    justify-self: end;
+  }
+
+  /* Hide language toggle on mobile only */
+  .lang-toggle {
+    display: none;
   }
 
   /* -------------------------------
@@ -103,6 +107,7 @@
 
   /* -------------------------------
      CATEGORIES BELOW TRENDING
+     (SAME DESIGN, HORIZONTAL)
   -------------------------------- */
 
   .side-card {
@@ -112,7 +117,7 @@
     gap: 10px;
     overflow-x: auto;
     padding: 8px 4px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     scrollbar-width: none;
   }
 
@@ -139,7 +144,8 @@
   }
 
   /* -------------------------------
-     NEWS LIST – MOBILE ADAPTIVE
+     NEWS LIST – MOBILE FRIENDLY
+     (NO SIDE SCROLL)
   -------------------------------- */
 
   section {
@@ -177,7 +183,8 @@
   }
 
   /* -------------------------------
-     RASHIFAL – DESKTOP LIKE
+     RASHIFAL – KEEP DESKTOP LOOK
+     (JUST FIX WIDTH)
   -------------------------------- */
 
   .right {
@@ -193,13 +200,11 @@
   .dob-box input {
     flex: 1;
     min-height: 40px;
-    font-size: 14px;
   }
 
   .dob-box button {
     min-height: 40px;
     padding: 0 14px;
-    font-size: 14px;
   }
 
   .rashi-grid {
@@ -208,22 +213,21 @@
   }
 
   /* -------------------------------
-     FOOTER – COMPACT
+     FOOTER – COMPACT ONLY
   -------------------------------- */
 
   .bv-footer-inner {
     grid-template-columns: 1fr;
-    gap: 16px;
     text-align: center;
-    padding: 20px 16px;
-  }
-
-  .bv-footer-logo {
-    margin: 0 auto;
+    gap: 16px;
   }
 
   .bv-footer-social {
     justify-content: center;
+  }
+
+  .bv-footer-logo {
+    margin: 0 auto;
   }
 
   .bv-clock-time {
