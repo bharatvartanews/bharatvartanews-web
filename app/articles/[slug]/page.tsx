@@ -523,6 +523,11 @@ function getYouTubeThumb(url: string) {
   }
 }
 
+function isValidImage(url?: string) {
+  return !!url && /\.(jpg|jpeg|png|webp)$/i.test(url);
+}
+
+
 function isVideoFile(url: string) {
   return /\.(mp4|webm|ogg)$/i.test(url);
 }
@@ -600,6 +605,69 @@ function injectMedia(body: string, media: string[]) {
 
 /* ===================== METADATA (FIXED IMAGE LOGIC ONLY) ===================== */
 
+
+// export async function generateMetadata(
+//   { params }: { params: { slug: string } }
+// ): Promise<Metadata> {
+//   const siteUrl = "https://www.bharatvartanews.com";
+
+//   const article = await PublicApi.getArticleBySlug(params.slug);
+
+//   const title = article?.title || "Bharat Varta News";
+//   const description =
+//     article?.summary ||
+//     article?.excerpt ||
+//     article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
+//     "Latest news from Bharat Varta News";
+
+//   // 🔥 ONLY FIX: preview image logic
+//   // const ogImage =
+//   //   article?.image ||
+//   //   (Array.isArray(article?.images) && article.images[0]) ||
+//   //   (isYouTube(article?.video)
+//   //     ? getYouTubeThumb(article.video)
+//   //     : null) ||
+//   //   `${siteUrl}/app_logo.png`; // fallback
+
+//   const ogImage =
+//   article?.image ||
+//   (Array.isArray(article?.images) && article.images[0]) ||
+//   (
+//     isYouTube(article?.video)
+//       ? getYouTubeThumb(article.video)
+//       : Array.isArray(article?.videos) && isYouTube(article.videos[0])
+//         ? getYouTubeThumb(article.videos[0])
+//         : null
+//   ) ||
+//   `${siteUrl}/video-placeholder.png`;
+
+
+//   return {
+//     title,
+//     description,
+//     openGraph: {
+//       type: "article",
+//       url: `${siteUrl}/articles/${params.slug}`,
+//       siteName: "Bharat Varta News",
+//       title,
+//       description,
+//       images: [
+//         {
+//           url: ogImage,
+//           width: 1200,
+//           height: 630,
+//         },
+//       ],
+//     },
+//     twitter: {
+//       card: "summary_large_image",
+//       title,
+//       description,
+//       images: [ogImage],
+//     },
+//   };
+// }
+
 export async function generateMetadata(
   { params }: { params: { slug: string } }
 ): Promise<Metadata> {
@@ -614,27 +682,45 @@ export async function generateMetadata(
     article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
     "Latest news from Bharat Varta News";
 
-  // 🔥 ONLY FIX: preview image logic
-  // const ogImage =
-  //   article?.image ||
-  //   (Array.isArray(article?.images) && article.images[0]) ||
-  //   (isYouTube(article?.video)
-  //     ? getYouTubeThumb(article.video)
-  //     : null) ||
-  //   `${siteUrl}/app_logo.png`; // fallback
+  let ogImage: string | null = null;
 
-  const ogImage =
-  article?.image ||
-  (Array.isArray(article?.images) && article.images[0]) ||
-  (
-    isYouTube(article?.video)
-      ? getYouTubeThumb(article.video)
-      : Array.isArray(article?.videos) && isYouTube(article.videos[0])
-        ? getYouTubeThumb(article.videos[0])
-        : null
-  ) ||
-  `${siteUrl}/video-placeholder.png`;
+  /* ================= IMAGE CASE ================= */
 
+  if (article?.image) {
+    ogImage = article.image;
+  }
+
+  if (!ogImage && Array.isArray(article?.images) && article.images.length > 0) {
+    ogImage = article.images[0];
+  }
+
+  /* ================= VIDEO CASE ================= */
+
+  // single video
+  if (!ogImage && article?.video) {
+    if (isYouTube(article.video)) {
+      ogImage = getYouTubeThumb(article.video);
+    } else {
+      // mp4 / other video → WhatsApp needs static image
+      ogImage = `${siteUrl}/video-placeholder.png`;
+    }
+  }
+
+  // videos array
+  if (!ogImage && Array.isArray(article?.videos) && article.videos.length > 0) {
+    const v = article.videos[0];
+    if (isYouTube(v)) {
+      ogImage = getYouTubeThumb(v);
+    } else {
+      ogImage = `${siteUrl}/video-placeholder.png`;
+    }
+  }
+
+  /* ================= FINAL FALLBACK ================= */
+
+  if (!ogImage) {
+    ogImage = `${siteUrl}/app_logo.png`;
+  }
 
   return {
     title,
@@ -661,6 +747,7 @@ export async function generateMetadata(
     },
   };
 }
+
 
 /* ===================== PAGE ===================== */
 
