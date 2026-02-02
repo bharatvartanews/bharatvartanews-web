@@ -600,102 +600,74 @@ function injectMedia(body: string, media: string[]) {
 
 /* ===================== METADATA (FIXED IMAGE LOGIC ONLY) ===================== */
 
-// export async function generateMetadata(
-//   { params }: { params: { slug: string } }
-// ): Promise<Metadata> {
-
-//   const siteUrl = "https://www.bharatvartanews.com";
-//   const article = await PublicApi.getArticleBySlug(params.slug);
-
-//   const title = article?.title || "Bharat Varta News";
-//   const description =
-//     article?.summary ||
-//     article?.excerpt ||
-//     article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
-//     "Latest news from Bharat Varta News";
-
-//   // ✅ DEFAULT (NO MEDIA CASE)
-//   let ogImage = `${siteUrl}/app_logo.png`;
-
-//   /* ================= IMAGE ================= */
-//   if (article?.image) {
-//     ogImage = article.image;
-//   }
-
-//   else if (
-//     Array.isArray(article?.images) &&
-//     article.images.length > 0
-//   ) {
-//     ogImage = article.images[0];
-//   }
-
-//   /* ================= VIDEO ================= */
-
-//   else if (article?.video) {
-
-//     // YouTube video
-//     if (isYouTube(article.video)) {
-//       const yt = getYouTubeThumb(article.video);
-//       if (yt) ogImage = yt;
-//     }
-
-//     // Non-YouTube video (mp4, hosted)
-//     else {
-//       ogImage = `${siteUrl}/video-placeholder.png`;
-//     }
-//   }
-
-//   else if (
-//     Array.isArray(article?.videos) &&
-//     article.videos.length > 0
-//   ) {
-//     const v = article.videos[0];
-
-//     if (isYouTube(v)) {
-//       const yt = getYouTubeThumb(v);
-//       if (yt) ogImage = yt;
-//     } else {
-//       ogImage = `${siteUrl}/video-placeholder.png`;
-//     }
-//   }
-
-//   return {
-//     title,
-//     description,
-//     openGraph: {
-//       type: "article",
-//       url: `${siteUrl}/articles/${params.slug}`,
-//       siteName: "Bharat Varta News",
-//       title,
-//       description,
-//       images: [
-//         {
-//           url: ogImage,
-//           width: 1200,
-//           height: 630,
-//         },
-//       ],
-//     },
-//     twitter: {
-//       card: "summary_large_image",
-//       title,
-//       description,
-//       images: [ogImage],
-//     },
-//   };
-// }
-
 export async function generateMetadata(
   { params }: { params: { slug: string } }
-) {
+): Promise<Metadata> {
+
   const siteUrl = "https://www.bharatvartanews.com";
-  const ogImage = `${siteUrl}/articles/${params.slug}/opengraph-image`;
+  const article = await PublicApi.getArticleBySlug(params.slug);
+
+  const title = article?.title || "Bharat Varta News";
+  const description =
+    article?.summary ||
+    article?.excerpt ||
+    article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
+    "Latest news from Bharat Varta News";
+
+  // ✅ DEFAULT (NO MEDIA CASE)
+  let ogImage = `${siteUrl}/app_logo.png`;
+
+  /* ================= IMAGE ================= */
+  if (article?.image) {
+    ogImage = article.image;
+  }
+
+  else if (
+    Array.isArray(article?.images) &&
+    article.images.length > 0
+  ) {
+    ogImage = article.images[0];
+  }
+
+  /* ================= VIDEO ================= */
+
+  else if (article?.video) {
+
+    // YouTube video
+    if (isYouTube(article.video)) {
+      const yt = getYouTubeThumb(article.video);
+      if (yt) ogImage = yt;
+    }
+
+    // Non-YouTube video (mp4, hosted)
+    else {
+      ogImage = `${siteUrl}/video-placeholder.png`;
+    }
+  }
+
+  else if (
+    Array.isArray(article?.videos) &&
+    article.videos.length > 0
+  ) {
+    const v = article.videos[0];
+
+    if (isYouTube(v)) {
+      const yt = getYouTubeThumb(v);
+      if (yt) ogImage = yt;
+    } else {
+      ogImage = `${siteUrl}/video-placeholder.png`;
+    }
+  }
 
   return {
+    title,
+    description,
     openGraph: {
       type: "article",
       url: `${siteUrl}/articles/${params.slug}`,
       siteName: "Bharat Varta News",
+      title,
+      description,
       images: [
         {
           url: ogImage,
@@ -706,6 +678,8 @@ export async function generateMetadata(
     },
     twitter: {
       card: "summary_large_image",
+      title,
+      description,
       images: [ogImage],
     },
   };
