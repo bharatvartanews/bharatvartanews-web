@@ -1,71 +1,24 @@
 /* =====================================================
-   MOBILE FIRST RESPONSIVE OVERRIDES
-
+   BHARAT VARTA – MOBILE ADAPTATION (SAFE)
+   Desktop design is UNTOUCHED
 ===================================================== */
 
-/* ===============================
-   GLOBAL MOBILE FIXES
-================================ */
 @media (max-width: 768px) {
 
-  body {
-    font-size: 14px;
+  /* ===============================
+     GLOBAL SAFETY
+  ================================ */
+  html, body {
+    overflow-x: hidden;
   }
 
   .container {
-    padding: 12px;
+    padding: 14px;
   }
 
   /* ===============================
-     HEADER (MOBILE)
-  ================================ */
-
-  .header-inner {
-    grid-template-columns: auto 1fr;
-    grid-template-rows: auto auto;
-    row-gap: 10px;
-  }
-
-  /* LOGO LEFT */
-  .logo {
-    grid-column: 1 / 2;
-  }
-
-  /* REMOVE LANGUAGE TOGGLE */
-  .lang-toggle {
-    display: none;
-  }
-
-  /* WEBSITE NAME CENTERED */
-  .logo img {
-    height: 46px;
-  }
-
-  /* SEARCH + NAV SECOND LINE */
-  .search-box,
-  .header-search {
-    grid-column: 1 / -1;
-    width: 100%;
-  }
-
-  .nav {
-    grid-column: 1 / -1;
-    justify-content: space-between;
-  }
-
-  .nav a {
-    padding: 6px 12px;
-    font-size: 14px;
-  }
-
-  /* PROFILE ICON */
-  .header-actions {
-    grid-column: 2 / 3;
-    justify-self: end;
-  }
-
-  /* ===============================
-     GRID LAYOUT (MOBILE)
+     MAIN GRID
+     (Collapse columns, keep order)
   ================================ */
 
   .grid {
@@ -75,15 +28,16 @@
 
   /* ===============================
      TRENDING HEADER
+     (NO DESIGN CHANGE)
   ================================ */
 
   .center-section-header {
-    font-size: 16px;
-    padding: 10px 12px;
+    margin-bottom: 8px;
   }
 
   /* ===============================
-     CATEGORIES → HORIZONTAL (MOBILE)
+     CATEGORIES → HORIZONTAL (MOBILE ONLY)
+     Below Trending News
   ================================ */
 
   .side-card {
@@ -91,8 +45,8 @@
     flex-direction: row;
     gap: 10px;
     overflow-x: auto;
-    padding: 10px 6px;
-    margin-bottom: 12px;
+    padding: 8px 4px;
+    margin-bottom: 14px;
     scrollbar-width: none;
   }
 
@@ -100,10 +54,8 @@
     display: none;
   }
 
-  .category-header {
-    display: none; /* hide "All Categories" title */
-  }
-
+  /* Hide vertical-only elements */
+  .category-header,
   .category-divider {
     display: none;
   }
@@ -111,7 +63,7 @@
   .category-pill {
     flex: 0 0 auto;
     padding: 8px 14px;
-    font-size: 13px;
+    font-size: 14px;
     border-radius: 999px;
     white-space: nowrap;
   }
@@ -121,17 +73,30 @@
     height: 18px;
   }
 
-  .category-pill.active {
-    background: linear-gradient(135deg, #d32f2f, #b71c1c);
-    color: #fff;
-  }
-
   /* ===============================
-     NEWS CARD (MOBILE)
+     NEWS LIST – MOBILE ADAPTIVE
+     (NO HORIZONTAL SCROLL)
   ================================ */
 
   .news-card {
-    padding: 14px;
+    display: block;
+    padding: 16px;
+  }
+
+  .news-body-row {
+    display: block;
+  }
+
+  .news-image {
+    width: 100%;
+    height: 180px;
+    margin-bottom: 10px;
+  }
+
+  .news-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .news-title {
@@ -139,88 +104,61 @@
     line-height: 1.35;
   }
 
-  .news-body-row {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .news-image {
-    width: 100%;
-    height: 180px;
-  }
-
   .news-preview {
     font-size: 14px;
   }
 
   /* ===============================
-     RIGHT SIDEBAR → STACK
+     RASHIFAL
+     (KEEP DESKTOP LOOK, FIX WIDTH)
   ================================ */
 
-  .right {
-    order: 3;
-  }
-
-  /* ===============================
-     ASTROLOGY (MOBILE)
-  ================================ */
-
-  .rashi-grid {
-    grid-template-columns: repeat(4, 1fr);
+  .dob-box {
+    display: flex;
     gap: 6px;
   }
 
-  .rashi-card {
-    padding: 6px;
+  .dob-box input {
+    flex: 1;
+    min-height: 38px;
   }
 
-  .rashi-name {
-    font-size: 10px;
+  .dob-box button {
+    min-height: 38px;
+  }
+
+  .rashi-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 
   /* ===============================
-     FOOTER (MOBILE FIX)
+     FOOTER
+     (Collapse grid only)
   ================================ */
 
   .bv-footer-inner {
     grid-template-columns: 1fr;
     gap: 18px;
     text-align: center;
-    padding: 24px 16px;
-  }
-
-  .bv-footer-logo {
-    width: 120px;
-    margin: auto;
-  }
-
-  .bv-footer-company ul {
-    padding: 0;
   }
 
   .bv-footer-social {
     justify-content: center;
   }
 
-  .bv-clock-time {
-    font-size: 22px;
+  .bv-footer-logo {
+    margin: 0 auto;
   }
 
-  .bv-footer-bottom {
-    font-size: 12px;
-    padding: 10px;
-  }
-
-  /* Reduce footer height */
   .bv-footer {
-    margin-top: 30px;
-    border-radius: 24px 24px 0 0;
+    margin-top: 32px;
   }
 
-  /* BACK TO TOP BUTTON */
+  /* ===============================
+     BACK TO TOP
+  ================================ */
+
   .bv-back-to-top {
-    width: 38px;
-    height: 38px;
     bottom: 16px;
     right: 16px;
   }
