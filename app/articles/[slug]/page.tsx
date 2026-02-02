@@ -823,6 +823,7 @@ function injectMedia(body: string, media: string[]) {
 // }
 
 
+
 export async function generateMetadata(
   { params }: { params: { slug: string } }
 ): Promise<Metadata> {
@@ -837,53 +838,8 @@ export async function generateMetadata(
     article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
     "Latest news from Bharat Varta News";
 
-  /* ================= DEFAULT ================= */
-  // fallback for:
-  // - non-youtube video
-  // - no media
-  let ogImage = `${siteUrl}/video-placeholder.png`;
-
-  /* ================= IMAGE ================= */
-  if (article?.image && article.image.startsWith("http")) {
-    ogImage = article.image;
-  }
-  else if (
-    Array.isArray(article?.images) &&
-    article.images.length > 0 &&
-    article.images[0]?.startsWith("http")
-  ) {
-    ogImage = article.images[0];
-  }
-
-  /* ================= VIDEO (SINGLE) ================= */
-  else if (article?.video) {
-
-    // YouTube → real thumbnail
-    if (isYouTube(article.video)) {
-      const ytThumb = getYouTubeThumb(article.video);
-      if (ytThumb) ogImage = ytThumb;
-    }
-
-    // Any other video (mp4 / hosted / unknown)
-    else {
-      ogImage = `${siteUrl}/video-placeholder.png`;
-    }
-  }
-
-  /* ================= VIDEO (ARRAY) ================= */
-  else if (
-    Array.isArray(article?.videos) &&
-    article.videos.length > 0
-  ) {
-    const v = article.videos[0];
-
-    if (isYouTube(v)) {
-      const ytThumb = getYouTubeThumb(v);
-      if (ytThumb) ogImage = ytThumb;
-    } else {
-      ogImage = `${siteUrl}/video-placeholder.png`;
-    }
-  }
+  // 🔒 SINGLE SOURCE OF TRUTH
+  const ogImage = `${siteUrl}/articles/${params.slug}/opengraph-image`;
 
   return {
     title,

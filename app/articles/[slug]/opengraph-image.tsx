@@ -12,14 +12,13 @@ const isImage = (url?: string) =>
 const isYouTube = (url?: string) =>
   !!url && (url.includes("youtube.com") || url.includes("youtu.be"));
 
-const getYouTubeThumb = (url: string) => {
+const getYouTubeThumb = (url?: string) => {
+  if (!url) return null;
   try {
     const id = url.includes("youtu.be")
       ? url.split("youtu.be/")[1]
       : new URL(url).searchParams.get("v");
-    return id
-      ? `https://img.youtube.com/vi/${id}/hqdefault.jpg`
-      : null;
+    return id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : null;
   } catch {
     return null;
   }
@@ -32,19 +31,35 @@ export default async function OGImage({
 }) {
   const article = await PublicApi.getArticleBySlug(params.slug);
 
-  let bgImage: string | null = null;
+  let bgImage: string;
   let isVideo = false;
 
+  /* ========== IMAGE ARTICLE ========== */
   if (isImage(article?.image)) {
     bgImage = article.image;
-  } else if (Array.isArray(article?.images) && isImage(article.images[0])) {
+  } else if (
+    Array.isArray(article?.images) &&
+    isImage(article.images[0])
+  ) {
     bgImage = article.images[0];
-  } else if (isYouTube(article?.video)) {
-    bgImage = getYouTubeThumb(article.video);
-    isVideo = true;
   }
 
-  if (!bgImage) {
+  /* ========== VIDEO ARTICLE ========== */
+  else if (article?.video || article?.videos?.length) {
+    const v = article.video || article.videos?.[0];
+
+    if (isYouTube(v)) {
+      bgImage = getYouTubeThumb(v)!;
+      isVideo = true;
+    } else {
+      // NON-YOUTUBE VIDEO → PLACEHOLDER
+      bgImage = "https://www.bharatvartanews.com/video-placeholder.png";
+      isVideo = true;
+    }
+  }
+
+  /* ========== NO MEDIA ========== */
+  else {
     bgImage = "https://www.bharatvartanews.com/app_logo.png";
   }
 
@@ -73,7 +88,7 @@ export default async function OGImage({
             position: "absolute",
             inset: 0,
             background:
-              "linear-gradient(to top, rgba(0,0,0,.7), rgba(0,0,0,.1))",
+              "linear-gradient(to top, rgba(0,0,0,.75), rgba(0,0,0,.1))",
           }}
         />
 
