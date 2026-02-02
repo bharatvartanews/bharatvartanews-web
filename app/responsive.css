@@ -252,3 +252,85 @@
     right: 16px;
   }
 }
+
+/* ===============================
+   FIX: Categories BELOW Trending
+   (Mobile only)
+================================ */
+
+@media (max-width: 768px) {
+
+  /* Parent container must be flex */
+  .grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Trending header always first */
+  .center-section-header {
+    order: 1;
+  }
+
+  /* Categories strictly AFTER trending */
+  .grid > .side-card {
+    order: 2;
+  }
+
+  /* News list AFTER categories */
+  .grid > section {
+    order: 3;
+  }
+
+  /* Rashifal LAST */
+  .grid > .right {
+    order: 4;
+  }
+}
+/* ===============================
+   FIX: Rashifal like Desktop
+   (Mobile only)
+================================ */
+
+@media (max-width: 768px) {
+
+  /* Rashifal container */
+  .right {
+    padding: 14px;
+  }
+
+  /* Date + OK row exactly like desktop */
+  .dob-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .dob-box input[type="date"],
+  .dob-box input {
+    flex: 1;
+    min-height: 44px;
+    font-size: 14px;
+  }
+
+  .dob-box button {
+    min-height: 44px;
+    padding: 0 16px;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  /* Instruction text below input */
+  .right p,
+  .right .hint-text {
+    margin-top: 8px;
+    font-size: 13px;
+  }
+
+  /* Zodiac grid exactly like desktop, just narrower */
+  .rashi-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 12px;
+  }
+}
