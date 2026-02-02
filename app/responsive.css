@@ -1,13 +1,12 @@
 /* =====================================================
-   MOBILE LAYOUT – EXACT ORDER AS REQUESTED
-   Desktop remains 100% untouched
+   MOBILE FIRST RESPONSIVE OVERRIDES
+
 ===================================================== */
 
+/* ===============================
+   GLOBAL MOBILE FIXES
+================================ */
 @media (max-width: 768px) {
-
-  /* ===============================
-     GLOBAL
-  ================================ */
 
   body {
     font-size: 14px;
@@ -18,93 +17,73 @@
   }
 
   /* ===============================
-     HEADER – 4 LINE STRUCTURE
+     HEADER (MOBILE)
   ================================ */
 
   .header-inner {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 8px;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    row-gap: 10px;
   }
 
-  /* ---------- LINE 1 ---------- */
-  /* Logo left */
+  /* LOGO LEFT */
   .logo {
     grid-column: 1 / 2;
   }
 
-  .logo img {
-    height: 42px;
-  }
-
-  /* Website name center (if text exists) */
-  .site-name,
-  .logo span {
-    grid-column: 2 / 3;
-    text-align: center;
-    font-size: 16px;
-    font-weight: 700;
-  }
-
-  /* Hide language toggle */
+  /* REMOVE LANGUAGE TOGGLE */
   .lang-toggle {
-    display: none !important;
+    display: none;
   }
 
-  /* ---------- LINE 2 ---------- */
-  /* Search */
-  .header-search,
-  .search-box {
+  /* WEBSITE NAME CENTERED */
+  .logo img {
+    height: 46px;
+  }
+
+  /* SEARCH + NAV SECOND LINE */
+  .search-box,
+  .header-search {
     grid-column: 1 / -1;
-    order: 2;
     width: 100%;
   }
 
-  .header-search input {
-    width: 100%;
-  }
-
-  /* ---------- LINE 3 ---------- */
-  /* Navigation */
   .nav {
     grid-column: 1 / -1;
-    order: 3;
-    display: flex;
     justify-content: space-between;
-    gap: 6px;
   }
 
   .nav a {
-    font-size: 13px;
-    padding: 6px 10px;
+    padding: 6px 12px;
+    font-size: 14px;
   }
 
-  /* Profile icon inline with nav */
+  /* PROFILE ICON */
   .header-actions {
-    order: 3;
+    grid-column: 2 / 3;
+    justify-self: end;
   }
 
   /* ===============================
-     MAIN GRID
+     GRID LAYOUT (MOBILE)
   ================================ */
 
   .grid {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 16px;
   }
 
   /* ===============================
-     LINE 4 – TRENDING HEADER
+     TRENDING HEADER
   ================================ */
 
   .center-section-header {
-    font-size: 15px;
-    padding: 8px 12px;
-    margin-bottom: 8px;
+    font-size: 16px;
+    padding: 10px 12px;
   }
 
   /* ===============================
-     LINE 5 – CATEGORIES HORIZONTAL
+     CATEGORIES → HORIZONTAL (MOBILE)
   ================================ */
 
   .side-card {
@@ -112,7 +91,7 @@
     flex-direction: row;
     gap: 10px;
     overflow-x: auto;
-    padding: 8px 6px;
+    padding: 10px 6px;
     margin-bottom: 12px;
     scrollbar-width: none;
   }
@@ -121,91 +100,102 @@
     display: none;
   }
 
-  .category-header,
+  .category-header {
+    display: none; /* hide "All Categories" title */
+  }
+
   .category-divider {
     display: none;
   }
 
   .category-pill {
     flex: 0 0 auto;
-    padding: 6px 12px;
+    padding: 8px 14px;
     font-size: 13px;
     border-radius: 999px;
     white-space: nowrap;
   }
 
   .category-icon {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
+  }
+
+  .category-pill.active {
+    background: linear-gradient(135deg, #d32f2f, #b71c1c);
+    color: #fff;
   }
 
   /* ===============================
-     NEWS LIST – KEEP COMPACT
+     NEWS CARD (MOBILE)
   ================================ */
 
   .news-card {
     padding: 14px;
   }
 
-  .news-body-row {
-    display: flex;
-    gap: 12px;
-  }
-
-  .news-image {
-    width: 140px;
-    height: 90px;
-  }
-
   .news-title {
-    font-size: 15px;
+    font-size: 16px;
     line-height: 1.35;
   }
 
+  .news-body-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .news-image {
+    width: 100%;
+    height: 180px;
+  }
+
   .news-preview {
-    font-size: 13px;
-  }
-
-  /* ===============================
-     RASHIFAL – DESKTOP-LIKE INPUT
-  ================================ */
-
-  .dob-box {
-    display: flex;
-    gap: 8px;
-  }
-
-  .dob-box input {
-    flex: 1;
-    min-height: 42px;
     font-size: 14px;
   }
 
-  .dob-box button {
-    min-height: 42px;
-    padding: 0 14px;
-    font-size: 13px;
+  /* ===============================
+     RIGHT SIDEBAR → STACK
+  ================================ */
+
+  .right {
+    order: 3;
   }
+
+  /* ===============================
+     ASTROLOGY (MOBILE)
+  ================================ */
 
   .rashi-grid {
     grid-template-columns: repeat(4, 1fr);
     gap: 6px;
   }
 
+  .rashi-card {
+    padding: 6px;
+  }
+
+  .rashi-name {
+    font-size: 10px;
+  }
+
   /* ===============================
-     FOOTER – COMPACT & CENTERED
+     FOOTER (MOBILE FIX)
   ================================ */
 
   .bv-footer-inner {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 18px;
     text-align: center;
-    padding: 20px 16px;
+    padding: 24px 16px;
   }
 
   .bv-footer-logo {
     width: 120px;
     margin: auto;
+  }
+
+  .bv-footer-company ul {
+    padding: 0;
   }
 
   .bv-footer-social {
@@ -216,16 +206,18 @@
     font-size: 22px;
   }
 
-  .bv-footer {
-    margin-top: 24px;
-  }
-
   .bv-footer-bottom {
     font-size: 12px;
     padding: 10px;
   }
 
-  /* Back to top */
+  /* Reduce footer height */
+  .bv-footer {
+    margin-top: 30px;
+    border-radius: 24px 24px 0 0;
+  }
+
+  /* BACK TO TOP BUTTON */
   .bv-back-to-top {
     width: 38px;
     height: 38px;
