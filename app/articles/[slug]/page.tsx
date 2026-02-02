@@ -693,137 +693,6 @@ function injectMedia(body: string, media: string[]) {
 //   };
 // }
 
-// export async function generateMetadata(
-//   { params }: { params: { slug: string } }
-// ): Promise<Metadata> {
-
-//   const siteUrl = "https://www.bharatvartanews.com";
-//   const article = await PublicApi.getArticleBySlug(params.slug);
-
-//   const title = article?.title || "Bharat Varta News";
-//   const description =
-//     article?.summary ||
-//     article?.excerpt ||
-//     article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
-//     "Latest news from Bharat Varta News";
-
-//   // ✅ DEFAULT FIRST (VERY IMPORTANT)
-//   let ogImage = `${siteUrl}/video_placeholder.png`;
-
-//   /* ================= IMAGE ================= */
-//   if (article?.image && article.image.startsWith("http")) {
-//     ogImage = article.image;
-//   }
-
-//   else if (
-//     Array.isArray(article?.images) &&
-//     article.images.length > 0 &&
-//     article.images[0].startsWith("http")
-//   ) {
-//     ogImage = article.images[0];
-//   }
-
-//   /* ================= VIDEO ================= */
-
-//   // single video
-//   else if (article?.video) {
-
-//     if (isYouTube(article.video)) {
-//       const ytThumb = getYouTubeThumb(article.video);
-//       if (ytThumb) ogImage = ytThumb;
-//     }
-
-//     else {
-//       // mp4 / hosted video → static placeholder
-//       ogImage = `${siteUrl}/video-placeholder.png`;
-//     }
-//   }
-
-//   // videos array
-//   else if (Array.isArray(article?.videos) && article.videos.length > 0) {
-//     const v = article.videos[0];
-
-//     if (isYouTube(v)) {
-//       const ytThumb = getYouTubeThumb(v);
-//       if (ytThumb) ogImage = ytThumb;
-//     }
-
-//     else {
-//       ogImage = `${siteUrl}/video-placeholder.png`;
-//     }
-//   }
-
-//   return {
-//     title,
-//     description,
-//     openGraph: {
-//       type: "article",
-//       url: `${siteUrl}/articles/${params.slug}`,
-//       siteName: "Bharat Varta News",
-//       title,
-//       description,
-//       images: [
-//         {
-//           url: ogImage,
-//           width: 1200,
-//           height: 630,
-//         },
-//       ],
-//     },
-//     twitter: {
-//       card: "summary_large_image",
-//       title,
-//       description,
-//       images: [ogImage],
-//     },
-//   };
-// }
-
-// export async function generateMetadata(
-//   { params }: { params: { slug: string } }
-// ): Promise<Metadata> {
-
-//   const siteUrl = "https://www.bharatvartanews.com";
-//   const article = await PublicApi.getArticleBySlug(params.slug);
-
-//   const title = article?.title || "Bharat Varta News";
-//   const description =
-//     article?.summary ||
-//     article?.excerpt ||
-//     article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
-//     "Latest news from Bharat Varta News";
-
-//   // 🔒 SINGLE OG IMAGE SOURCE
-//   const ogImage = `${siteUrl}/articles/${params.slug}/opengraph-image`;
-
-//   return {
-//     title,
-//     description,
-//     openGraph: {
-//       type: "article",
-//       url: `${siteUrl}/articles/${params.slug}`,
-//       siteName: "Bharat Varta News",
-//       title,
-//       description,
-//       images: [
-//         {
-//           url: ogImage,
-//           width: 1200,
-//           height: 630,
-//         },
-//       ],
-//     },
-//     twitter: {
-//       card: "summary_large_image",
-//       title,
-//       description,
-//       images: [ogImage],
-//     },
-//   };
-// }
-
-
-
 export async function generateMetadata(
   { params }: { params: { slug: string } }
 ): Promise<Metadata> {
@@ -838,8 +707,51 @@ export async function generateMetadata(
     article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
     "Latest news from Bharat Varta News";
 
-  // 🔒 SINGLE SOURCE OF TRUTH
-  const ogImage = `${siteUrl}/articles/${params.slug}/opengraph-image`;
+  // ✅ DEFAULT FIRST (VERY IMPORTANT)
+  let ogImage = `${siteUrl}/video_placeholder.png`;
+
+  /* ================= IMAGE ================= */
+  if (article?.image && article.image.startsWith("http")) {
+    ogImage = article.image;
+  }
+
+  else if (
+    Array.isArray(article?.images) &&
+    article.images.length > 0 &&
+    article.images[0].startsWith("http")
+  ) {
+    ogImage = article.images[0];
+  }
+
+  /* ================= VIDEO ================= */
+
+  // single video
+  else if (article?.video) {
+
+    if (isYouTube(article.video)) {
+      const ytThumb = getYouTubeThumb(article.video);
+      if (ytThumb) ogImage = ytThumb;
+    }
+
+    else {
+      // mp4 / hosted video → static placeholder
+      ogImage = `${siteUrl}/video-placeholder.png`;
+    }
+  }
+
+  // videos array
+  else if (Array.isArray(article?.videos) && article.videos.length > 0) {
+    const v = article.videos[0];
+
+    if (isYouTube(v)) {
+      const ytThumb = getYouTubeThumb(v);
+      if (ytThumb) ogImage = ytThumb;
+    }
+
+    else {
+      ogImage = `${siteUrl}/video-placeholder.png`;
+    }
+  }
 
   return {
     title,
@@ -866,6 +778,7 @@ export async function generateMetadata(
     },
   };
 }
+
 
 /* ===================== PAGE ===================== */
 
