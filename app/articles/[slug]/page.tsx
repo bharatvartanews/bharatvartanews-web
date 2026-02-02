@@ -497,8 +497,8 @@ interface PageProps {
 
 /* ===================== HELPERS ===================== */
 
-function isYouTube(url: string) {
-  return url.includes("youtube.com") || url.includes("youtu.be");
+function isYouTube(url?: string) {
+  return !!url && (url.includes("youtube.com") || url.includes("youtu.be"));
 }
 
 function getYouTubeEmbed(url: string) {
@@ -507,6 +507,17 @@ function getYouTubeEmbed(url: string) {
       return `https://www.youtube.com/embed/${url.split("youtu.be/")[1]}`;
     }
     return `https://www.youtube.com/embed/${new URL(url).searchParams.get("v")}`;
+  } catch {
+    return null;
+  }
+}
+
+function getYouTubeThumb(url: string) {
+  try {
+    const id = url.includes("youtu.be")
+      ? url.split("youtu.be/")[1]
+      : new URL(url).searchParams.get("v");
+    return id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : null;
   } catch {
     return null;
   }
@@ -549,11 +560,7 @@ function buildAllMedia(article: any): string[] {
       if (embed) {
         media.push(`
           <div class="article-media">
-            <iframe
-              src="${embed}"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            ></iframe>
+            <iframe src="${embed}" allowfullscreen></iframe>
           </div>
         `);
       }
@@ -591,78 +598,43 @@ function injectMedia(body: string, media: string[]) {
   return output;
 }
 
-/* ===================== METADATA ===================== */
-
-// export async function generateMetadata(
-//   { params }: PageProps
-// ): Promise<Metadata> {
-//   const raw = params.slug;
-//   const isId = /^\d+$/.test(raw);
-
-//   const article = isId
-//     ? await PublicApi.getArticleById(raw)
-//     : await PublicApi.getArticleBySlug(raw);
-
-//   const SITE_URL = "https://www.bharatvartanews.com";
-
-//   if (!article) {
-//     return {
-//       title: "Bharat Varta News",
-//       description: "Latest news from Bharat Varta News",
-//     };
-//   }
-
-//   const title = article.title;
-//   const description =
-//     article.summary ||
-//     article.excerpt ||
-//     article.body?.replace(/<[^>]+>/g, "").slice(0, 150);
-
-//   // 🔥 THIS IS THE KEY
-//   const ogImage = `${SITE_URL}/og-default.jpg`;
-
-//   return {
-//     title,
-//     description,
-//     openGraph: {
-//       type: "article",
-//       url: `${SITE_URL}/articles/${params.slug}`,
-//       siteName: "Bharat Varta News",
-//       title,
-//       description,
-//       images: [
-//         {
-//           url: ogImage,
-//           width: 1200,
-//           height: 630,
-//         },
-//       ],
-//     },
-//     twitter: {
-//       card: "summary_large_image",
-//       title,
-//       description,
-//       images: [ogImage],
-//     },
-//   };
-// }
+/* ===================== METADATA (FIXED IMAGE LOGIC ONLY) ===================== */
 
 export async function generateMetadata(
   { params }: { params: { slug: string } }
 ): Promise<Metadata> {
   const siteUrl = "https://www.bharatvartanews.com";
 
+  const article = await PublicApi.getArticleBySlug(params.slug);
+
+  const title = article?.title || "Bharat Varta News";
+  const description =
+    article?.summary ||
+    article?.excerpt ||
+    article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
+    "Latest news from Bharat Varta News";
+
+  // 🔥 ONLY FIX: preview image logic
+  const ogImage =
+    article?.image ||
+    (Array.isArray(article?.images) && article.images[0]) ||
+    (isYouTube(article?.video)
+      ? getYouTubeThumb(article.video)
+      : null) ||
+    `${siteUrl}/app_logo.png`; // fallback
+
   return {
+    title,
+    description,
     openGraph: {
       type: "article",
       url: `${siteUrl}/articles/${params.slug}`,
       siteName: "Bharat Varta News",
-      title: "Bharat Varta News",
-      description: "Latest news from Bharat Varta News",
+      title,
+      description,
       images: [
         {
-          // 🔥 ONLY THIS IMAGE, ALWAYS
-          url: `${siteUrl}/articles/${params.slug}/opengraph-image`,
+          url: ogImage,
           width: 1200,
           height: 630,
         },
@@ -670,13 +642,12 @@ export async function generateMetadata(
     },
     twitter: {
       card: "summary_large_image",
-      images: [
-        `${siteUrl}/articles/${params.slug}/opengraph-image`,
-      ],
+      title,
+      description,
+      images: [ogImage],
     },
   };
 }
-
 
 /* ===================== PAGE ===================== */
 
@@ -714,14 +685,12 @@ export default async function ArticlePage({ params }: PageProps) {
   return (
     <main className="container">
       <div className="grid">
-        {/* LEFT */}
         <aside className="left">
           <Link href="/" className="category-pill">
             ← Back to News
           </Link>
         </aside>
 
-        {/* CENTER */}
         <section>
           <article className="article-card">
             <h1 className="article-title">{article.title}</h1>
@@ -744,7 +713,6 @@ export default async function ArticlePage({ params }: PageProps) {
           </article>
         </section>
 
-        {/* RIGHT */}
         <aside className="right">
           <h3>Related News</h3>
           <div className="right-card">More updates soon</div>

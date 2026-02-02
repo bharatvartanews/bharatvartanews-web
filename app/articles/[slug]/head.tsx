@@ -39,6 +39,17 @@
 // }
 import { PublicApi } from "../../services/publicApi";
 
+function getYouTubeThumb(url?: string) {
+  if (!url) return null;
+  try {
+    const id = url.includes("youtu.be")
+      ? url.split("youtu.be/")[1]
+      : new URL(url).searchParams.get("v");
+    return id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : null;
+  } catch {
+    return null;
+  }
+}
 export default async function Head({
   params,
 }: {
@@ -63,7 +74,11 @@ export default async function Head({
       .slice(0, 150) ||
     "Latest news from Bharat Varta News";
 
-  const image = `${siteUrl}/app_logo.png`; // STATIC, SAFE
+ const image =
+    article?.image ||
+    (Array.isArray(article?.images) && article.images[0]) ||
+    getYouTubeThumb(article?.video) ||
+    `${siteUrl}/app_logo.png`;
 
   return (
     <>

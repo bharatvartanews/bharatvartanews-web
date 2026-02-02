@@ -251,13 +251,28 @@ export default async function Home({ searchParams }) {
   const homeData = await api("/api/home");
 
   const categories = homeData.categories ?? [];
-  let articles = [];
+  const topNews = homeData.topNews ?? [];
+  // let articles = [];
+
+  // if (categorySlug) {
+  //   const category = await api(`/api/categories/${categorySlug}`);
+  //   articles = await api(`/api/articles?categoryId=${category.id}`);
+  // } else {
+  //   articles = homeData.articles ?? [];
+  // }
+
+  let articles: any[] = [];
 
   if (categorySlug) {
     const category = await api(`/api/categories/${categorySlug}`);
-    articles = await api(`/api/articles?categoryId=${category.id}`);
+
+    //  ALL category articles
+    articles = await api(
+      `/api/articles?categoryId=${category.id}`
+    );
   } else {
-    articles = homeData.articles ?? [];
+    //  ALL articles (for pagination)
+    articles = await api(`/api/articles`);
   }
 
   const activeCategorySlug = categorySlug || null;
