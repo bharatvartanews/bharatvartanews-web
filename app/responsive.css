@@ -1,6 +1,6 @@
 /* =====================================================
-   BHARAT VARTA – MOBILE ADAPTATION (SAFE)
-   Desktop design is UNTOUCHED
+   BHARAT VARTA – MOBILE ADAPTATION (DESIGN SAFE)
+   Desktop layout is NOT touched
 ===================================================== */
 
 @media (max-width: 768px) {
@@ -17,36 +17,97 @@
   }
 
   /* ===============================
-     MAIN GRID
-     (Collapse columns, keep order)
+     HEADER – CONTROLLED STACKING
+  ================================ */
+
+  .header-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 10px;
+  }
+
+  /* LINE 1 */
+  .logo {
+    grid-column: 1 / 2;
+  }
+
+  .logo img {
+    height: 46px;
+  }
+
+  .site-name,
+  .logo-text {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  /* hide language toggle */
+  .lang-toggle {
+    display: none;
+  }
+
+  /* LINE 2 */
+  .header-search {
+    grid-column: 1 / -1;
+  }
+
+  .header-search input {
+    width: 100%;
+  }
+
+  /* LINE 3 */
+  .nav {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .nav a {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+  }
+
+  /* ===============================
+     MAIN GRID – SINGLE COLUMN
   ================================ */
 
   .grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
   }
 
   /* ===============================
-     TRENDING HEADER
-     (NO DESIGN CHANGE)
+     TRENDING HEADER (FIRST)
   ================================ */
 
   .center-section-header {
-    margin-bottom: 8px;
+    order: 1;
+    margin-bottom: 6px;
   }
 
   /* ===============================
-     CATEGORIES → HORIZONTAL (MOBILE ONLY)
-     Below Trending News
+     CATEGORIES – BELOW TRENDING
   ================================ */
 
   .side-card {
+    order: 2;
     display: flex;
     flex-direction: row;
     gap: 10px;
     overflow-x: auto;
     padding: 8px 4px;
-    margin-bottom: 14px;
+    margin-bottom: 10px;
     scrollbar-width: none;
   }
 
@@ -54,7 +115,6 @@
     display: none;
   }
 
-  /* Hide vertical-only elements */
   .category-header,
   .category-divider {
     display: none;
@@ -74,9 +134,12 @@
   }
 
   /* ===============================
-     NEWS LIST – MOBILE ADAPTIVE
-     (NO HORIZONTAL SCROLL)
+     NEWS LIST – MOBILE FRIENDLY
   ================================ */
+
+  section {
+    order: 3;
+  }
 
   .news-card {
     display: block;
@@ -109,49 +172,66 @@
   }
 
   /* ===============================
-     RASHIFAL
-     (KEEP DESKTOP LOOK, FIX WIDTH)
+     RASHIFAL – DESKTOP-LIKE INPUT
   ================================ */
+
+  .right {
+    order: 4;
+  }
 
   .dob-box {
     display: flex;
-    gap: 6px;
+    gap: 8px;
+    align-items: center;
   }
 
   .dob-box input {
     flex: 1;
-    min-height: 38px;
+    min-height: 40px;
+    font-size: 14px;
   }
 
   .dob-box button {
-    min-height: 38px;
+    min-height: 40px;
+    padding: 0 14px;
+    font-size: 14px;
   }
 
   .rashi-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
   }
 
   /* ===============================
-     FOOTER
-     (Collapse grid only)
+     FOOTER – COMPACT & CENTERED
   ================================ */
 
   .bv-footer-inner {
     grid-template-columns: 1fr;
-    gap: 18px;
+    gap: 16px;
     text-align: center;
-  }
-
-  .bv-footer-social {
-    justify-content: center;
+    padding: 20px 16px;
   }
 
   .bv-footer-logo {
     margin: 0 auto;
   }
 
+  .bv-footer-social {
+    justify-content: center;
+  }
+
+  .bv-clock-time {
+    font-size: 22px;
+  }
+
   .bv-footer {
-    margin-top: 32px;
+    margin-top: 28px;
+  }
+
+  .bv-footer-bottom {
+    font-size: 12px;
+    padding: 10px;
   }
 
   /* ===============================
