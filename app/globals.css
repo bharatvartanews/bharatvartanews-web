@@ -75,7 +75,7 @@ body {
 }
 
 .lang-toggle {
-  display: flex;
+  display: none;
   border: 1px solid var(--primary);
   border-radius: 18px;
   overflow: hidden;
