@@ -140,15 +140,25 @@ export default function RootLayout({
 
           <header className="header">
             <div className="header-inner">
-          <div className="logo">
-          <img
+          //</div><div className="logo">
+          {/* <img
             src="/app_logo.png"
             alt="Bharat Varta News"
             width={60}
             height={60}
           />
           <span className="site-name">Bharat Varta News</span>
-        </div>
+        </div> */}
+
+<div className="logo">
+  <img 
+  src="/app_logo.png"
+            alt="Bharat Varta News"
+            width={60}
+            height={60}
+            />
+</div>
+<span className="site-name">Bharat Varta News</span>
 
 
               <div className="lang-toggle">
