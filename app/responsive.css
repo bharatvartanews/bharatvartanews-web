@@ -1,12 +1,9 @@
 /* =====================================================
-   BHARAT VARTA – MOBILE RESPONSIVE (FINAL, CLEAN)
+   BHARAT VARTA – MOBILE RESPONSIVE (FIXED & LOCKED)
    Desktop remains untouched
 ===================================================== */
 
-/* ================= MOBILE ================= */
 @media (max-width: 768px) {
-
-  /* ---------- GLOBAL ---------- */
 
   html, body {
     overflow-x: hidden;
@@ -16,7 +13,7 @@
     padding: 14px;
   }
 
-  /* ---------- HEADER ---------- */
+  /* ================= HEADER ================= */
 
   .header-inner {
     display: grid;
@@ -25,11 +22,11 @@
       "logo title spacer"
       "search search search"
       "nav nav profile";
-    row-gap: 10px;
+    row-gap: 12px;
     align-items: center;
   }
 
-  /* LOGO – LEFT */
+  /* LOGO (LEFT) */
   .logo {
     grid-area: logo;
     display: flex;
@@ -38,11 +35,11 @@
   }
 
   .logo img {
-    height: 40px;
+    height: 36px;
     width: auto;
   }
 
-  /* SITE NAME – TRUE CENTER */
+  /* SITE NAME (TRUE CENTER) */
   .site-name {
     grid-area: title;
     text-align: center;
@@ -52,11 +49,11 @@
     white-space: nowrap;
   }
 
-  /* SEARCH – BELOW TITLE, NO OVERFLOW */
+  /* SEARCH (FORCED TO ROW 2) */
   .header-search {
     grid-area: search;
-    padding: 0 12px;
     width: 100%;
+    padding: 0 12px;
     box-sizing: border-box;
   }
 
@@ -66,12 +63,13 @@
     font-size: 14px;
   }
 
-  /* NAV */
+  /* NAV (LEFT OF ROW 3) */
   .nav {
     grid-area: nav;
     display: flex;
     gap: 10px;
     padding-left: 8px;
+    align-items: center;
   }
 
   .nav a {
@@ -79,12 +77,12 @@
     padding: 6px 10px;
   }
 
-  /* PROFILE – ALWAYS VISIBLE */
+  /* PROFILE (RIGHT OF ROW 3) */
   .header-actions {
     grid-area: profile;
     display: flex;
-    justify-content: flex-end;
     align-items: center;
+    justify-content: flex-end;
     padding-right: 8px;
     min-width: 44px;
   }
@@ -94,7 +92,7 @@
     display: none;
   }
 
-  /* ---------- PAGE GRID ---------- */
+  /* ================= PAGE GRID ================= */
 
   .grid {
     display: flex;
@@ -102,7 +100,7 @@
     gap: 14px;
   }
 
-  /* ---------- VISIBILITY ---------- */
+  /* ================= VISIBILITY ================= */
 
   .desktop-only {
     display: none !important;
@@ -112,7 +110,7 @@
     display: flex !important;
   }
 
-  /* ---------- MOBILE CATEGORIES ---------- */
+  /* ================= MOBILE CATEGORIES ================= */
 
   .mobile-only.side-card {
     display: flex;
@@ -139,15 +137,10 @@
     height: 18px;
   }
 
-  /* ---------- NEWS LIST ---------- */
+  /* ================= NEWS LIST ================= */
 
   .news-card {
-    display: block;
     padding: 16px;
-  }
-
-  .news-body-row {
-    display: block;
   }
 
   .news-image {
@@ -162,16 +155,7 @@
     object-fit: cover;
   }
 
-  .news-title {
-    font-size: 16px;
-    line-height: 1.35;
-  }
-
-  .news-preview {
-    font-size: 14px;
-  }
-
-  /* ---------- RASHIFAL ---------- */
+  /* ================= RASHIFAL ================= */
 
   .right {
     width: 100%;
@@ -193,23 +177,6 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 8px;
     margin-top: 12px;
-  }
-
-  /* ---------- FOOTER ---------- */
-
-  .bv-footer-inner {
-    grid-template-columns: 1fr;
-    text-align: center;
-    gap: 16px;
-  }
-
-  .bv-footer-social {
-    justify-content: center;
-  }
-
-  .bv-footer-bottom {
-    font-size: 12px;
-    padding: 10px;
   }
 }
 
