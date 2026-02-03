@@ -614,49 +614,39 @@ export async function generateMetadata(
     article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
     "Latest news from Bharat Varta News";
 
-  // ✅ DEFAULT (NO MEDIA CASE)
-  let ogImage = `${siteUrl}/app_logo.png`;
+  // 🔥 GUARANTEED OG IMAGE (NEVER NULL)
+  let ogImage: string = `${siteUrl}/app_logo.png`;
 
-  /* ================= IMAGE ================= */
+  // IMAGE
   if (article?.image) {
     ogImage = article.image;
   }
-
-  else if (
-    Array.isArray(article?.images) &&
-    article.images.length > 0
-  ) {
+  else if (Array.isArray(article?.images) && article.images.length > 0) {
     ogImage = article.images[0];
   }
 
-  /* ================= VIDEO ================= */
-
+  // VIDEO
   else if (article?.video) {
-
-    // YouTube video
     if (isYouTube(article.video)) {
       const yt = getYouTubeThumb(article.video);
-      if (yt) ogImage = yt;
+      ogImage = yt || `${siteUrl}/video-placeholder.png`;
+    } else {
+      ogImage = `${siteUrl}/video-placeholder.png`;
     }
-
-    // Non-YouTube video (mp4, hosted)
-    else {
+  }
+  else if (Array.isArray(article?.videos) && article.videos.length > 0) {
+    const v = article.videos[0];
+    if (isYouTube(v)) {
+      const yt = getYouTubeThumb(v);
+      ogImage = yt || `${siteUrl}/video-placeholder.png`;
+    } else {
       ogImage = `${siteUrl}/video-placeholder.png`;
     }
   }
 
-  else if (
-    Array.isArray(article?.videos) &&
-    article.videos.length > 0
-  ) {
-    const v = article.videos[0];
-
-    if (isYouTube(v)) {
-      const yt = getYouTubeThumb(v);
-      if (yt) ogImage = yt;
-    } else {
-      ogImage = `${siteUrl}/video-placeholder.png`;
-    }
+  // FINAL SAFETY
+  if (!ogImage.startsWith("http")) {
+    ogImage = `${siteUrl}/app_logo.png`;
   }
 
   return {
