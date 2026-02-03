@@ -66,9 +66,9 @@
   .header-search input {
     width: 100%;
     max-width: 100%;
+     min-width: 0; 
     height: 42px;
     font-size: 14px;
-    min-width: 0;
     box-sizing: border-box;
   }
 
@@ -90,10 +90,10 @@
   .header-actions {
     grid-area: profile;
     display: flex;
-    width: 40px;
     align-items: center;
-    justify-content: flex-end;
-    padding-right: 6px;   /* ⬅ reduced */
+      justify-content: center;   /* 🔥 instead of flex-end */
+  padding-right: 0;          /* 🔥 remove edge push */
+  padding-left: 6px;    /* ⬅ reduced */
     min-width: 36px;
     box-sizing: border-box;
   }
