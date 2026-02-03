@@ -257,18 +257,16 @@ export default function RootLayout({
               <div className="header-inner">
 
                 {/* 🔥 CHANGE: logo + site-name BOTH are grid items */}
-                <div className="logo">
-                  <img
-                    src="/app_logo.png"
-                    alt="Bharat Varta News"
-                    width={60}
-                    height={60}
-                  />
-                </div>
+               <div className="logo">
+  <img
+    src="/app_logo.png"
+    alt="Bharat Varta News"
+    width={60}
+    height={60}
+  />
+  <span className="site-name">Bharat Varta News</span>
+</div>
 
-                <div className="site-name">
-                  Bharat Varta News
-                </div>
 
                 <div className="lang-toggle">
                   <button
