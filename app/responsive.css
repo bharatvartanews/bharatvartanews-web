@@ -26,10 +26,6 @@
     align-items: center;
     width: 100%;
   }
-  /* FORCE HeaderSearch into grid */
-.header-inner > *:has(input) {
-  grid-area: search;
-}
 
 
   /* LOGO – LEFT */
@@ -59,10 +55,17 @@
   .header-search {
     grid-area: search;
     width: 100%;
-    padding: 0 8px;
+    max-width: 100%;
+    padding: 0;
     box-sizing: border-box;
   }
-
+/* IMPORTANT: constrain search-box */
+  .header-search .search-box {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;               /* 🔥 REQUIRED FOR GRID */
+    box-sizing: border-box;
+  }
   .header-search input {
     width: 100%;
     max-width: 100%;
@@ -93,7 +96,7 @@
     align-items: center;
       justify-content: center;   /* 🔥 instead of flex-end */
   padding-right: 0;          /* 🔥 remove edge push */
-  padding-left: 6px;    /* ⬅ reduced */
+  padding-left: 8px;    /* ⬅ reduced */
     min-width: 36px;
     box-sizing: border-box;
   }
