@@ -620,7 +620,7 @@ export async function generateMetadata(
     "Latest news from Bharat Varta News";
 
   // 🔥 DEFAULT PLACEHOLDER (REAL IMAGE FILE)
-  let ogImage = `${siteUrl}/og-placeholder.jpg`;
+  let ogImage = `${siteUrl}/og-placeholder.png`;
 
   /* ================= IMAGE ================= */
   if (isImage(article?.image)) {
