@@ -596,7 +596,10 @@ export default function RootLayout({
                 </div>
 
                 {/* SEARCH */}
-                <HeaderSearch />
+<div className="header-search">
+  <HeaderSearch />
+</div>
+
 
                 {/* NAV */}
                 <nav className="nav">
