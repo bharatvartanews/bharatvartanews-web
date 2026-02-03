@@ -1,8 +1,9 @@
 /* =====================================================
-   BHARAT VARTA – MOBILE RESPONSIVE (STABLE & FIXED)
+   BHARAT VARTA – MOBILE RESPONSIVE (FINAL, STABLE)
    Desktop remains untouched
 ===================================================== */
 
+/* ================= MOBILE ================= */
 @media (max-width: 768px) {
 
   /* ---------- GLOBAL ---------- */
@@ -15,9 +16,15 @@
   }
 
   /* ---------- HEADER ---------- */
+
+  .header {
+    width: 100%;
+    position: relative;
+  }
+
   .header-inner {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto 1fr min-content;
     grid-template-areas:
       "logo title title"
       "search search search"
@@ -25,9 +32,10 @@
     row-gap: 10px;
     align-items: center;
     width: 100%;
+    box-sizing: border-box;
   }
 
-  /* LOGO – LEFT */
+  /* LOGO – LEFT (LINE 1) */
   .logo {
     grid-area: logo;
     display: flex;
@@ -40,7 +48,7 @@
     width: auto;
   }
 
-  /* SITE NAME – CENTER */
+  /* SITE NAME – CENTER (LINE 1) */
   .site-name {
     grid-area: title;
     text-align: center;
@@ -48,13 +56,16 @@
     font-weight: 700;
     color: #d32f2f;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 8px;
   }
 
-  /* 🔥 SEARCH – ALWAYS SECOND LINE */
+  /* SEARCH – STRICTLY LINE 2 */
   .header-search {
     grid-area: search;
     width: 100%;
-    padding: 0 10px;
+    padding: 0 12px;
     box-sizing: border-box;
   }
 
@@ -66,32 +77,33 @@
     box-sizing: border-box;
   }
 
-  /* NAV – THIRD LINE LEFT */
+  /* NAV – LINE 3 LEFT */
   .nav {
     grid-area: nav;
     display: flex;
+    align-items: center;
     gap: 10px;
     padding-left: 8px;
-    align-items: center;
+    overflow: hidden;
   }
 
   .nav a {
     font-size: 13px;
     padding: 6px 10px;
+    white-space: nowrap;
   }
 
-  /* 🔥 PROFILE – VISIBLE, INSIDE SCREEN */
+  /* PROFILE – LINE 3 RIGHT (VISIBLE) */
   .header-actions {
     grid-area: profile;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    padding-right: 6px;   /* ⬅ reduced */
+    padding-right: 8px;
     min-width: 36px;
-    box-sizing: border-box;
   }
 
-  /* LANGUAGE OFF ON MOBILE */
+  /* LANGUAGE TOGGLE – HIDDEN ON MOBILE */
   .lang-toggle {
     display: none;
   }
@@ -209,14 +221,14 @@
   }
 }
 
-/* ---------- DESKTOP SAFETY ---------- */
+/* ================= DESKTOP SAFETY ================= */
 @media (min-width: 769px) {
   .mobile-only {
     display: none !important;
   }
 }
 
-/* ---------- SITE NAME BASE (DESKTOP) ---------- */
+/* ================= SITE NAME BASE (DESKTOP) ================= */
 .site-name {
   font-size: 20px;
   font-weight: 700;
