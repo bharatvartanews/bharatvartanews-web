@@ -229,3 +229,30 @@
   margin-left: 10px;
   white-space: nowrap;
 }
+/* ================= HEADER MICRO POLISH (MOBILE) ================= */
+@media (max-width: 768px) {
+
+  /* TRUE VISUAL CENTER FOR SITE NAME */
+  .site-name {
+    justify-self: center;
+    padding-right: 40px; /* balances logo width */
+  }
+
+  /* SEARCH – APP-LIKE WIDTH (NO EDGE TOUCH) */
+  .header-search {
+    padding: 0 14px;
+  }
+
+  .header-search input {
+    border-radius: 12px;
+  }
+
+  /* NAV + PROFILE – VISUAL GROUPING */
+  .nav {
+    padding-left: 10px;
+  }
+
+  .header-actions {
+    padding-right: 10px;
+  }
+}
