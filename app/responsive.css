@@ -1,5 +1,5 @@
 /* =====================================================
-   BHARAT VARTA – MOBILE RESPONSIVE (FINAL & STABLE)
+   BHARAT VARTA – MOBILE RESPONSIVE (FINAL, CLEAN)
    Desktop remains untouched
 ===================================================== */
 
@@ -16,48 +16,48 @@
     padding: 14px;
   }
 
-  /* ---------- HEADER (ONLY GRID – NO FLEX OVERRIDES) ---------- */
-/* =====================================================
-   BHARAT VARTA – MOBILE HEADER (FINAL, NO CONFLICT)
-===================================================== */
-@media (max-width: 768px) {
+  /* ---------- HEADER ---------- */
 
   .header-inner {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: auto 1fr auto;
     grid-template-areas:
-      "brand brand"
-      "search search"
-      "nav profile";
-    row-gap: 12px;
+      "logo title spacer"
+      "search search search"
+      "nav nav profile";
+    row-gap: 10px;
     align-items: center;
   }
 
-  /* LOGO + TITLE SAME LINE */
-  .brand {
-    grid-area: brand;
+  /* LOGO – LEFT */
+  .logo {
+    grid-area: logo;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
+    padding-left: 8px;
   }
 
-  .brand img {
-    height: 36px;
+  .logo img {
+    height: 40px;
     width: auto;
   }
 
+  /* SITE NAME – TRUE CENTER */
   .site-name {
+    grid-area: title;
+    text-align: center;
     font-size: 16px;
     font-weight: 700;
     color: #d32f2f;
     white-space: nowrap;
   }
 
-  /* SEARCH */
+  /* SEARCH – BELOW TITLE, NO OVERFLOW */
   .header-search {
     grid-area: search;
+    padding: 0 12px;
     width: 100%;
+    box-sizing: border-box;
   }
 
   .header-search input {
@@ -71,23 +71,28 @@
     grid-area: nav;
     display: flex;
     gap: 10px;
+    padding-left: 8px;
   }
 
-  /* PROFILE */
+  .nav a {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+
+  /* PROFILE – ALWAYS VISIBLE */
   .header-actions {
     grid-area: profile;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    min-width: 40px;
+    padding-right: 8px;
+    min-width: 44px;
   }
 
+  /* HIDE LANGUAGE ON MOBILE */
   .lang-toggle {
     display: none;
   }
-}
-
-
 
   /* ---------- PAGE GRID ---------- */
 
