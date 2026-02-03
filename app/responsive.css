@@ -26,6 +26,10 @@
     align-items: center;
     width: 100%;
   }
+  /* FORCE HeaderSearch into grid */
+.header-inner > *:has(input) {
+  grid-area: search;
+}
 
 
   /* LOGO – LEFT */
@@ -55,21 +59,16 @@
   .header-search {
     grid-area: search;
     width: 100%;
-    max-width: 100%;
     padding: 0;
+    padding-right: 14px; 
     box-sizing: border-box;
   }
-/* IMPORTANT: constrain search-box */
-  .header-search .search-box {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;               /* 🔥 REQUIRED FOR GRID */
-    box-sizing: border-box;
-  }
+
   .header-search input {
     width: 100%;
     max-width: 100%;
      min-width: 0; 
+     padding-right: 14px;   
     height: 42px;
     font-size: 14px;
     box-sizing: border-box;
@@ -94,9 +93,9 @@
     grid-area: profile;
     display: flex;
     align-items: center;
-      justify-content: center;   /* 🔥 instead of flex-end */
-  padding-right: 0;          /* 🔥 remove edge push */
-  padding-left: 8px;    /* ⬅ reduced */
+    justify-content: center;  
+  padding-right: 14px;   ;       
+  padding-left: 6px;    /* ⬅ reduced */
     min-width: 36px;
     box-sizing: border-box;
   }
