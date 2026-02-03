@@ -98,29 +98,15 @@
 //     </>
 //   );
 // }
-
 import { PublicApi } from "../../services/publicApi";
-
-function getYouTubeThumb(url?: string) {
-  if (!url) return null;
-  try {
-    const id = url.includes("youtu.be")
-      ? url.split("youtu.be/")[1]
-      : new URL(url).searchParams.get("v");
-    return id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : null;
-  } catch {
-    return null;
-  }
-}
 
 export default async function Head({
   params,
 }: {
   params: { slug: string };
 }) {
-  const article = await PublicApi.getArticleBySlug(params.slug);
-
   const siteUrl = "https://www.bharatvartanews.com";
+  const article = await PublicApi.getArticleBySlug(params.slug);
 
   const title = article?.title || "Bharat Varta News";
   const description =
@@ -129,19 +115,8 @@ export default async function Head({
     article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
     "Latest news from Bharat Varta News";
 
-  let image =
-    article?.image ||
-    (Array.isArray(article?.images) && article.images[0]) ||
-    getYouTubeThumb(article?.video) ||
-    (Array.isArray(article?.videos)
-      ? getYouTubeThumb(article.videos[0])
-      : null) ||
-    `${siteUrl}/og-placeholder.png`;
-
-  // 🔒 HARD GUARANTEE
-  if (!image || typeof image !== "string") {
-    image = `${siteUrl}/og-placeholder.png`;
-  }
+  // 🔥 ALWAYS point to rendered OG image
+  const ogImage = `${siteUrl}/articles/${params.slug}/opengraph-image`;
 
   return (
     <>
@@ -153,14 +128,14 @@ export default async function Head({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={`${siteUrl}/articles/${params.slug}`} />
-      <meta property="og:image" content={image} />
+      <meta property="og:image" content={ogImage} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={image} />
+      <meta name="twitter:image" content={ogImage} />
     </>
   );
 }

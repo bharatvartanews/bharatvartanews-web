@@ -7,7 +7,7 @@ export const runtime = "nodejs";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-/* ===================== HELPERS ===================== */
+/* ================= HELPERS ================= */
 
 const isImage = (url?: string) =>
   !!url && /\.(jpg|jpeg|png|webp)$/i.test(url);
@@ -27,7 +27,7 @@ const getYouTubeThumb = (url?: string) => {
   }
 };
 
-/* ===================== OG IMAGE ===================== */
+/* ================= OG IMAGE ================= */
 
 export default async function OGImage({
   params,
@@ -39,28 +39,21 @@ export default async function OGImage({
   let article: any = null;
   try {
     article = await PublicApi.getArticleBySlug(params.slug);
-  } catch {
-    article = null;
-  }
+  } catch {}
 
   let bgImage = `${siteUrl}/app_logo.png`;
   let isVideo = false;
 
-  /* ================= IMAGE ================= */
+  // IMAGE
   if (isImage(article?.image)) {
     bgImage = article.image;
-  }
-  else if (
-    Array.isArray(article?.images) &&
-    isImage(article.images[0])
-  ) {
+  } else if (Array.isArray(article?.images) && isImage(article.images[0])) {
     bgImage = article.images[0];
   }
 
-  /* ================= VIDEO ================= */
+  // VIDEO
   else if (article?.video || article?.videos?.length) {
     const v = article.video || article.videos[0];
-
     if (isYouTube(v)) {
       bgImage = getYouTubeThumb(v) || `${siteUrl}/video-placeholder.png`;
     } else {
@@ -69,8 +62,8 @@ export default async function OGImage({
     isVideo = true;
   }
 
-  /* ================= FINAL GUARANTEE ================= */
-  if (!bgImage || typeof bgImage !== "string") {
+  // FINAL FALLBACK
+  if (!bgImage) {
     bgImage = `${siteUrl}/app_logo.png`;
   }
 
@@ -91,14 +84,10 @@ export default async function OGImage({
         {/* Background */}
         <img
           src={bgImage}
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-          }}
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
         />
 
-        {/* Gradient overlay */}
+        {/* Gradient */}
         <div
           style={{
             position: "absolute",
@@ -123,14 +112,14 @@ export default async function OGImage({
           }}
         />
 
-        {/* Video play icon */}
+        {/* Video Play Icon */}
         {isVideo && (
           <div
             style={{
               position: "absolute",
               top: "50%",
               left: "50%",
-              transform: "translate(-50%, -50%)",
+              transform: "translate(-50%,-50%)",
               width: 96,
               height: 96,
               borderRadius: "50%",
@@ -146,7 +135,7 @@ export default async function OGImage({
                 height: 0,
                 borderTop: "18px solid transparent",
                 borderBottom: "18px solid transparent",
-                borderLeft: "28px solid white",
+                borderLeft: "28px solid #fff",
                 marginLeft: 6,
               }}
             />

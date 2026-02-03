@@ -599,10 +599,11 @@ function injectMedia(body: string, media: string[]) {
 }
 
 /* ===================== METADATA (FIXED IMAGE LOGIC ONLY) ===================== */
-
-export async function generateMetadata(
-  { params }: { params: { slug: string } }
-) {
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const siteUrl = "https://www.bharatvartanews.com";
   const article = await PublicApi.getArticleBySlug(params.slug);
 
@@ -613,20 +614,20 @@ export async function generateMetadata(
     article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
     "Latest news from Bharat Varta News";
 
-  const ogImageUrl = `${siteUrl}/articles/${params.slug}/opengraph-image`;
+  const ogImage = `${siteUrl}/articles/${params.slug}/opengraph-image`;
 
   return {
     title,
     description,
     openGraph: {
       type: "article",
-      url: `${siteUrl}/articles/${params.slug}`,
       siteName: "Bharat Varta News",
+      url: `${siteUrl}/articles/${params.slug}`,
       title,
       description,
       images: [
         {
-          url: ogImageUrl,
+          url: ogImage,
           width: 1200,
           height: 630,
         },
@@ -636,7 +637,7 @@ export async function generateMetadata(
       card: "summary_large_image",
       title,
       description,
-      images: [ogImageUrl],
+      images: [ogImage],
     },
   };
 }
