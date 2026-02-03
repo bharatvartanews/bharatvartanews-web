@@ -17,6 +17,10 @@
   }
 
   /* ---------- HEADER (ONLY GRID – NO FLEX OVERRIDES) ---------- */
+/* =====================================================
+   BHARAT VARTA – MOBILE HEADER (FINAL, NO CONFLICT)
+===================================================== */
+@media (max-width: 768px) {
 
   .header-inner {
     display: grid;
@@ -25,12 +29,12 @@
       "brand brand"
       "search search"
       "nav profile";
-    row-gap: 10px;
+    row-gap: 12px;
     align-items: center;
   }
 
-  /* Logo + Site name */
-  .logo {
+  /* LOGO + TITLE SAME LINE */
+  .brand {
     grid-area: brand;
     display: flex;
     align-items: center;
@@ -38,8 +42,8 @@
     gap: 8px;
   }
 
-  .logo img {
-    height: 40px;
+  .brand img {
+    height: 36px;
     width: auto;
   }
 
@@ -50,7 +54,7 @@
     white-space: nowrap;
   }
 
-  /* Search */
+  /* SEARCH */
   .header-search {
     grid-area: search;
     width: 100%;
@@ -62,31 +66,28 @@
     font-size: 14px;
   }
 
-  /* Navigation */
+  /* NAV */
   .nav {
     grid-area: nav;
     display: flex;
     gap: 10px;
-    align-items: center;
   }
 
-  .nav a {
-    font-size: 13px;
-    padding: 6px 10px;
-  }
-
-  /* Profile */
+  /* PROFILE */
   .header-actions {
     grid-area: profile;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    min-width: 40px;
   }
 
-  /* Hide language toggle on mobile */
   .lang-toggle {
     display: none;
   }
+}
+
+
 
   /* ---------- PAGE GRID ---------- */
 
