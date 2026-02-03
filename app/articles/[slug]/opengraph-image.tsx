@@ -5,6 +5,9 @@ import path from "path";
 
 export const runtime = "nodejs";
 export const size = { width: 1200, height: 630 };
+export const contentType = "image/png";
+
+/* ===================== HELPERS ===================== */
 
 const isImage = (url?: string) =>
   !!url && /\.(jpg|jpeg|png|webp)$/i.test(url);
@@ -24,29 +27,51 @@ const getYouTubeThumb = (url?: string) => {
   }
 };
 
-export default async function OGImage({ params }: { params: { slug: string } }) {
-  const article = await PublicApi.getArticleBySlug(params.slug);
+/* ===================== OG IMAGE ===================== */
 
-  let bgImage = "https://www.bharatvartanews.com/app_logo.png";
+export default async function OGImage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const siteUrl = "https://www.bharatvartanews.com";
+
+  let article: any = null;
+  try {
+    article = await PublicApi.getArticleBySlug(params.slug);
+  } catch {
+    article = null;
+  }
+
+  let bgImage = `${siteUrl}/app_logo.png`;
   let isVideo = false;
 
-  // ✅ IMAGE
+  /* ================= IMAGE ================= */
   if (isImage(article?.image)) {
     bgImage = article.image;
-  } else if (Array.isArray(article?.images) && isImage(article.images[0])) {
+  }
+  else if (
+    Array.isArray(article?.images) &&
+    isImage(article.images[0])
+  ) {
     bgImage = article.images[0];
   }
 
-  // ✅ VIDEO
+  /* ================= VIDEO ================= */
   else if (article?.video || article?.videos?.length) {
     const v = article.video || article.videos[0];
 
     if (isYouTube(v)) {
-      bgImage = getYouTubeThumb(v) || bgImage;
+      bgImage = getYouTubeThumb(v) || `${siteUrl}/video-placeholder.png`;
     } else {
-      bgImage = "https://www.bharatvartanews.com/video-placeholder.png";
+      bgImage = `${siteUrl}/video-placeholder.png`;
     }
     isVideo = true;
+  }
+
+  /* ================= FINAL GUARANTEE ================= */
+  if (!bgImage || typeof bgImage !== "string") {
+    bgImage = `${siteUrl}/app_logo.png`;
   }
 
   const logo = fs.readFileSync(
@@ -55,21 +80,35 @@ export default async function OGImage({ params }: { params: { slug: string } }) 
 
   return new ImageResponse(
     (
-      <div style={{ width: "100%", height: "100%", position: "relative" }}>
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          position: "relative",
+          backgroundColor: "#000",
+        }}
+      >
+        {/* Background */}
         <img
           src={bgImage}
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+          }}
         />
 
+        {/* Gradient overlay */}
         <div
           style={{
             position: "absolute",
             inset: 0,
             background:
-              "linear-gradient(to top, rgba(0,0,0,.7), rgba(0,0,0,.1))",
+              "linear-gradient(to top, rgba(0,0,0,.75), rgba(0,0,0,.15))",
           }}
         />
 
+        {/* Logo */}
         <img
           src={logo as any}
           style={{
@@ -84,21 +123,37 @@ export default async function OGImage({ params }: { params: { slug: string } }) 
           }}
         />
 
+        {/* Video play icon */}
         {isVideo && (
           <div
             style={{
               position: "absolute",
               top: "50%",
               left: "50%",
-              transform: "translate(-50%,-50%)",
-              width: 90,
-              height: 90,
+              transform: "translate(-50%, -50%)",
+              width: 96,
+              height: 96,
               borderRadius: "50%",
               background: "rgba(0,0,0,.6)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
-          />
+          >
+            <div
+              style={{
+                width: 0,
+                height: 0,
+                borderTop: "18px solid transparent",
+                borderBottom: "18px solid transparent",
+                borderLeft: "28px solid white",
+                marginLeft: 6,
+              }}
+            />
+          </div>
         )}
 
+        {/* Title */}
         <div
           style={{
             position: "absolute",
@@ -108,9 +163,11 @@ export default async function OGImage({ params }: { params: { slug: string } }) 
             color: "#fff",
             fontSize: 44,
             fontWeight: 800,
+            lineHeight: 1.2,
+            textShadow: "0 4px 12px rgba(0,0,0,.6)",
           }}
         >
-          {article?.title}
+          {article?.title || "Bharat Varta News"}
         </div>
       </div>
     ),

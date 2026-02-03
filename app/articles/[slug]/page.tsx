@@ -600,11 +600,9 @@ function injectMedia(body: string, media: string[]) {
 
 /* ===================== METADATA (FIXED IMAGE LOGIC ONLY) ===================== */
 
-
 export async function generateMetadata(
   { params }: { params: { slug: string } }
-): Promise<Metadata> {
-
+) {
   const siteUrl = "https://www.bharatvartanews.com";
   const article = await PublicApi.getArticleBySlug(params.slug);
 
@@ -615,47 +613,7 @@ export async function generateMetadata(
     article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
     "Latest news from Bharat Varta News";
 
-  // 🔒 DEFAULT (NEVER EMPTY)
-  let ogImage = `${siteUrl}/og-placeholder.png`;
-
-  /* ================= IMAGE ================= */
-  if (article?.image) {
-    ogImage = article.image;
-  }
-  else if (
-    Array.isArray(article?.images) &&
-    article.images.length > 0 &&
-    article.images[0]
-  ) {
-    ogImage = article.images[0];
-  }
-
-  /* ================= VIDEO ================= */
-  else if (article?.video) {
-    if (isYouTube(article.video)) {
-      const yt = getYouTubeThumb(article.video);
-      ogImage = yt || `${siteUrl}/video-placeholder.png`;
-    } else {
-      ogImage = `${siteUrl}/og-placeholder.png`;
-    }
-  }
-  else if (
-    Array.isArray(article?.videos) &&
-    article.videos.length > 0
-  ) {
-    const v = article.videos[0];
-    if (isYouTube(v)) {
-      const yt = getYouTubeThumb(v);
-      ogImage = yt || `${siteUrl}/og-placeholder.png`;
-    } else {
-      ogImage = `${siteUrl}/og-placeholder.png`;
-    }
-  }
-
-  // 🔥 FINAL HARD GUARANTEE
-  if (!ogImage || typeof ogImage !== "string") {
-    ogImage = `${siteUrl}/og-placeholder.png`;
-  }
+  const ogImageUrl = `${siteUrl}/articles/${params.slug}/opengraph-image`;
 
   return {
     title,
@@ -668,7 +626,7 @@ export async function generateMetadata(
       description,
       images: [
         {
-          url: ogImage,
+          url: ogImageUrl,
           width: 1200,
           height: 630,
         },
@@ -678,10 +636,11 @@ export async function generateMetadata(
       card: "summary_large_image",
       title,
       description,
-      images: [ogImage],
+      images: [ogImageUrl],
     },
   };
 }
+
 
 /* ===================== PAGE ===================== */
 
