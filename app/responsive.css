@@ -1,11 +1,12 @@
 /* =====================================================
-   BHARAT VARTA – MOBILE RESPONSIVE (CLEAN & SAFE)
+   BHARAT VARTA – MOBILE RESPONSIVE (FINAL & STABLE)
    Desktop remains untouched
 ===================================================== */
 
+/* ================= MOBILE ================= */
 @media (max-width: 768px) {
 
-  /* ================= GLOBAL ================= */
+  /* ---------- GLOBAL ---------- */
 
   html, body {
     overflow-x: hidden;
@@ -15,42 +16,41 @@
     padding: 14px;
   }
 
-  /* ================= HEADER (✅ FIXED) ================= */
+  /* ---------- HEADER (ONLY GRID – NO FLEX OVERRIDES) ---------- */
 
-  /* 🔥 CHANGE: SINGLE GRID-BASED HEADER (NO FLEX OVERRIDE) */
- .header-inner {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  grid-template-areas:
-    "logo title title"
-    "search search search"
-    "nav nav profile";
-  row-gap: 10px;
-  align-items: center;
-}
-
-
-  .logo {
-    grid-area: logo;
-    display: flex;
+  .header-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "brand brand"
+      "search search"
+      "nav profile";
+    row-gap: 10px;
     align-items: center;
   }
 
+  /* Logo + Site name */
+  .logo {
+    grid-area: brand;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
   .logo img {
-    height: 44px;
+    height: 40px;
     width: auto;
   }
 
-  /* 🔥 CHANGE: site-name stays INSIDE grid */
   .site-name {
-    grid-area: title;
-    text-align: center;
     font-size: 16px;
     font-weight: 700;
     color: #d32f2f;
     white-space: nowrap;
   }
 
+  /* Search */
   .header-search {
     grid-area: search;
     width: 100%;
@@ -58,12 +58,16 @@
 
   .header-search input {
     width: 100%;
+    height: 42px;
+    font-size: 14px;
   }
 
+  /* Navigation */
   .nav {
     grid-area: nav;
     display: flex;
     gap: 10px;
+    align-items: center;
   }
 
   .nav a {
@@ -71,16 +75,20 @@
     padding: 6px 10px;
   }
 
+  /* Profile */
   .header-actions {
     grid-area: profile;
-    justify-self: end;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
   }
 
+  /* Hide language toggle on mobile */
   .lang-toggle {
     display: none;
   }
 
-  /* ================= GRID ================= */
+  /* ---------- PAGE GRID ---------- */
 
   .grid {
     display: flex;
@@ -88,7 +96,7 @@
     gap: 14px;
   }
 
-  /* ================= VISIBILITY ================= */
+  /* ---------- VISIBILITY ---------- */
 
   .desktop-only {
     display: none !important;
@@ -98,21 +106,13 @@
     display: flex !important;
   }
 
-  /* ================= TRENDING ================= */
-
-  .center-section-header {
-    margin-bottom: 6px;
-  }
-
-  /* ================= CATEGORIES (MOBILE) ================= */
+  /* ---------- MOBILE CATEGORIES ---------- */
 
   .mobile-only.side-card {
     display: flex;
-    flex-direction: row;
     gap: 10px;
     overflow-x: auto;
     padding: 8px 4px;
-    margin-bottom: 12px;
     scrollbar-width: none;
   }
 
@@ -133,7 +133,7 @@
     height: 18px;
   }
 
-  /* ================= NEWS LIST ================= */
+  /* ---------- NEWS LIST ---------- */
 
   .news-card {
     display: block;
@@ -165,7 +165,7 @@
     font-size: 14px;
   }
 
-  /* ================= RASHIFAL ================= */
+  /* ---------- RASHIFAL ---------- */
 
   .right {
     width: 100%;
@@ -189,7 +189,7 @@
     margin-top: 12px;
   }
 
-  /* ================= FOOTER ================= */
+  /* ---------- FOOTER ---------- */
 
   .bv-footer-inner {
     grid-template-columns: 1fr;
@@ -215,7 +215,7 @@
   }
 }
 
-/* ================= SITE NAME BASE ================= */
+/* ================= SITE NAME BASE (DESKTOP) ================= */
 
 .site-name {
   font-size: 20px;
