@@ -603,7 +603,6 @@ function injectMedia(body: string, media: string[]) {
 function isImage(url?: string) {
   return !!url && /\.(jpg|jpeg|png|webp)$/i.test(url);
 }
-
 export async function generateMetadata(
   { params }: { params: { slug: string } }
 ): Promise<Metadata> {
@@ -612,24 +611,20 @@ export async function generateMetadata(
   const article = await PublicApi.getArticleBySlug(params.slug);
 
   const title = article?.title || "Bharat Varta News";
-
   const description =
     article?.summary ||
     article?.excerpt ||
     article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
     "Latest news from Bharat Varta News";
 
-  // 🔥 DEFAULT PLACEHOLDER (REAL IMAGE FILE)
-  let ogImage = `${siteUrl}/og-placeholder.png`;
+  // 🔥 UNIQUE CACHE-BUSTED PLACEHOLDER URL
+  let ogImage = `${siteUrl}/og-placeholder.png?thumb=${params.slug}`;
 
   /* ================= IMAGE ================= */
   if (isImage(article?.image)) {
     ogImage = article.image;
   }
-  else if (
-    Array.isArray(article?.images) &&
-    isImage(article.images[0])
-  ) {
+  else if (Array.isArray(article?.images) && isImage(article.images[0])) {
     ogImage = article.images[0];
   }
 
@@ -640,7 +635,7 @@ export async function generateMetadata(
     if (isYouTube(v)) {
       ogImage = getYouTubeThumb(v) || ogImage;
     }
-    // non-YouTube video → keep placeholder
+    // non-youtube video → keep cache-busted placeholder
   }
 
   return {
