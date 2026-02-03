@@ -616,7 +616,7 @@ export async function generateMetadata(
     "Latest news from Bharat Varta News";
 
   // 🔒 DEFAULT (NEVER EMPTY)
-  let ogImage = `${siteUrl}/app_logo.png`;
+  let ogImage = `${siteUrl}/og-placeholder.png`;
 
   /* ================= IMAGE ================= */
   if (article?.image) {
@@ -636,7 +636,7 @@ export async function generateMetadata(
       const yt = getYouTubeThumb(article.video);
       ogImage = yt || `${siteUrl}/video-placeholder.png`;
     } else {
-      ogImage = `${siteUrl}/video-placeholder.png`;
+      ogImage = `${siteUrl}/og-placeholder.png`;
     }
   }
   else if (
@@ -646,15 +646,15 @@ export async function generateMetadata(
     const v = article.videos[0];
     if (isYouTube(v)) {
       const yt = getYouTubeThumb(v);
-      ogImage = yt || `${siteUrl}/video-placeholder.png`;
+      ogImage = yt || `${siteUrl}/og-placeholder.png`;
     } else {
-      ogImage = `${siteUrl}/video-placeholder.png`;
+      ogImage = `${siteUrl}/og-placeholder.png`;
     }
   }
 
   // 🔥 FINAL HARD GUARANTEE
   if (!ogImage || typeof ogImage !== "string") {
-    ogImage = `${siteUrl}/app_logo.png`;
+    ogImage = `${siteUrl}/og-placeholder.png`;
   }
 
   return {

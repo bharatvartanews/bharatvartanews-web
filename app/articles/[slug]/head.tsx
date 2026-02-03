@@ -136,11 +136,11 @@ export default async function Head({
     (Array.isArray(article?.videos)
       ? getYouTubeThumb(article.videos[0])
       : null) ||
-    `${siteUrl}/video-placeholder.png`;
+    `${siteUrl}/og-placeholder.png`;
 
   // 🔒 HARD GUARANTEE
   if (!image || typeof image !== "string") {
-    image = `${siteUrl}/app_logo.png`;
+    image = `${siteUrl}/og-placeholder.png`;
   }
 
   return (
