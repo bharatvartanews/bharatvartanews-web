@@ -96,6 +96,124 @@
 // }
 
 
+// "use client";
+
+// import { useState } from "react";
+// import Link from "next/link";
+// import { usePathname } from "next/navigation";
+// import "./globals.css";
+// import "./responsive.css";
+
+
+// import ProfileButton from "./components/ProfileButton";
+// import { AuthProvider } from "./context/AuthContext";
+// import AutoSignIn from "./components/AutoSignIn";
+// import { SearchProvider } from "./context/SearchContext";
+// import HeaderSearch from "./components/HeaderSearch";
+// import Footer from "./footer";
+
+
+// export default function RootLayout({
+//   children,
+// }: {
+//   children: React.ReactNode;
+// }) {
+//   const [lang, setLang] = useState("en");
+//   const pathname = usePathname();
+
+//   const tabClass = (path: string) =>
+//     pathname === path ? "nav-tab active" : "nav-tab";
+
+//   return (
+//     <html lang="en">
+//       <body>
+//         {/* Google Identity SDK */}
+//         <script
+//           src="https://accounts.google.com/gsi/client"
+//           async
+//           defer
+//         />
+
+//         <AuthProvider>
+//           <SearchProvider>
+//           <AutoSignIn />
+
+//           <header className="header">
+//             <div className="header-inner">
+//           {/* //</div><div className="logo"> */}
+//           {/* <img
+//             src="/app_logo.png"
+//             alt="Bharat Varta News"
+//             width={60}
+//             height={60}
+//           />
+//           <span className="site-name">Bharat Varta News</span>
+//         </div> */}
+
+// <div className="logo">
+//   <img 
+//   src="/app_logo.png"
+//             alt="Bharat Varta News"
+//             width={60}
+//             height={60}/>
+// </div>
+// <span className="site-name">Bharat Varta News</span>
+
+
+//               <div className="lang-toggle">
+//                 <button
+//                   className={lang === "hi" ? "active" : ""}
+//                   onClick={() => setLang("hi")}
+//                 >
+//                   हिन्दी
+//                 </button>
+//                 <button
+//                   className={lang === "en" ? "active" : ""}
+//                   onClick={() => setLang("en")}
+//                 >
+//                   EN
+//                 </button>
+//               </div>
+
+//               {/* <div className="search-box">
+//                 <input placeholder="Search news..." />
+//               </div> */}
+//                <HeaderSearch />
+
+//            <nav className="nav">
+//   <Link href="/" className={tabClass("/")}>
+//     Home
+//   </Link>
+//   <Link href="/videos" className={tabClass("/videos")}>
+//     Videos
+//   </Link>
+//   {/* <Link href="/stories" className={tabClass("/stories")}>
+//     Stories
+//   </Link> */}
+//   <Link href="/live" className={tabClass("/live")}>
+//     Live
+//   </Link>
+// </nav>
+
+// {/* Header action area */}
+// <div className="header-actions">
+//   <ProfileButton />
+// </div>
+
+//             </div>
+//           </header>
+
+//           {children}
+
+//         {/* ✅ FOOTER COMPONENT */}
+//             <Footer />
+//           </SearchProvider>
+//         </AuthProvider>
+//       </body>
+//     </html>
+//   );
+// }
+
 "use client";
 
 import { useState } from "react";
@@ -104,14 +222,12 @@ import { usePathname } from "next/navigation";
 import "./globals.css";
 import "./responsive.css";
 
-
 import ProfileButton from "./components/ProfileButton";
 import { AuthProvider } from "./context/AuthContext";
 import AutoSignIn from "./components/AutoSignIn";
 import { SearchProvider } from "./context/SearchContext";
 import HeaderSearch from "./components/HeaderSearch";
 import Footer from "./footer";
-
 
 export default function RootLayout({
   children,
@@ -127,7 +243,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {/* Google Identity SDK */}
         <script
           src="https://accounts.google.com/gsi/client"
           async
@@ -136,76 +251,57 @@ export default function RootLayout({
 
         <AuthProvider>
           <SearchProvider>
-          <AutoSignIn />
+            <AutoSignIn />
 
-          <header className="header">
-            <div className="header-inner">
-          {/* //</div><div className="logo"> */}
-          {/* <img
-            src="/app_logo.png"
-            alt="Bharat Varta News"
-            width={60}
-            height={60}
-          />
-          <span className="site-name">Bharat Varta News</span>
-        </div> */}
+            <header className="header">
+              <div className="header-inner">
 
-<div className="logo">
-  <img 
-  src="/app_logo.png"
-            alt="Bharat Varta News"
-            width={60}
-            height={60}/>
-</div>
-<span className="site-name">Bharat Varta News</span>
+                {/* 🔥 CHANGE: logo + site-name BOTH are grid items */}
+                <div className="logo">
+                  <img
+                    src="/app_logo.png"
+                    alt="Bharat Varta News"
+                    width={60}
+                    height={60}
+                  />
+                </div>
 
+                <div className="site-name">
+                  Bharat Varta News
+                </div>
 
-              <div className="lang-toggle">
-                <button
-                  className={lang === "hi" ? "active" : ""}
-                  onClick={() => setLang("hi")}
-                >
-                  हिन्दी
-                </button>
-                <button
-                  className={lang === "en" ? "active" : ""}
-                  onClick={() => setLang("en")}
-                >
-                  EN
-                </button>
+                <div className="lang-toggle">
+                  <button
+                    className={lang === "hi" ? "active" : ""}
+                    onClick={() => setLang("hi")}
+                  >
+                    हिन्दी
+                  </button>
+                  <button
+                    className={lang === "en" ? "active" : ""}
+                    onClick={() => setLang("en")}
+                  >
+                    EN
+                  </button>
+                </div>
+
+                <HeaderSearch />
+
+                <nav className="nav">
+                  <Link href="/" className={tabClass("/")}>Home</Link>
+                  <Link href="/videos" className={tabClass("/videos")}>Videos</Link>
+                  <Link href="/live" className={tabClass("/live")}>Live</Link>
+                </nav>
+
+                <div className="header-actions">
+                  <ProfileButton />
+                </div>
+
               </div>
+            </header>
 
-              {/* <div className="search-box">
-                <input placeholder="Search news..." />
-              </div> */}
-               <HeaderSearch />
+            {children}
 
-           <nav className="nav">
-  <Link href="/" className={tabClass("/")}>
-    Home
-  </Link>
-  <Link href="/videos" className={tabClass("/videos")}>
-    Videos
-  </Link>
-  {/* <Link href="/stories" className={tabClass("/stories")}>
-    Stories
-  </Link> */}
-  <Link href="/live" className={tabClass("/live")}>
-    Live
-  </Link>
-</nav>
-
-{/* Header action area */}
-<div className="header-actions">
-  <ProfileButton />
-</div>
-
-            </div>
-          </header>
-
-          {children}
-
-        {/* ✅ FOOTER COMPONENT */}
             <Footer />
           </SearchProvider>
         </AuthProvider>

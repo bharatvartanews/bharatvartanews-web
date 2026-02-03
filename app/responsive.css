@@ -1,5 +1,5 @@
 /* =====================================================
-   BHARAT VARTA – MOBILE RESPONSIVE (CLEAN)
+   BHARAT VARTA – MOBILE RESPONSIVE (CLEAN & SAFE)
    Desktop remains untouched
 ===================================================== */
 
@@ -15,8 +15,9 @@
     padding: 14px;
   }
 
-  /* ================= HEADER ================= */
+  /* ================= HEADER (✅ FIXED) ================= */
 
+  /* 🔥 CHANGE: SINGLE GRID-BASED HEADER (NO FLEX OVERRIDE) */
   .header-inner {
     display: grid;
     grid-template-columns: auto 1fr auto;
@@ -30,23 +31,26 @@
 
   .logo {
     grid-area: logo;
+    display: flex;
+    align-items: center;
   }
 
   .logo img {
     height: 44px;
+    width: auto;
   }
 
-  .site-name,
-  .logo-text {
+  /* 🔥 CHANGE: site-name stays INSIDE grid */
+  .site-name {
     grid-area: title;
     text-align: center;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
-    color: var(--primary);
+    color: #d32f2f;
+    white-space: nowrap;
   }
 
-  .header-search,
-  .search-box {
+  .header-search {
     grid-area: search;
     width: 100%;
   }
@@ -115,11 +119,6 @@
     display: none;
   }
 
-  .mobile-only .category-header,
-  .mobile-only .category-divider {
-    display: none;
-  }
-
   .category-pill {
     flex: 0 0 auto;
     padding: 8px 14px;
@@ -168,7 +167,6 @@
   /* ================= RASHIFAL ================= */
 
   .right {
-    display: block;
     width: 100%;
   }
 
@@ -178,14 +176,9 @@
     align-items: center;
   }
 
-  .dob-box input {
-    flex: 1;
-    min-height: 44px;
-  }
-
+  .dob-box input,
   .dob-box button {
-    min-height: 44px;
-    padding: 0 14px;
+    min-height: 42px;
   }
 
   .rashi-grid {
@@ -207,20 +200,9 @@
     justify-content: center;
   }
 
-  .bv-footer {
-    margin-top: 28px;
-  }
-
   .bv-footer-bottom {
     font-size: 12px;
     padding: 10px;
-  }
-
-  /* ================= BACK TO TOP ================= */
-
-  .bv-back-to-top {
-    bottom: 16px;
-    right: 16px;
   }
 }
 
@@ -231,124 +213,9 @@
     display: none !important;
   }
 }
-/* =====================================
-   RASHIFAL DATE PICKER – MOBILE POLISH
-===================================== */
 
-@media (max-width: 768px) {
+/* ================= SITE NAME BASE ================= */
 
-  /* Date input base */
-  .dob-box input[type="date"],
-  .dob-box select {
-    height: 42px;                 /* smaller & app-like */
-    padding: 8px 12px;
-    font-size: 14px;
-    border-radius: 10px;
-    border: 1.5px solid #e5e7eb;
-    background-color: #ffffff;
-    box-shadow: none;
-  }
-
-  /* Remove ugly default highlight */
-  .dob-box input[type="date"]:focus {
-    outline: none;
-    border-color: #d32f2f;        /* Bharat Varta red */
-    box-shadow: 0 0 0 1px rgba(211,47,47,0.15);
-  }
-
-  /* Calendar icon alignment (Chrome/Android) */
-  .dob-box input[type="date"]::-webkit-calendar-picker-indicator {
-    cursor: pointer;
-    opacity: 0.7;
-    padding-right: 6px;
-  }
-
-  /* OK button size alignment */
-  .dob-box button {
-    height: 42px;
-    padding: 0 14px;
-    font-size: 14px;
-    border-radius: 10px;
-  }
-
-  /* Rashifal card spacing */
-  .right {
-    padding: 14px;
-  }
-}
-
-/* =====================================
-   HEADER SITE NAME – MOBILE VISIBILITY
-===================================== */
-
-@media (max-width: 768px) {
-
-  /* Header top row */
-  header,
-  .header,
-  .top-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 12px;
-    position: relative;
-  }
-
-  /* Logo stays left */
-  .logo,
-  .site-logo {
-    position: absolute;
-    left: 12px;
-    display: flex;
-    align-items: center;
-  }
-
-  /* Website name text */
-  .site-title,
-  .site-name,
-  .brand-name {
-    display: block !important;
-    font-size: 16px;
-    font-weight: 700;
-    color: #d32f2f; /* Bharat Varta red */
-    text-align: center;
-    white-space: nowrap;
-  }
-}
-/* =====================================
-   HEADER LOGO + SITE NAME (MOBILE)
-===================================== */
-
-@media (max-width: 768px) {
-
-  .header-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  /* First line: logo + site name */
-  .logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 6px;
-  }
-
-  .logo img {
-    width: 36px;
-    height: 36px;
-  }
-
-  .site-name {
-    font-size: 16px;
-    font-weight: 700;
-    color: #d32f2f;
-    text-align: center;
-  }
-}
-/* Site name base (desktop hidden if needed) */
 .site-name {
   font-size: 20px;
   font-weight: 700;
