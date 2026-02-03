@@ -256,15 +256,17 @@ export default function RootLayout({
             <header className="header">
               <div className="header-inner">
 
-                {/* 🔥 CHANGE: logo + site-name BOTH are grid items */}
-               <div className="logo">
+                <div className="logo">
   <img
     src="/app_logo.png"
     alt="Bharat Varta News"
     width={60}
     height={60}
   />
-  <span className="site-name">Bharat Varta News</span>
+</div>
+
+<div className="site-name">
+  Bharat Varta News
 </div>
 
 
