@@ -600,6 +600,7 @@ function injectMedia(body: string, media: string[]) {
 
 /* ===================== METADATA (FIXED IMAGE LOGIC ONLY) ===================== */
 
+
 export async function generateMetadata(
   { params }: { params: { slug: string } }
 ): Promise<Metadata> {
@@ -614,18 +615,22 @@ export async function generateMetadata(
     article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
     "Latest news from Bharat Varta News";
 
-  // 🔥 GUARANTEED OG IMAGE (NEVER NULL)
-  let ogImage: string = `${siteUrl}/app_logo.png`;
+  // 🔒 DEFAULT (NEVER EMPTY)
+  let ogImage = `${siteUrl}/app_logo.png`;
 
-  // IMAGE
+  /* ================= IMAGE ================= */
   if (article?.image) {
     ogImage = article.image;
   }
-  else if (Array.isArray(article?.images) && article.images.length > 0) {
+  else if (
+    Array.isArray(article?.images) &&
+    article.images.length > 0 &&
+    article.images[0]
+  ) {
     ogImage = article.images[0];
   }
 
-  // VIDEO
+  /* ================= VIDEO ================= */
   else if (article?.video) {
     if (isYouTube(article.video)) {
       const yt = getYouTubeThumb(article.video);
@@ -634,7 +639,10 @@ export async function generateMetadata(
       ogImage = `${siteUrl}/video-placeholder.png`;
     }
   }
-  else if (Array.isArray(article?.videos) && article.videos.length > 0) {
+  else if (
+    Array.isArray(article?.videos) &&
+    article.videos.length > 0
+  ) {
     const v = article.videos[0];
     if (isYouTube(v)) {
       const yt = getYouTubeThumb(v);
@@ -644,8 +652,8 @@ export async function generateMetadata(
     }
   }
 
-  // FINAL SAFETY
-  if (!ogImage.startsWith("http")) {
+  // 🔥 FINAL HARD GUARANTEE
+  if (!ogImage || typeof ogImage !== "string") {
     ogImage = `${siteUrl}/app_logo.png`;
   }
 
@@ -674,7 +682,6 @@ export async function generateMetadata(
     },
   };
 }
-
 
 /* ===================== PAGE ===================== */
 
