@@ -153,7 +153,10 @@ export default async function Head({
     if (isYouTube(v)) {
       image = getYouTubeThumb(v) || image;
     }
-    // non-youtube video → keep placeholder
+     if(image==null||image==undefined)
+    {
+      image= `${siteUrl}/og-placeholder.png`
+    }
   }
 
   return (

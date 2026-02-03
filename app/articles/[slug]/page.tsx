@@ -640,7 +640,10 @@ export async function generateMetadata(
     if (isYouTube(v)) {
       ogImage = getYouTubeThumb(v) || ogImage;
     }
-    // non-YouTube video → keep placeholder
+    if(ogImage==null||ogImage==undefined)
+    {
+      ogImage= `${siteUrl}/og-placeholder.png`
+    }
   }
 
   return {
