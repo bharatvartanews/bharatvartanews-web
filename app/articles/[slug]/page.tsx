@@ -599,24 +599,49 @@ function injectMedia(body: string, media: string[]) {
 }
 
 /* ===================== METADATA (FIXED IMAGE LOGIC ONLY) ===================== */
-export const dynamic = "force-dynamic";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}) {
+function isImage(url?: string) {
+  return !!url && /\.(jpg|jpeg|png|webp)$/i.test(url);
+}
+
+export async function generateMetadata(
+  { params }: { params: { slug: string } }
+): Promise<Metadata> {
+
   const siteUrl = "https://www.bharatvartanews.com";
   const article = await PublicApi.getArticleBySlug(params.slug);
 
   const title = article?.title || "Bharat Varta News";
+
   const description =
     article?.summary ||
     article?.excerpt ||
     article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
     "Latest news from Bharat Varta News";
 
-  const ogImage = `${siteUrl}/articles/${params.slug}/opengraph-image`;
+  // 🔥 DEFAULT PLACEHOLDER (REAL IMAGE FILE)
+  let ogImage = `${siteUrl}/og-placeholder.jpg`;
+
+  /* ================= IMAGE ================= */
+  if (isImage(article?.image)) {
+    ogImage = article.image;
+  }
+  else if (
+    Array.isArray(article?.images) &&
+    isImage(article.images[0])
+  ) {
+    ogImage = article.images[0];
+  }
+
+  /* ================= VIDEO ================= */
+  else if (article?.video || article?.videos?.length) {
+    const v = article.video || article.videos[0];
+
+    if (isYouTube(v)) {
+      ogImage = getYouTubeThumb(v) || ogImage;
+    }
+    // non-YouTube video → keep placeholder
+  }
 
   return {
     title,
@@ -643,6 +668,7 @@ export async function generateMetadata({
     },
   };
 }
+
 
 
 

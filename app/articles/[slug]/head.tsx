@@ -102,6 +102,26 @@ import { PublicApi } from "../../services/publicApi";
 
 export const dynamic = "force-dynamic";
 
+function isImage(url?: string) {
+  return !!url && /\.(jpg|jpeg|png|webp)$/i.test(url);
+}
+
+function isYouTube(url?: string) {
+  return !!url && (url.includes("youtube.com") || url.includes("youtu.be"));
+}
+
+function getYouTubeThumb(url?: string) {
+  if (!url) return null;
+  try {
+    const id = url.includes("youtu.be")
+      ? url.split("youtu.be/")[1]
+      : new URL(url).searchParams.get("v");
+    return id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : null;
+  } catch {
+    return null;
+  }
+}
+
 export default async function Head({
   params,
 }: {
@@ -117,8 +137,24 @@ export default async function Head({
     article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
     "Latest news from Bharat Varta News";
 
-  // 🔥 ALWAYS POINT TO OG IMAGE ROUTE
-  const ogImage = `${siteUrl}/articles/${params.slug}/opengraph-image`;
+  let image = `${siteUrl}/og-placeholder.png`; // 🔥 DEFAULT PLACEHOLDER
+
+  // ✅ IMAGE
+  if (isImage(article?.image)) {
+    image = article.image;
+  }
+  else if (Array.isArray(article?.images) && isImage(article.images[0])) {
+    image = article.images[0];
+  }
+
+  // ✅ VIDEO
+  else if (article?.video || article?.videos?.length) {
+    const v = article.video || article.videos[0];
+    if (isYouTube(v)) {
+      image = getYouTubeThumb(v) || image;
+    }
+    // non-youtube video → keep placeholder
+  }
 
   return (
     <>
@@ -130,14 +166,16 @@ export default async function Head({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={`${siteUrl}/articles/${params.slug}`} />
-      <meta property="og:image" content={ogImage} />
+
+      {/* 🔥 THIS is what WhatsApp reads */}
+      <meta property="og:image" content={image} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={ogImage} />
+      <meta name="twitter:image" content={image} />
     </>
   );
 }
