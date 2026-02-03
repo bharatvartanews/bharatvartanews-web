@@ -3,22 +3,33 @@
    Desktop remains untouched
 ===================================================== */
 
+/* ================= MOBILE ================= */
 @media (max-width: 768px) {
 
-  /* ---------- HEADER GRID ---------- */
+  /* ---------- GLOBAL ---------- */
+
+  html, body {
+    overflow-x: hidden;
+  }
+
+  .container {
+    padding: 14px;
+  }
+
+  /* ---------- HEADER ---------- */
+
   .header-inner {
     display: grid;
     grid-template-columns: auto 1fr auto;
     grid-template-areas:
-      "logo title title"
+      "logo title spacer"
       "search search search"
       "nav nav profile";
     row-gap: 10px;
     align-items: center;
-    width: 100%;
   }
 
-  /* LOGO */
+  /* LOGO – LEFT */
   .logo {
     grid-area: logo;
     display: flex;
@@ -31,7 +42,7 @@
     width: auto;
   }
 
-  /* SITE NAME (CENTERED, SAME LINE AS LOGO) */
+  /* SITE NAME – TRUE CENTER */
   .site-name {
     grid-area: title;
     text-align: center;
@@ -41,29 +52,26 @@
     white-space: nowrap;
   }
 
-  /* SEARCH — STRICTLY SECOND LINE */
+  /* SEARCH – BELOW TITLE, NO OVERFLOW */
   .header-search {
     grid-area: search;
-    width: 100%;
     padding: 0 12px;
+    width: 100%;
     box-sizing: border-box;
   }
 
   .header-search input {
     width: 100%;
-    max-width: 100%;
     height: 42px;
     font-size: 14px;
-    box-sizing: border-box;
   }
 
-  /* NAV — THIRD LINE LEFT */
+  /* NAV */
   .nav {
     grid-area: nav;
     display: flex;
     gap: 10px;
     padding-left: 8px;
-    align-items: center;
   }
 
   .nav a {
@@ -71,21 +79,20 @@
     padding: 6px 10px;
   }
 
-  /* PROFILE — THIRD LINE RIGHT */
+  /* PROFILE – ALWAYS VISIBLE */
   .header-actions {
     grid-area: profile;
     display: flex;
-    align-items: center;
     justify-content: flex-end;
+    align-items: center;
     padding-right: 8px;
     min-width: 44px;
   }
 
-  /* LANGUAGE HIDDEN ON MOBILE */
+  /* HIDE LANGUAGE ON MOBILE */
   .lang-toggle {
     display: none;
   }
-}
 
   /* ---------- PAGE GRID ---------- */
 
@@ -204,6 +211,7 @@
     font-size: 12px;
     padding: 10px;
   }
+}
 
 /* ================= DESKTOP SAFETY ================= */
 
