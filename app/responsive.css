@@ -14,36 +14,38 @@
     padding: 14px;
   }
 
-  /* ---------- HEADER GRID ---------- */
+  /* ---------- HEADER ---------- */
   .header-inner {
     display: grid;
     grid-template-columns: auto 1fr auto;
     grid-template-areas:
-      "logo title profile"
+      "logo title title"
       "search search search"
-      "nav nav nav";
+      "nav nav profile";
     row-gap: 10px;
-    column-gap: 6px;
     align-items: center;
     width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
   }
+  /* FORCE HeaderSearch into grid */
+.header-inner > *:has(input) {
+  grid-area: search;
+}
 
-  /* ---------- LOGO ---------- */
+
+  /* LOGO – LEFT */
   .logo {
     grid-area: logo;
     display: flex;
     align-items: center;
-    padding-left: 6px;
+    padding-left: 8px;
   }
 
   .logo img {
-    height: 38px;
+    height: 40px;
     width: auto;
   }
 
-  /* ---------- SITE NAME ---------- */
+  /* SITE NAME – CENTER */
   .site-name {
     grid-area: title;
     text-align: center;
@@ -51,33 +53,12 @@
     font-weight: 700;
     color: #d32f2f;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
-  /* ---------- PROFILE (STABLE) ---------- */
-  .header-actions {
-    grid-area: profile;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    width: 40px;
-    min-width: 40px;
-    padding-right: 6px;
-    box-sizing: border-box;
-  }
-
-  .header-actions img,
-  .header-actions svg {
-    width: 32px;
-    height: 32px;
-  }
-
-  /* ---------- SEARCH (NO OVERFLOW) ---------- */
+  /* 🔥 SEARCH – ALWAYS SECOND LINE */
   .header-search {
     grid-area: search;
     width: 100%;
-    max-width: 100%;
     padding: 0 8px;
     box-sizing: border-box;
   }
@@ -85,29 +66,39 @@
   .header-search input {
     width: 100%;
     max-width: 100%;
-    min-width: 0;               /* 🔥 CRITICAL FIX */
     height: 42px;
     font-size: 14px;
+    min-width: 0;
     box-sizing: border-box;
   }
 
-  /* ---------- NAV ---------- */
+  /* NAV – THIRD LINE LEFT */
   .nav {
     grid-area: nav;
     display: flex;
     gap: 10px;
-    padding-left: 6px;
+    padding-left: 8px;
     align-items: center;
-    overflow-x: auto;
   }
 
   .nav a {
     font-size: 13px;
     padding: 6px 10px;
-    white-space: nowrap;
   }
 
-  /* ---------- LANGUAGE OFF ---------- */
+  /* 🔥 PROFILE – VISIBLE, INSIDE SCREEN */
+  .header-actions {
+    grid-area: profile;
+    display: flex;
+    width: 40px;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 6px;   /* ⬅ reduced */
+    min-width: 36px;
+    box-sizing: border-box;
+  }
+
+  /* LANGUAGE OFF ON MOBILE */
   .lang-toggle {
     display: none;
   }
@@ -154,7 +145,7 @@
     height: 18px;
   }
 
-  /* ---------- NEWS ---------- */
+  /* ---------- NEWS LIST ---------- */
   .news-card {
     display: block;
     padding: 16px;
@@ -185,6 +176,29 @@
     font-size: 14px;
   }
 
+  /* ---------- RASHIFAL ---------- */
+  .right {
+    width: 100%;
+  }
+
+  .dob-box {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .dob-box input,
+  .dob-box button {
+    min-height: 42px;
+  }
+
+  .rashi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 12px;
+  }
+
   /* ---------- FOOTER ---------- */
   .bv-footer-inner {
     grid-template-columns: 1fr;
@@ -209,7 +223,7 @@
   }
 }
 
-/* ---------- DESKTOP SITE NAME ---------- */
+/* ---------- SITE NAME BASE (DESKTOP) ---------- */
 .site-name {
   font-size: 20px;
   font-weight: 700;
