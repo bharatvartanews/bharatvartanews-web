@@ -100,6 +100,8 @@
 // }
 import { PublicApi } from "../../services/publicApi";
 
+export const dynamic = "force-dynamic";
+
 export default async function Head({
   params,
 }: {
@@ -115,7 +117,7 @@ export default async function Head({
     article?.body?.replace(/<[^>]+>/g, "").slice(0, 150) ||
     "Latest news from Bharat Varta News";
 
-  // 🔥 ALWAYS point to rendered OG image
+  // 🔥 ALWAYS POINT TO OG IMAGE ROUTE
   const ogImage = `${siteUrl}/articles/${params.slug}/opengraph-image`;
 
   return (

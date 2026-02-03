@@ -34,42 +34,34 @@ export default async function OGImage({
 }: {
   params: { slug: string };
 }) {
-  const siteUrl = "https://www.bharatvartanews.com";
-
   let article: any = null;
   try {
     article = await PublicApi.getArticleBySlug(params.slug);
   } catch {}
 
-  let bgImage = `${siteUrl}/app_logo.png`;
+  // ✅ READ LOGO FILE (THIS WAS MISSING BEFORE)
+  const logo = fs.readFileSync(
+    path.join(process.cwd(), "public/og-placeholder.png")
+  );
+
+  let bgImage: string | null = null;
   let isVideo = false;
 
-  // IMAGE
+  /* ===== IMAGE ===== */
   if (isImage(article?.image)) {
     bgImage = article.image;
   } else if (Array.isArray(article?.images) && isImage(article.images[0])) {
     bgImage = article.images[0];
   }
 
-  // VIDEO
+  /* ===== VIDEO ===== */
   else if (article?.video || article?.videos?.length) {
     const v = article.video || article.videos[0];
     if (isYouTube(v)) {
-      bgImage = getYouTubeThumb(v) || `${siteUrl}/video-placeholder.png`;
-    } else {
-      bgImage = `${siteUrl}/video-placeholder.png`;
+      bgImage = getYouTubeThumb(v);
     }
     isVideo = true;
   }
-
-  // FINAL FALLBACK
-  if (!bgImage) {
-    bgImage = `${siteUrl}/app_logo.png`;
-  }
-
-  const logo = fs.readFileSync(
-    path.join(process.cwd(), "public/app_logo.png")
-  );
 
   return new ImageResponse(
     (
@@ -78,16 +70,37 @@ export default async function OGImage({
           width: "100%",
           height: "100%",
           position: "relative",
-          backgroundColor: "#000",
+          backgroundColor: "#020617",
         }}
       >
-        {/* Background */}
-        <img
-          src={bgImage}
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-        />
+        {/* ===== BACKGROUND ===== */}
+        {bgImage ? (
+          <img
+            src={bgImage}
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          />
+        ) : (
+          // 🔥 PLACEHOLDER (DRAWN, NOT FETCHED)
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                "linear-gradient(135deg, #020617, #0f172a, #020617)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          />
+        )}
 
-        {/* Gradient */}
+        {/* ===== DARK OVERLAY ===== */}
         <div
           style={{
             position: "absolute",
@@ -97,22 +110,22 @@ export default async function OGImage({
           }}
         />
 
-        {/* Logo */}
+        {/* ===== LOGO (NOW VISIBLE) ===== */}
         <img
           src={logo as any}
           style={{
             position: "absolute",
-            top: 24,
-            right: 24,
-            width: 80,
-            height: 80,
+            top: 32,
+            right: 32,
+            width: 90,
+            height: 90,
             borderRadius: "50%",
             background: "#fff",
-            padding: 8,
+            padding: 10,
           }}
         />
 
-        {/* Video Play Icon */}
+        {/* ===== VIDEO PLAY ICON ===== */}
         {isVideo && (
           <div
             style={{
@@ -135,14 +148,14 @@ export default async function OGImage({
                 height: 0,
                 borderTop: "18px solid transparent",
                 borderBottom: "18px solid transparent",
-                borderLeft: "28px solid #fff",
+                borderLeft: "28px solid white",
                 marginLeft: 6,
               }}
             />
           </div>
         )}
 
-        {/* Title */}
+        {/* ===== TITLE ===== */}
         <div
           style={{
             position: "absolute",

@@ -599,6 +599,8 @@ function injectMedia(body: string, media: string[]) {
 }
 
 /* ===================== METADATA (FIXED IMAGE LOGIC ONLY) ===================== */
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({
   params,
 }: {
@@ -641,6 +643,7 @@ export async function generateMetadata({
     },
   };
 }
+
 
 
 /* ===================== PAGE ===================== */
