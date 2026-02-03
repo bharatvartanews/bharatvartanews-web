@@ -18,16 +18,17 @@
   /* ================= HEADER (✅ FIXED) ================= */
 
   /* 🔥 CHANGE: SINGLE GRID-BASED HEADER (NO FLEX OVERRIDE) */
-  .header-inner {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    grid-template-areas:
-      "logo title title"
-      "search search search"
-      "nav nav profile";
-    row-gap: 10px;
-    align-items: center;
-  }
+ .header-inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas:
+    "logo title title"
+    "search search search"
+    "nav nav profile";
+  row-gap: 10px;
+  align-items: center;
+}
+
 
   .logo {
     grid-area: logo;
