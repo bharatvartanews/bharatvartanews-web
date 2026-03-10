@@ -205,5 +205,16 @@ function getSourceName(url: string) {
 // }
 export default async function VideosPage() {
   const videos: any[] = await api("/api/videos");
-  return <VideoGrid videos={videos || []} />;
+  return(  <main className="container">
+      {/* HEADER (same style as article page) */}
+      <div className="article-top-bar">
+        <Link href="/" className="back-to-news">
+          ← Back to News
+        </Link>
+      </div>
+
+      {/* VIDEOS GRID */}
+      <VideoGrid videos={videos || []} />
+    </main>
+  );
 }

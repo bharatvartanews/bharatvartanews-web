@@ -468,7 +468,7 @@
 //   );
 // }
 "use client";
-
+import { api } from "./lib/api";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
@@ -483,8 +483,12 @@ export default function Footer() {
   const [showTop, setShowTop] = useState(false);
   const [time, setTime] = useState(null);
 
-  const [totalVisitors] = useState(128742); // TEMP
-  const [liveUsers] = useState(12); // TEMP
+  // const [totalVisitors] = useState(128742); // TEMP
+  // const [liveUsers] = useState(12); // TEMP
+
+const [totalVisitors, setTotalVisitors] = useState(0);
+const [liveUsers, setLiveUsers] = useState(0);
+
 
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 300);
@@ -497,6 +501,24 @@ export default function Footer() {
       clearInterval(timer);
     };
   }, []);
+
+useEffect(() => {
+
+  const loadStats = async () => {
+    // const res = await fetch(`${API}/api/analytics/visitors`);
+    // const data = await res.json();
+    const data=await api(`/api/analytics/visitors`);
+
+    setTotalVisitors(data.totalVisitors);
+    setLiveUsers(data.liveUsers);
+  };
+
+  loadStats();
+  const interval = setInterval(loadStats, 10000);
+
+  return () => clearInterval(interval);
+
+}, []);
 
   return (
     <footer className="bv-footer">

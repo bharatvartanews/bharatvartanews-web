@@ -709,15 +709,17 @@ export default async function ArticlePage({ params }: PageProps) {
   const finalBody = injectMedia(article.body || "", media);
 
   return (
-    <main className="container">
-      <div className="grid">
-        <aside className="left">
-          <Link href="/" className="category-pill">
+    // <main className="container">
+    //   <div className="grid">
+    <main className="container article-page">
+  <div className="article-layout">
+        <section>
+          <Link href="/" className="back-to-news">
             ← Back to News
           </Link>
-        </aside>
+        
 
-        <section>
+        
           <article className="article-card">
             <h1 className="article-title">{article.title}</h1>
 
