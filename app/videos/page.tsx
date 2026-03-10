@@ -81,6 +81,8 @@
 //     </main>
 //   );
 // }
+
+export const dynamic = "force-dynamic";
 import { api } from "../lib/api";
 import Link from "next/link";
 import VideoGrid from "../videos/videos-grid";
