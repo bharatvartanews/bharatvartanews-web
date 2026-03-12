@@ -487,7 +487,8 @@ return (
 
     </div>
     {/* MOBILE CATEGORIES */}
-<aside className="mobile-only.side-card">
+{/* MOBILE CATEGORIES */}
+<aside className="side-card mobile-only">
 
   {categories.map((c: any) => (
     <Link

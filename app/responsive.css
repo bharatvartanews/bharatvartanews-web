@@ -48,8 +48,8 @@
   grid-column: 1 / -1;
   grid-row: 1;
   text-align: center;
-  font-size:40px !important;
-  font-weight: 400;
+  font-size:36px !important;
+  font-weight: 200;
   color: #d32f2f;
   white-space: nowrap;
   margin: 0;
@@ -135,20 +135,19 @@ text-overflow:ellipsis;
   flex-wrap: nowrap;
   white-space: nowrap;
 }
-.mobile-only.side-card .category-pill{
-  flex:0 0 auto;
-}
   .mobile-only.side-card::-webkit-scrollbar {
     display: none;
   }
-
-  .category-pill {
-    flex: 0 0 auto;
+  .mobile-only .category-pill{
+width:auto;
+min-width:120px;
+flex: 0 0 auto;
     padding: 8px 14px;
     font-size: 14px;
+      white-space: nowrap;
     border-radius: 999px;
-    white-space: nowrap;
-  }
+justify-content:center;
+}
 
   .category-icon {
     width: 18px;
