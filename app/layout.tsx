@@ -636,6 +636,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Script from "next/script";
 import { usePathname } from "next/navigation";
 
 import "./globals.css";
@@ -662,7 +663,10 @@ const tabClass = (path: string) =>
 pathname === path ? "nav-tab active" : "nav-tab";
 
 return ( <html lang="en"> <body>
-
+<Script
+  src="https://accounts.google.com/gsi/client"
+  strategy="afterInteractive"
+/>
 
     <AuthProvider>
       <SearchProvider>
