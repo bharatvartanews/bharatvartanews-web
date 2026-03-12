@@ -15,6 +15,7 @@
   }
   .trending{
 width:100%;
+padding-right: 20px;
 }
 
   /* ---------- HEADER ---------- */
@@ -53,7 +54,7 @@ width:100%;
   text-align: center;
   font-size:28px !important;
   line-height:1.1;
-  font-weight: 100;
+  font-weight: 700;
   color: #d32f2f;
   white-space: nowrap;
   margin: 0;
@@ -130,13 +131,19 @@ text-overflow:ellipsis;
   }
 
   /* ---------- MOBILE CATEGORIES ---------- */
-  .mobile-only.side-card {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;
-    padding: 8px 4px;
-    scrollbar-width: none;
-  }
+ .mobile-only.side-card {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 8px 4px;
+  scrollbar-width: none;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.mobile-only.side-card .category-pill{
+  flex:0 0 auto;
+}
 
   .mobile-only.side-card::-webkit-scrollbar {
     display: none;
