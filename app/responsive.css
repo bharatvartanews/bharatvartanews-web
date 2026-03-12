@@ -27,10 +27,6 @@
     align-items: center;
     width: 100%;
   }
-  /* FORCE HeaderSearch into grid */
-.header-inner > *:has(input) {
-  grid-area: search;
-}
 
 
   /* LOGO – LEFT */
@@ -52,7 +48,7 @@
     grid-row: 1;           /* same row as logo */
     text-align: center;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 400;
     color: #d32f2f;
     white-space: nowrap;
     margin: 0;             /* 🔥 no starting space */
@@ -190,7 +186,7 @@
 
   .dob-box {
     display: flex;
-    gap: 8px;
+    gap: 4p;
     align-items: center;
   }
 
