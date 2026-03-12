@@ -27,6 +27,11 @@
     align-items: center;
     width: 100%;
   }
+  /* FORCE HeaderSearch into grid */
+.header-inner > *:has(input) {
+  grid-area: search;
+}
+
 
   /* LOGO – LEFT */
   .logo {
@@ -55,10 +60,6 @@
     justify-self: center;
     pointer-events: none;  /* optional, avoids overlap clicks */
   }
-
-  .center-section-header{
-  width:100%;
-}
   /* 🔥 SEARCH – ALWAYS SECOND LINE */
   .header-search {
     grid-area: search;
@@ -79,21 +80,18 @@
   }
 
   /* NAV – THIRD LINE LEFT */
- .nav {
-  grid-area: nav;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding-left: 8px;
-}
+  .nav {
+    grid-area: nav;
+    display: flex;
+    gap: 10px;
+    padding-left: 8px;
+    align-items: center;
+  }
 
-.nav a {
-  flex: 1;
-  text-align: center;
-  font-size: 13px;
-  padding: 6px 0;
-}
+  .nav a {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
 
   /* 🔥 PROFILE – VISIBLE, INSIDE SCREEN */
   .header-actions {
@@ -113,7 +111,7 @@
   }
 
   /* ---------- PAGE GRID ---------- */
-.layout-grid {
+  .layout-grid {
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -156,7 +154,7 @@
 
   /* ---------- NEWS LIST ---------- */
   .news-card {
-    display: block;
+    display: flex;
     padding: 16px;
   }
 
