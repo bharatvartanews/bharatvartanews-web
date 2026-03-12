@@ -35,6 +35,7 @@
     display: flex;
     align-items: center;
     padding-left: 8px;
+  justify-content: flex-start;
   }
 
   .logo img {
@@ -44,18 +45,18 @@
 
   /* SITE NAME – CENTER */
 .site-name {
-    grid-column: 1 / -1;   /* 🔥 full row */
-    grid-row: 1;           /* same row as logo */
-    text-align: center;
-    font-size: 16px;
-    font-weight: 400;
-    color: #d32f2f;
-    white-space: nowrap;
-    margin: 0;             /* 🔥 no starting space */
-    padding: 0;
-    justify-self: center;
-    pointer-events: none;  /* optional, avoids overlap clicks */
-  }
+  grid-column: 1 / -1;
+  grid-row: 1;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  color: #d32f2f;
+  white-space: nowrap;
+  margin: 0;
+  padding-left: 40px;
+  padding-right: 40px;
+  justify-self: center;
+}
   /* 🔥 SEARCH – ALWAYS SECOND LINE */
   .header-search {
     grid-area: search;
@@ -150,7 +151,7 @@
 
   /* ---------- NEWS LIST ---------- */
   .news-card {
-    display: flex;
+    display: auto;
     padding: 16px;
   }
 
