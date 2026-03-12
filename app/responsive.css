@@ -13,6 +13,12 @@
   .container {
     padding: 14px;
   }
+  .center-section-header{
+  width:100%;
+  margin-right:0;
+  box-sizing:border-box;
+}
+
 
   /* ---------- HEADER ---------- */
   .header-inner {
@@ -126,27 +132,41 @@ text-overflow:ellipsis;
   }
 
   /* ---------- MOBILE CATEGORIES ---------- */
- .mobile-only.side-card {
+.mobile-only.side-card {
   display: flex;
+
   gap: 10px;
+
   overflow-x: auto;
-  padding: 8px 4px;
+  overflow-y: hidden;
+
+  width: 100%;
+  max-width: 100%;
+
+  padding: 8px 0;
+
+  box-sizing: border-box;
+
   scrollbar-width: none;
-  flex-wrap: nowrap;
-  white-space: nowrap;
 }
   .mobile-only.side-card::-webkit-scrollbar {
     display: none;
   }
-  .mobile-only .category-pill{
-width:auto;
-min-width:120px;
-flex: 0 0 auto;
-    padding: 8px 14px;
-    font-size: 14px;
-      white-space: nowrap;
-    border-radius: 999px;
-justify-content:center;
+  .category-pill {
+  flex: 0 0 auto;
+
+  min-width: 120px;
+  width: auto;
+
+  padding: 8px 14px;
+
+  font-size: 14px;
+
+  border-radius: 999px;
+
+  white-space: nowrap;
+
+  justify-content: center;
 }
 
   .category-icon {
@@ -192,13 +212,13 @@ justify-content:center;
 
   .dob-box {
     display: flex;
-    gap: 4p;
+    gap: 4px;
     align-items: center;
   }
 
   .dob-box input,
   .dob-box button {
-    min-height: 34px;
+    min-height: 28px;
   }
 
   .rashi-grid {

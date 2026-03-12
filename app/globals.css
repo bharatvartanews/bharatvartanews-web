@@ -2859,7 +2859,7 @@ body {
 
   top:40px;
   right:40px;
-
+  margin-top: 20px;
   width:56px;
   height:56px;
 
@@ -2880,6 +2880,7 @@ body {
 .whatsapp-float img{
   width:30px;
   height:30px;
+  
 }
 
 @keyframes whatsappPulse{
