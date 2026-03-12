@@ -486,6 +486,26 @@ return (
       </h2>
 
     </div>
+    {/* MOBILE CATEGORIES */}
+<aside className="side-card mobile-only">
+
+  {categories.map((c: any) => (
+    <Link
+      key={c.id}
+      href={`/?category=${c.slug}`}
+      className={`category-pill ${
+        c.slug === activeCategorySlug ? "active" : ""
+      }`}
+    >
+      <span className="category-icon">
+        {renderCategoryIcon(c)}
+      </span>
+
+      <span>{c.name}</span>
+    </Link>
+  ))}
+
+</aside>
 
 
     {/* ARTICLES */}

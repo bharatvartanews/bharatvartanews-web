@@ -13,6 +13,9 @@
   .container {
     padding: 14px;
   }
+  .trending{
+width:100%;
+}
 
   /* ---------- HEADER ---------- */
   .header-inner {
@@ -48,7 +51,8 @@
   grid-column: 1 / -1;
   grid-row: 1;
   text-align: center;
-  font-size: 10px;
+  font-size:28px !important;
+  line-height:1.1;
   font-weight: 100;
   color: #d32f2f;
   white-space: nowrap;
@@ -56,6 +60,8 @@
   padding-left: 40px;
   padding-right: 40px;
   justify-self: center;
+  overflow:hidden;
+text-overflow:ellipsis;
 }
   /* 🔥 SEARCH – ALWAYS SECOND LINE */
   .header-search {
