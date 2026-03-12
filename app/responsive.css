@@ -15,7 +15,7 @@
   }
   .center-section-header{
   width:100%;
-  margin-right:0;
+  margin:0;
   box-sizing:border-box;
 }
 
@@ -97,6 +97,16 @@ text-overflow:ellipsis;
     font-size: 13px;
     padding: 6px 10px;
   }
+  .nav-row{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.nav-row nav{
+  display:flex;
+  gap:8px;
+}
 
   /* 🔥 PROFILE – VISIBLE, INSIDE SCREEN */
   .header-actions {
@@ -132,41 +142,59 @@ text-overflow:ellipsis;
   }
 
   /* ---------- MOBILE CATEGORIES ---------- */
-.mobile-only.side-card {
-  display: flex;
+.mobile-only.side-card{
 
-  gap: 10px;
+  display:flex;
+  gap:10px;
 
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow-x:auto;
+  overflow-y:hidden;
 
-  width: 100%;
-  max-width: 100%;
+  width:100%;
+  max-width:100%;
 
-  padding: 8px 0;
+  padding:10px;
 
-  box-sizing: border-box;
+  border-radius:16px;
 
-  scrollbar-width: none;
+  background:linear-gradient(
+    180deg,
+    #f6d2d2,
+    #f9fafb
+  );
+
+  border:1px solid rgba(0,0,0,0.06);
+
+  box-sizing:border-box;
+
+  scrollbar-width:none;
 }
   .mobile-only.side-card::-webkit-scrollbar {
     display: none;
   }
-  .category-pill {
-  flex: 0 0 auto;
+  .category-pill{
 
-  min-width: 120px;
-  width: auto;
+  flex:0 0 auto;
 
-  padding: 8px 14px;
+  min-width:140px;
 
-  font-size: 14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
-  border-radius: 999px;
+  gap:6px;
 
-  white-space: nowrap;
+  padding:8px 14px;
 
-  justify-content: center;
+  border-radius:999px;
+
+  background:#ffffff;
+
+  border:1px solid rgba(0,0,0,0.06);
+
+  font-size:14px;
+
+  white-space:nowrap;
 }
 
   .category-icon {
