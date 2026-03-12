@@ -34,12 +34,12 @@
     grid-area: logo;
     display: flex;
     align-items: center;
-    padding-left: 8px;
+    padding-left: 4px;
   justify-content: flex-start;
   }
 
   .logo img {
-    height: 40px;
+    height: 80px;
     width: auto;
   }
 
@@ -135,6 +135,9 @@ text-overflow:ellipsis;
   flex-wrap: nowrap;
   white-space: nowrap;
 }
+.mobile-only.side-card .category-pill{
+  flex:0 0 auto;
+}
   .mobile-only.side-card::-webkit-scrollbar {
     display: none;
   }
@@ -155,8 +158,7 @@ text-overflow:ellipsis;
   /* ---------- NEWS LIST ---------- */
   .news-card {
     display: flex;
-    width: 100%;
-    padding: 20px;
+    padding: 8px;
   }
 
   .news-body-row {
